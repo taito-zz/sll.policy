@@ -1,0 +1,161 @@
+Introduction
+============
+
+This document describes how to update donation from Products.PFGVerkkomaksut to
+use collective.pfg.payment.
+
+Benefits::
+
+    - Products.PFGVerkkomaksut is used only for payment system provided by Verkkomaksut and 
+    the flexibility is limited.
+
+    - collective.pfg.payment fully uses Products.PloneFormGen to the payment to happen and this can be easily extended to the other payment systems.
+
+    - The flexibility provides more usages in other site, which makes the package more tested and trustworthy.
+
+Jäseneksi liittyminen
+=====================
+
+We use this form as is, but create another form where the original form will be traversed.
+
+liittymislomake
+---------------
+
+Edit
+    Uncheck Verkkomaksut-adapteri
+        Verkkomaksut adapter is not necessary any more.
+            Can be uninstalled completely.
+    Thanks page
+        Select None
+
+Go to /lomakkeet
+    Creta Form Folder named liittymislomake2 or whatever name you want.
+        Edit
+            Title: Liittymislomake2
+            Action Adapter: None
+            Thanks Page: None
+
+            Overrides >> Custom Form Action:
+
+                https://payment.verkkomaksut.fi/
+
+        Contents
+            Delete all the contents
+            Add the next fields with the ids below with String Field::
+                MERCHANT_ID
+                AMOUNT
+                ORDER_NUMBER
+                REFERENCE_NUMBER
+                ORDER_DESCRIPTION
+                CURRENCY
+                RETURN_ADDRESS
+                CANCEL_ADDRESS
+                PENDING_ADDRESS
+                NOTIFY_ADDRESS
+                TYPE
+                CULTURE
+                PRESELECTED_METHOD
+                MODE
+                VISIBLE_METHODS
+                GROUP
+                AUTHCODE
+                * Since you will hide those field above, titles do not matter.
+                * The field ids must be upper cases.
+
+        Actions >> Make order number aware
+            * You can use incremental number or random digits number.
+                This is for ORDER_NUMBER for Verkkomaksut.
+
+
+        * These fields below needs to be configured::
+
+            MERCHANT_ID
+            ORDER_NUMBER
+            CURRENCY
+            RETURN_ADDRESS
+            CANCEL_ADDRESS
+            NOTIFY_ADDRESS
+            TYPE
+            CULTURE
+            MODE
+            AUTHCODE
+
+            MERCHANT_ID
+                Edit >> Default
+                    13466
+
+            ORDER_NUMBER
+                Edit >> Overrides >> Default Expression
+                    python:here.restrictedTraverse('number')()
+
+            CURRENCY
+                Edit >> Default
+                    EUR
+
+            RETURN_ADDRESS
+                Edit >> Overrides >> Default Expression
+                    string:${portal_url}/lomakkeet/liittymislomake3/thank-you/@@payment-succeeded
+
+            * Assuming that Liittymislomake3 will be created under /lomakkeet.
+            * If field values are not necessary to be sent by e-mail or displayed after successful payment, you can give different address here.
+
+            CANCEL_ADDRESS
+                Edit >> Overrides >> Default Expression
+                    string:${portal_url}/lomakkeet/liittymislomake
+
+            NOTIFY_ADDRESS
+                Edit >> Overrides >> Default Expression
+                    string:${portal_url}
+
+            TYPE
+                Edit >> Default
+                    S1
+
+            CULTURE
+                Edit >> Default
+                    fi_FI
+
+            MODE
+                Edit >> Default
+                    1
+
+            AUTHCODE
+                Edit >> Overrides >> Default Expression
+                    python:here.restrictedTraverse('auth-code')
+
+    Now go back to liitymislomake
+        Edit >> Overrides >> Custom Success Action
+            traverse_to:string:liittymislomake2
+                * Now that you click "Siiry maksuun" button, you go to liittymislomake2.
+            Change Jäsenyys field's id to AMOUNT.
+                * Not that you click "Siiry maksuun" button, the AMOUNT is transfered to liittymislomake2.
+
+    Click "submit" in the liittymislomake2. You now go to Verkkomaksut payment page.
+    If you click "Peruuta" button in their page, you go back to your site, to the page specified at CANCEL_ADDRESS.
+
+    We haven't created liittymislomake3 page. this can be what ever page like Document type page.
+    However, if you want e-mails to be sent when people returns to the site, add the FormFolder again.
+    Form Folder: Liittymislomake3
+        We use Mail and Thank you page created here automatically.
+        The RETURN_ADDRESS will be redirected to this thanks page.
+        You can show the field values from liittyislomake1 here and can be also sent by e-mail.
+        To make this happen, you need to add exactly the same field with the same id in Liittymislomake3. 
+        For example, if you want to show nimi field in thank you page, then add nimi field in liitymislomake3 with string field. You may also copy it from littymislomake and paste it to liittymislomake3.
+        Also you need to add Custom Script Adapter to liittymislomake.
+
+        Go to liittymislomake
+            Add Custom Script Adapter
+                Edit
+                    Script body:
+
+                        items = dict(
+                            AMOUNT=request.form["AMOUNT"],
+                            nimi=request.form["nimi"],
+                        )
+                        request.SESSION.set("collective.pfg.payment", items)
+
+                    * AMOUNT and nimi is from the field id.
+                      Change those for your needs and add or delete lines with form:
+                        field_id=request.form['field_id'],
+
+

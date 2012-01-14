@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="sll.policy">
+
+  <browser:viewlet
+    name="sll.footer"
+    for="*"
+    manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+    template="viewlets/footer.pt"
+    permission="zope.Public"
+    />
+
+  <browser:viewlet
+    name="plone.path_bar"
+    manager="plone.app.layout.viewlets.interfaces.IContentViews"
+    class=".viewlet.PathBarViewlet"
+    permission="zope2.View"
+    layer="sll.policy.interfaces.ISLLPolicyLayer"
+    />
+
+</configure>

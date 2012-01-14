@@ -1,0 +1,36 @@
+Introduction
+============
+This document describes about SLL site packages for Plone-3.3.5.
+
+builout.cfg
+------------
+
+Check the sll-3.3.5.cfg.
+
+Theming
+-------
+
+* Products.NewSllSking
+* collective.folderlogo
+
+After the in stallation of collective.folderlogo, go to the page:
+
+/@@manage-viewlets
+
+Hide Viewlet: plone.header under ViewletManager: plone.portaltop
+Hide Viewlet: plone.logo under ViewletManager: plone.portalheader under Viewlet: folderlogo.header
+
+The width is now 900 px.
+
+Hot To Change log and its bacground image.
+
+Add image id named "logo" to any folder you want to change logo.
+For background, add image called "background" to the folder.
+
+Logo and background have to be layered.
+
+If you want to change change those IDs, go Site Setup >> Folder Logo
+
+We need 1px width image for portal-globalnav or use some background color since the 
+character color is white.
+

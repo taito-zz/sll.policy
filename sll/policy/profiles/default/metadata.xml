@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<metadata>
+  <version>1</version>
+  <dependencies>
+<!--     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
+    <dependency>profile-Products.PFGSelectionStringField:default</dependency>
+    <dependency>profile-collective.folderlogo:default</dependency>
+    <dependency>profile-collective.pfg.payment:default</dependency>
+    <dependency>profile-collective.cart.core:default</dependency>
+    <dependency>profile-collective.cart.shipping:default</dependency>
+    <dependency>profile-collective.pfg.showrequest:default</dependency> -->
+    <dependency>profile-sll.theme:default</dependency>
+  </dependencies>
+</metadata>

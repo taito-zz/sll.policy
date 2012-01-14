@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<object>
+
+  <order manager="plone.contentviews">
+    <viewlet name="plone.path_bar" />
+    <viewlet name="plone.contentviews" />
+    <viewlet name="plone.contentactions" />
+  </order>
+
+  <order manager="plone.portalfooter">
+    <viewlet name="sll.footer" />
+    <viewlet name="plone.colophon" />
+  </order>
+
+  <hidden manager="plone.portalheader">
+    <viewlet name="plone.path_bar" />
+  </hidden>
+
+  <hidden manager="plone.portalfooter">
+    <viewlet name="plone.footer" />
+  </hidden>
+</object>

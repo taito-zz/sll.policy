@@ -1,0 +1,50 @@
+from sll.policy.browser.viewlet import PathBarViewlet
+from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from zope.interface import alsoProvides
+
+import unittest2 as unittest
+import mock
+
+
+class PathBarViewletTestCase(unittest.TestCase):
+    """Tests for the viewlet implementation."""
+
+    def make_viewlet(self, context=None, request=None, view=None, manager=None):
+        context = context or mock.Mock()
+        request = request or mock.Mock()
+        view = view or mock.Mock()
+        manager = manager or mock.Mock()
+#        alsoProvides(context, IAttributeAnnotatable)
+        return PathBarViewlet(context, request, view, manager)
+
+    @mock.patch('sll.policy.browser.viewlet.getMultiAdapter')
+    def test_portal_url(self, getMultiAdapter):
+        getMultiAdapter().portal_url.return_value = 'portal_url'
+        view = self.make_viewlet()
+        self.assertEquals('portal_url', view.portal_url)
+
+    @mock.patch('sll.policy.browser.viewlet.aq_parent')
+    def test_root(self, aq_parent):
+        parent = mock.Mock()
+        alsoProvides(parent, INavigationRoot)
+        aq_parent.return_value = parent
+        view = self.make_viewlet()
+        self.assertEquals(parent, view.root)
+        context = mock.Mock()
+        alsoProvides(context, INavigationRoot)
+        view = self.make_viewlet(context=context)
+        self.assertEquals(context, view.root)
+
+    @mock.patch('sll.policy.browser.viewlet.PathBarViewlet.root')
+    def test_available(self, root):
+        view = self.make_viewlet()
+        self.failUnless(view.available)
+        alsoProvides(root, IPloneSiteRoot)
+        self.failIf(view.available)
+
+
+def test_suite():
+    suite = unittest.TestSuite()
+    suite.addTest(unittest.makeSuite(PathBarViewletTestCase))
+    return suite

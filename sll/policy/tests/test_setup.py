@@ -1,0 +1,244 @@
+# -*- coding: utf-8 -*-
+
+# from Products.CMFCore.utils import getToolByName
+# from plone.portlets.interfaces import IPortletAssignmentMapping
+# from plone.portlets.interfaces import IPortletManager
+# from sll.policy.tests.base import TestCase
+# from zope.component import getMultiAdapter
+# from zope.component import getUtility
+
+# import unittest2 as unittest
+
+
+# class TestSetup(TestCase):
+
+#     def afterSetUp(self):
+#         self.installer = getToolByName(self.portal, 'portal_quickinstaller')
+#         self.properties = getToolByName(self.portal, 'portal_properties')
+#         self.ccp = getattr(self.properties, 'collective_cart_properties')
+#         self.cppp = getattr(self.properties, 'collective_pfg_payment_properties')
+#         self.flp = getattr(self.properties, 'folder_logo_properties')
+
+#     def test_sll_policy_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('sll.policy'))
+
+#     def test_is_collective_folderlogo_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('collective.folderlogo'))
+
+#     def test_is_collective_pfg_payment_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('collective.pfg.payment'))
+
+#     def test_is_collective_cart_core_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('collective.cart.core'))
+
+#     def test_is_collective_cart_shipping_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('collective.cart.shipping'))
+
+#     def test_is_collective_pfg_showrequest_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('collective.pfg.showrequest'))
+
+#     def test_is_plone_form_gen_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('PloneFormGen'))
+
+#     def test_is_pfg_extended_mail_adapter_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('PFGExtendedMailAdapter'))
+
+#     def test_is_pfg_selection_string_field_installed(self):
+#         self.failUnless(self.installer.isProductInstalled('PFGSelectionStringField'))
+
+#     # def test_is_new_ssl_skin_installed(self):
+#     #     self.failUnless(self.installer.isProductInstalled('NewSllSkin'))
+
+#     ## browserlayer.xml
+#     def test_browserlayer(self):
+#         from sll.policy.interfaces import ISLLPolicyLayer
+#         from plone.browserlayer import utils
+#         self.failUnless(ISLLPolicyLayer in utils.registered_layers())
+
+#     ## properties.xml
+#     def test_portal_email_from_name(self):
+#         self.assertEquals('Luonnonsuojeluliitto', self.portal.getProperty('title'))
+#         self.assertEquals('Suomen luonnonsuojeluliitto ry', self.portal.getProperty('description'))
+#         self.assertEquals("front-page", self.portal.getProperty('default_page'))
+#         self.assertEquals('webmaster@sll.fi', self.portal.getProperty('email_from_address'))
+#         self.assertEquals('Suomen luonnonsuojeluliitto ry', self.portal.getProperty('email_from_name'))
+
+#     ## propertiestool.xml
+#     def test_collective_cart_properties(self):
+#         self.assertEquals('EUR', self.ccp.getProperty('currency'))
+#         self.assertEquals('€', self.ccp.getProperty('currency_symbol'))
+#         self.assertEquals('Behind', self.ccp.getProperty('symbol_location'))
+#         self.assertEquals(('Document',), self.ccp.getProperty('content_types'))
+#         self.assertEquals('Select', self.ccp.getProperty('quantity_method'))
+
+#     def test_collective_pfg_payment_properties(self):
+#         names = (
+#             'MERCHANT_ID',
+#             'AMOUNT',
+#             'ORDER_NUMBER',
+#             'REFERENCE_NUMBER',
+#             'ORDER_DESCRIPTION',
+#             'CURRENCY',
+#             'RETURN_ADDRESS',
+#             'CANCEL_ADDRESS',
+#             'PENDING_ADDRESS',
+#             'NOTIFY_ADDRESS',
+#             'TYPE',
+#             'CULTURE',
+#             'PRESELECTED_METHOD',
+#             'MODE',
+#             'VISIBLE_METHODS',
+#             'GROUP'
+#         )
+#         self.assertEquals(names, self.cppp.getProperty('fields'))
+#         self.assertEquals('6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ', self.cppp.getProperty('mac'))
+#         self.assertEquals('|', self.cppp.getProperty('separator'))
+#         self.assertEquals(True, self.cppp.getProperty('capital'))
+
+#     def test_folder_logo_properties(self):
+#         self.assertEquals('ylapalkin-logo.png', self.flp.getProperty('logo_id'))
+#         self.assertEquals('#5b905b', self.flp.getProperty('background_color'))
+#         self.assertEquals('ylapalkin-tausta.png', self.flp.getProperty('background_image_id'))
+
+
+#     def test_left_portlet(self):
+#         column = getUtility(IPortletManager, name=u"plone.leftcolumn")
+#         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+#         self.failIf(u'Cart' in assignable.keys())
+
+#     def test_right_portlet(self):
+#         column = getUtility(IPortletManager, name=u"plone.rightcolumn")
+#         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+#         self.failUnless(u'Cart' in assignable.keys())
+
+#     ## Uninstalling
+#     def test_uninstall(self):
+# #        self.installer.uninstallProducts(['sll.policy'])
+# #        self.failUnless(not self.installer.isProductInstalled('sll.policy'))
+# #        ids = [action.id for action in self.controlpanel.listActions()]
+# #        self.failUnless('collective_pfg_payment_config' not in ids)
+# #        self.failIf(hasattr(self.actions.object_buttons, 'make_order_number_aware'))
+# #        self.failIf(hasattr(self.actions.object_buttons, 'make_order_number_unaware'))
+# #        self.failIf(hasattr(self.actions.object, 'edit_order_number'))
+#         pass
+
+from sll.policy.tests.base import IntegrationTestCase
+from Products.CMFCore.utils import getToolByName
+
+
+class TestCase(IntegrationTestCase):
+    """TestCase for Plone setup."""
+
+    def setUp(self):
+        self.portal = self.layer['portal']
+
+    def test_is_sll_policy_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.policy'))
+
+    def test_properties__title(self):
+        self.assertEqual(
+            self.portal.getProperty('title'),
+            'Luonnonsuojeluliitto'
+        )
+
+    def test_properties__description(self):
+        self.assertEqual(
+            self.portal.getProperty('description'),
+            'Suomen luonnonsuojeluliitto ry'
+        )
+
+    def test_properties__email_from_address(self):
+        self.assertEqual(
+            self.portal.getProperty('email_from_address'),
+            'webmaster@sll.fi'
+        )
+
+    def test_properties__email_from_name(self):
+        self.assertEqual(
+            self.portal.getProperty('email_from_name'),
+            'Suomen luonnonsuojeluliitto ry'
+        )
+
+    # def test_propertiestool_site_properties__disable_nonfolderish_sections(self):
+    #     properties = getToolByName(self.portal, 'portal_properties')
+    #     site_properties = getattr(properties, 'site_properties')
+    #     self.assertTrue(site_properties.getProperty('disable_nonfolderish_sections'))
+
+    # def test_propertiestool_site_properties__use_email_as_login(self):
+    #     properties = getToolByName(self.portal, 'portal_properties')
+    #     site_properties = getattr(properties, 'site_properties')
+    #     self.assertTrue(site_properties.getProperty('use_email_as_login'))
+
+    def test_propertiestool_site_properties__icon_visibility(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertEqual(
+            site_properties.getProperty('icon_visibility'),
+            'authenticated'
+        )
+
+    def test_propertiestool_site_properties__exposeDCMetaTags(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertTrue(site_properties.getProperty('exposeDCMetaTags'))
+
+    def test_propertiestool_site_properties__enable_sitemap(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertTrue(site_properties.getProperty('enable_sitemap'))
+
+    # def test_tinymce__autoresize(self):
+    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
+    #     self.assertTrue(tinymce.autoresize)
+
+    def test_tinymce__link_using_uids(self):
+        tinymce = getToolByName(self.portal, 'portal_tinymce')
+        self.assertTrue(tinymce.link_using_uids)
+
+    # def test_tinymce__toolbar_forecolor(self):
+    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
+    #     self.assertTrue(tinymce.toolbar_forecolor)
+
+    # def test_tinymce__toolbar_backcolor(self):
+    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
+    #     self.assertTrue(tinymce.toolbar_backcolor)
+
+    # def test_jsregistry__kukit(self):
+    #     javascripts = getToolByName(self.portal, 'portal_javascripts')
+    #     self.assertFalse(javascripts.getResource("++resource++kukit.js").getAuthenticated())
+
+    def test_theme__enabled(self):
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+        from plone.app.theming.interfaces import IThemeSettings
+        settings = registry.forInterface(IThemeSettings)
+        self.assertTrue(settings.enabled)
+
+    def test_theme__rules(self):
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+        from plone.app.theming.interfaces import IThemeSettings
+        settings = registry.forInterface(IThemeSettings)
+        self.assertEqual(
+            settings.rules,
+            "/++theme++sll.theme/rules.xml"
+        )
+
+    def test_theme__absolutePrefix(self):
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+        from plone.app.theming.interfaces import IThemeSettings
+        settings = registry.forInterface(IThemeSettings)
+        self.assertEqual(
+            settings.absolutePrefix,
+            "/++theme++sll.theme"
+        )
+
+    def test_uninstall(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        installer.uninstallProducts(['sll.policy'])
+        self.failIf(installer.isProductInstalled('sll.policy'))

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+
+  <object name="site_properties" meta_type="Plone Property Sheet">
+      <property
+        name="icon_visibility"
+        type="string">authenticated</property>
+      <property
+        name="exposeDCMetaTags"
+        type="boolean">True</property>
+      <property
+        name="enable_sitemap"
+        type="boolean">True</property>
+  </object>
+
+ <object name="collective_cart_properties" meta_type="Plone Property Sheet">
+  <property name="title">Cart Properties</property>
+  <property name="currency" type="string">EUR</property>
+  <property name="currency_symbol" type="string">€</property>
+  <property name="symbol_location" type="string">Behind</property>
+  <property name="content_types" type="lines">
+    <element value="Document"/>
+  </property>
+  <property name="decimal_type" type="string">,</property>
+  <property name="quantity_method" type="string">Select</property>
+ </object>
+ <object name="collective_pfg_payment_properties" meta_type="Plone Property Sheet">
+  <property name="title">Payment Properties</property>
+  <property name="fields" type="lines">
+    <element value="MERCHANT_ID"/>
+    <element value="AMOUNT"/>
+    <element value="ORDER_NUMBER"/>
+    <element value="REFERENCE_NUMBER"/>
+    <element value="ORDER_DESCRIPTION"/>
+    <element value="CURRENCY"/>
+    <element value="RETURN_ADDRESS"/>
+    <element value="CANCEL_ADDRESS"/>
+    <element value="PENDING_ADDRESS"/>
+    <element value="NOTIFY_ADDRESS"/>
+    <element value="TYPE"/>
+    <element value="CULTURE"/>
+    <element value="PRESELECTED_METHOD"/>
+    <element value="MODE"/>
+    <element value="VISIBLE_METHODS"/>
+    <element value="GROUP"/>
+  </property>
+  <property name="separator" type="string">|</property>
+  <property name="capital" type="boolean">True</property>
+
+  <!-- For testing -->
+  <property name="mac" type="string">6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ</property>
+ </object>
+
+ <object name="folder_logo_properties" meta_type="Plone Property Sheet">
+  <property name="title">Folder Logo Properties</property>
+  <property name="logo_id" type="string">ylapalkin-logo.png</property>
+  <property name="background_color" type="string">#5b905b</property>
+  <property name="background_image_id" type="string">ylapalkin-tausta.png</property>
+ </object>
+
+</object>

@@ -1,0 +1,52 @@
+Introduction
+============
+This document describes how to migrate kauppa folder from Plone-2.5.5 to Plone-3.3.5.
+
+Plone-2.5.5
+===========
+
+Put sci.py file from sll.policy/sll/policy/Extensions/sci.py to /Extensions directory of 
+Plone-2.5.5.
+
+Then::
+
+    ZMI >> portal_skins >> custom
+
+        Add External method
+            id: sci
+            Module Name: sci
+            Function Name: export_sci
+            Save and click Test
+                Copy the results to some text file. (*1)
+                The result will be used on Plone-3.3.5 instance.
+
+Now make sure that News Items with id_new or id_option_name is created under kauppa folders
+copied from SimpleCartItem and at the same time, SimpleCartItem is deleted.
+
+(*1) This is not necessary since there are no changed made for products for long time...
+
+* There are no option support for the new cart system for now.
+
+Clean up kauppa folder if necessary.
+
+Now export kauppa folder and import to other new Plone-2.5.5 instance.
+
+Upgrade this Plone2.5.5 to Plone-3.3.5
+
+Export kauppa folder and import it to sll Plone-3.3.5 instance.
+
+Then with sll.policy installed::
+
+    ZMI >> portal_skins >> custom
+
+        Add External method
+            id: sci
+            Module Name: sll.policy.sci
+            Function Name: setting_up_products
+            Save and click Test
+
+Make sure that News Items under kauppa folder now has Edit Product tab and when you click it, you see price there.
+
+When you click View, it must be able to add to cart. (Actually, there will be error if you really try to add to cart since you have not yet created Cart Folder.)
+
+
