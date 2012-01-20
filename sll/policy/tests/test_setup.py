@@ -136,6 +136,7 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.policy'))
 
+    ## properties.xml
     def test_properties__title(self):
         self.assertEqual(
             self.portal.getProperty('title'),
@@ -160,7 +161,7 @@ class TestCase(IntegrationTestCase):
             'Suomen luonnonsuojeluliitto ry'
         )
 
-    ## properties.xml
+    ## propertiestool.xml
     def test_disable_nonfolderish_sections(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_props = properties.site_properties
@@ -260,6 +261,18 @@ class TestCase(IntegrationTestCase):
             settings.absolutePrefix,
             "/++theme++sll.theme"
         )
+
+    def test_medialle_folder_created(self):
+        self.assertTrue(self.portal['medialle'])
+
+    def test_yhteistiedot_folder_created(self):
+        self.assertTrue(self.portal['yhteistiedot'])
+
+    def test_english_folder_created(self):
+        self.assertTrue(self.portal['english'])
+
+    def test_svenska_folder_created(self):
+        self.assertTrue(self.portal['svenska'])
 
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
