@@ -105,6 +105,7 @@ class SllPolicyLayer(PloneSandboxLayer):
         """Set up Plone."""
         # Install into Plone site using portal_setup
         self.applyProfile(portal, 'sll.policy:default')
+        self.applyProfile(portal, 'sll.theme:default')
 
     def tearDownZope(self, app):
         """Tear down Zope."""

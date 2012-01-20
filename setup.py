@@ -10,7 +10,7 @@ long_description = (
     open(os.path.join("docs", "INSTALL.txt")).read() + "\n" +
     open(os.path.join("docs", "HISTORY.txt")).read() + "\n" +
     open(os.path.join("docs", "CREDITS.txt")).read()
-    )
+)
 
 setup(
     name='sll.policy',
@@ -36,6 +36,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'hexagonit.testing',
+        'inicie.cropimage',
         'setuptools',
         'sll.theme',
         # -*- Extra requirements: -*-

@@ -160,6 +160,22 @@ class TestCase(IntegrationTestCase):
             'Suomen luonnonsuojeluliitto ry'
         )
 
+    ## properties.xml
+    def test_disable_nonfolderish_sections(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_props = properties.site_properties
+        self.assertTrue(site_props.getProperty('disable_nonfolderish_sections'))
+
+    def test_default_language(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_props = properties.site_properties
+        self.assertEqual(site_props.getProperty('default_language'), 'fi')
+
+    def test_enable_self_reg(self):
+        perms = self.portal.rolesOfPermission(permission='Add portal member')
+        anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
+        self.assertEqual(anon, '')
+
     # def test_propertiestool_site_properties__disable_nonfolderish_sections(self):
     #     properties = getToolByName(self.portal, 'portal_properties')
     #     site_properties = getattr(properties, 'site_properties')
