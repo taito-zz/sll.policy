@@ -11,5 +11,6 @@
     <dependency>profile-collective.pfg.showrequest:default</dependency> -->
     <dependency>profile-sll.theme:default</dependency>
     <dependency>profile-inicie.cropimage:default</dependency>
+    <dependency>profile-collective.contentleadimage:default</dependency>
   </dependencies>
 </metadata>

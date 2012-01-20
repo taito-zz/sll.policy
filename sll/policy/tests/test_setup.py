@@ -136,6 +136,12 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.policy'))
 
+    def test_dependencies_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.theme'))
+        self.failUnless(installer.isProductInstalled('inicie.cropimage'))
+        self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
+
     ## properties.xml
     def test_properties__title(self):
         self.assertEqual(
@@ -212,6 +218,14 @@ class TestCase(IntegrationTestCase):
         for content in contents:
             self.assertTrue(content in navtree_properties.getProperty('metaTypesNotToList'))
 
+    def test_propertiestool_cli_properties__allowed_types(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        cli_properties = getattr(properties, 'cli_properties')
+        self.assertEqual(
+            cli_properties.getProperty('allowed_types'),
+            ('Document', 'Event')
+        )
+
     # def test_tinymce__autoresize(self):
     #     tinymce = getToolByName(self.portal, 'portal_tinymce')
     #     self.assertTrue(tinymce.autoresize)
@@ -263,16 +277,20 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_medialle_folder_created(self):
-        self.assertTrue(self.portal['medialle'])
+        folder = self.portal['medialle']
+        self.assertTrue(folder.exclude_from_nav())
 
     def test_yhteistiedot_folder_created(self):
-        self.assertTrue(self.portal['yhteistiedot'])
+        folder = self.portal['yhteistiedot']
+        self.assertTrue(folder.exclude_from_nav())
 
     def test_english_folder_created(self):
-        self.assertTrue(self.portal['english'])
+        folder = self.portal['english']
+        self.assertTrue(folder.exclude_from_nav())
 
     def test_svenska_folder_created(self):
-        self.assertTrue(self.portal['svenska'])
+        folder = self.portal['svenska']
+        self.assertTrue(folder.exclude_from_nav())
 
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')

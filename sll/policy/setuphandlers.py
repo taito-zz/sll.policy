@@ -1,11 +1,17 @@
+def exclude_from_nav(context, content):
+    if not content.exclude_from_nav():
+        log = context.getLogger(__name__)
+        content.setExcludeFromNav(True)
+        content.reindexObject(idxs=['exclude_from_nav'])
+        message = 'Folder "{0}" excluded from navigation.'.format(content.id)
+        log.info(message)
+
+
 def setUpMembersFolder(context):
     portal = context.getSite()
     members = portal.get('Members')
-    if members and not members.exclude_from_nav():
-        log = context.getLogger(__name__)
-        members.setExcludeFromNav(True)
-        members.reindexObject(idxs=['exclude_from_nav'])
-        log.info('Member folder excluded from navigation.')
+    if members:
+        exclude_from_nav(context, members)
 
 
 def createFolder(context, id):
@@ -23,6 +29,7 @@ def createFolder(context, id):
         log = context.getLogger(__name__)
         message = 'Folder "{0}" created.'.format(id)
         log.info(message)
+        exclude_from_nav(context, folder)
 
 
 def setupVarious(context):
@@ -34,4 +41,3 @@ def setupVarious(context):
     items = ['medialle', 'yhteistiedot', 'english', 'svenska']
     for item in items:
         createFolder(context, item)
-

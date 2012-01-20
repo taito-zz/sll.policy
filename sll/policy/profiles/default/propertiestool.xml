@@ -91,4 +91,11 @@
   <property name="background_image_id" type="string">ylapalkin-tausta.png</property>
  </object>
 
+ <object name="cli_properties" meta_type="Plone Property Sheet">
+  <property name="allowed_types" type="lines" purge="True">
+   <element value="Document"/>
+   <element value="Event"/>
+  </property>
+ </object>
+
 </object>

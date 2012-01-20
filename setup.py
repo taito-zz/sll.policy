@@ -16,7 +16,7 @@ long_description = (
 
 setup(
     name='sll.policy',
-    version='0.5',
+    version='0.6',
     description="Turns plone site into SLL site.",
     long_description=long_description,
     # Get more strings from
@@ -36,6 +36,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'collective.contentleadimage',
         'hexagonit.testing',
         'inicie.cropimage',
         'setuptools',
