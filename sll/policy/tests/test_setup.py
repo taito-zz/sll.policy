@@ -204,6 +204,13 @@ class TestCase(IntegrationTestCase):
         site_properties = getattr(properties, 'site_properties')
         self.assertTrue(site_properties.getProperty('enable_sitemap'))
 
+    def test_propertiestool_navtree_properties__metaTypesNotToList(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        navtree_properties = getattr(properties, 'navtree_properties')
+        contents = ('Image', 'Event', 'Document', 'Topic', 'Link', 'File', 'News Item')
+        for content in contents:
+            self.assertTrue(content in navtree_properties.getProperty('metaTypesNotToList'))
+
     # def test_tinymce__autoresize(self):
     #     tinymce = getToolByName(self.portal, 'portal_tinymce')
     #     self.assertTrue(tinymce.autoresize)

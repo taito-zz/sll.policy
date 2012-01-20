@@ -17,6 +17,35 @@
         type="boolean">True</property>
   </object>
 
+  <object name="navtree_properties" meta_type="Plone Property Sheet">
+    <property name="metaTypesNotToList" type="lines">
+      <element value="ATBooleanCriterion"/>
+      <element value="ATDateCriteria"/>
+      <element value="ATDateRangeCriterion"/>
+      <element value="ATListCriterion"/>
+      <element value="ATPortalTypeCriterion"/>
+      <element value="ATReferenceCriterion"/>
+      <element value="ATSelectionCriterion"/>
+      <element value="ATSimpleIntCriterion"/>
+      <element value="ATSimpleStringCriterion"/>
+      <element value="ATSortCriterion"/>
+      <element value="ChangeSet"/>
+      <element value="Discussion Item"/>
+      <element value="Plone Site"/>
+      <element value="TempFolder"/>
+      <element value="ATCurrentAuthorCriterion"/>
+      <element value="ATPathCriterion"/>
+      <element value="ATRelativePathCriterion"/>
+      <element value="Image"/>
+      <element value="Event"/>
+      <element value="Document"/>
+      <element value="Topic"/>
+      <element value="Link"/>
+      <element value="File"/>
+      <element value="News Item"/>
+    </property>
+  </object>
+
  <object name="collective_cart_properties" meta_type="Plone Property Sheet">
   <property name="title">Cart Properties</property>
   <property name="currency" type="string">EUR</property>
