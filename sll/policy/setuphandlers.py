@@ -1,3 +1,7 @@
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
+
+
 def exclude_from_nav(context, content):
     if not content.exclude_from_nav():
         log = context.getLogger(__name__)
@@ -32,6 +36,14 @@ def createFolder(context, id):
         exclude_from_nav(context, folder)
 
 
+def add_inicie_cropimage_ids(context):
+    registry = getUtility(IRegistry)
+    ids = registry['inicie.cropimage.ids']
+    import pdb; pdb.set_trace()
+    log = context.getLogger(__name__)
+    log.info('')
+
+
 def setupVarious(context):
 
     if context.readDataFile('sll.policy_various.txt') is None:
@@ -41,3 +53,4 @@ def setupVarious(context):
     items = ['medialle', 'yhteistiedot', 'english', 'svenska']
     for item in items:
         createFolder(context, item)
+    add_inicie_cropimage_ids(context)
