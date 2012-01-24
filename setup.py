@@ -30,7 +30,7 @@ setup(
     author='Taito Horiuchi',
     author_email='taito.horiuchi@inicie.net',
     url='',
-    license='',
+    license='None-free',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['sll'],
     include_package_data=True,
