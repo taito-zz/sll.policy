@@ -39,7 +39,6 @@ def createFolder(context, id):
 def add_inicie_cropimage_ids(context):
     registry = getUtility(IRegistry)
     ids = registry['inicie.cropimage.ids']
-    import pdb; pdb.set_trace()
     log = context.getLogger(__name__)
     log.info('')
 
