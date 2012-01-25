@@ -9,8 +9,8 @@
     <dependency>profile-collective.cart.core:default</dependency>
     <dependency>profile-collective.cart.shipping:default</dependency>
     <dependency>profile-collective.pfg.showrequest:default</dependency> -->
-    <dependency>profile-sll.theme:default</dependency>
     <dependency>profile-inicie.cropimage:default</dependency>
     <dependency>profile-collective.contentleadimage:default</dependency>
+    <dependency>profile-sll.theme:default</dependency>
   </dependencies>
 </metadata>
