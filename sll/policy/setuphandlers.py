@@ -1,4 +1,5 @@
 from plone.registry.interfaces import IRegistry
+from sll.policy.config import IDS
 from zope.component import getUtility
 
 
@@ -38,9 +39,12 @@ def createFolder(context, id):
 
 def add_inicie_cropimage_ids(context):
     registry = getUtility(IRegistry)
-    ids = registry['inicie.cropimage.ids']
+    registry['inicie.cropimage.ids'] = IDS
+    keys = [item['id'] for item in IDS]
     log = context.getLogger(__name__)
-    log.info('')
+    for key in keys:
+        message='inicie.cropimage.ids updated with ID: "{0}"'.format(key)
+        log.info(message)
 
 
 def setupVarious(context):

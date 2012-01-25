@@ -124,6 +124,8 @@
 
 from sll.policy.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 
 
 class TestCase(IntegrationTestCase):
@@ -291,6 +293,23 @@ class TestCase(IntegrationTestCase):
     def test_svenska_folder_created(self):
         folder = self.portal['svenska']
         self.assertTrue(folder.exclude_from_nav())
+
+    def test_inicie_cropimage_ids(self):
+        registry = getUtility(IRegistry)
+        self.assertEqual(
+            registry['inicie.cropimage.ids'],
+            [
+                {
+                    'ratio_height': 3.0,
+                    'ratio_width': 4.0,
+                    'max_width': 240.0,
+                    'min_height': 180.0,
+                    'max_height': 180.0,
+                    'min_width': 240.0,
+                    'id': 'feed'
+                }
+            ]
+        )
 
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
