@@ -8,3 +8,8 @@ Go to manage-portlets page and check that 'portlets.Login' is not there::
     >>> browser.open('/@@manage-portlets')
     >>> 'portlets.Login' in browser.contents
     False
+
+Check that there are not right portlet column::
+
+    >>> 'id="portletmanager-plone-rightcolumn"' in browser.contents
+    False

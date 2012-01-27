@@ -4,6 +4,15 @@
     i18n_domain="sll.policy">
 
   <browser:viewlet
+    name="sll.head"
+    for="*"
+    manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
+    class=".viewlet.HeadViewlet"
+    permission="zope.Public"
+    layer=".interfaces.ISllPolicyLayer"
+    />
+
+  <browser:viewlet
     name="sll.footer"
     for="*"
     manager="plone.app.layout.viewlets.interfaces.IPortalFooter"

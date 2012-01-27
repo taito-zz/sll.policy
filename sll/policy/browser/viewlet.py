@@ -6,6 +6,14 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from zope.component import getMultiAdapter
 
 
+class HeadViewlet(PathBarViewlet):
+
+    index = ViewPageTemplateFile('viewlets/head.pt')
+
+    def update(self):
+        self.request.set('disable_plone.rightcolumn', True)
+
+
 class PathBarViewlet(PathBarViewlet):
 
     index = render = ViewPageTemplateFile('viewlets/path_bar.pt')
