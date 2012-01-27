@@ -20,8 +20,8 @@
     <object name="plone_setup" meta_type="CMF Action" i18n:domain="plone">
       <property name="visible">False</property>
     </object>
-    <object name="medialle" meta_type="CMF Action">
-      <property name="title">Medialle</property>
+    <object name="medialle" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">To Media</property>
       <property name="description" i18n:translate=""></property>
       <property
         name="url_expr">string:${portal_url}/medialle</property>
@@ -32,8 +32,8 @@
       </property>
       <property name="visible">True</property>
     </object>
-    <object name="yhteystiedot" meta_type="CMF Action">
-      <property name="title">Yhteystiedot</property>
+    <object name="yhteystiedot" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">Contact</property>
       <property name="description" i18n:translate=""></property>
       <property
         name="url_expr">string:${portal_url}/yhteystiedot</property>
@@ -44,8 +44,8 @@
       </property>
       <property name="visible">True</property>
     </object>
-    <object name="english" meta_type="CMF Action">
-      <property name="title">In English</property>
+    <object name="english" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">In English</property>
       <property name="description" i18n:translate=""></property>
       <property
         name="url_expr">string:${portal_url}/english</property>
@@ -56,8 +56,8 @@
       </property>
       <property name="visible">True</property>
     </object>
-    <object name="svenska" meta_type="CMF Action">
-      <property name="title">På Svenska</property>
+    <object name="svenska" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">In Swedish</property>
       <property name="description" i18n:translate=""></property>
       <property
         name="url_expr">string:${portal_url}/svenska</property>
