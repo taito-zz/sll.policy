@@ -143,6 +143,14 @@ class TestCase(IntegrationTestCase):
         self.failUnless(installer.isProductInstalled('sll.theme'))
         self.failUnless(installer.isProductInstalled('inicie.cropimage'))
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
+        self.failUnless(installer.isProductInstalled('PloneFormGen'))
+
+    ## actions.xml
+    def test_dashboard(self):
+        tool = getToolByName(self.portal, 'portal_actions')
+        actions = getattr(tool, 'user')
+        action = getattr(actions, 'dashboard')
+        self.assertFalse(action.getProperty('visible'))
 
     ## properties.xml
     def test_properties__title(self):

@@ -101,9 +101,8 @@ class SllPolicyLayer(PloneSandboxLayer):
         # Load ZCML
         import sll.policy
         self.loadZCML(package=sll.policy)
-        # z2.installProduct(app, 'sll.policy')
-        import sll.theme
-        self.loadZCML(package=sll.theme)
+        # import sll.theme
+        # self.loadZCML(package=sll.theme)
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
@@ -116,7 +115,7 @@ class SllPolicyLayer(PloneSandboxLayer):
         self.applyProfile(portal, 'Products.CMFPlone:plone-content')
 
         self.applyProfile(portal, 'sll.policy:default')
-        self.applyProfile(portal, 'sll.theme:default')
+        # self.applyProfile(portal, 'sll.theme:default')
 
     def tearDownZope(self, app):
         """Tear down Zope."""
