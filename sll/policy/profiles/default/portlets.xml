@@ -6,16 +6,15 @@
   <!-- Hide default Calendar portlet -->
   <portlet addview="portlets.Login" remove="true" />
 
-  <!-- Assign portlets to left column -->
-  <assignment name="navigation" category="context" key="/"
+  <!-- Remove portlets from left column -->
+  <assignment remove="True" name="navigation" category="context" key="/"
               manager="plone.leftcolumn" type="portlets.Navigation" />
-
 
   <!-- Remove portlets from right column -->
   <assignment remove="True" name="news" category="context" key="/"
-              manager="plone.rightcolumn" type="portlet.Cart" />
+              manager="plone.rightcolumn" type="portlet.News" />
   <assignment remove="True" name="events" category="context" key="/"
-              manager="plone.rightcolumn" type="portlet.Cart" />
+              manager="plone.rightcolumn" type="portlet.Events" />
 
 </portlets>
 

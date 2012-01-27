@@ -249,6 +249,14 @@ class TestCase(IntegrationTestCase):
     #     self.assertFalse(javascripts.getResource("++resource++kukit.js").getAuthenticated())
 
     ## portlets.xml
+    def test_portlets__navigation_removed_from_left_column(self):
+        from zope.component import getMultiAdapter
+        from plone.portlets.interfaces import IPortletManager
+        from plone.portlets.interfaces import IPortletAssignmentMapping
+        column = getUtility(IPortletManager, name=u"plone.leftcolumn")
+        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+        self.assertFalse('navigation' in assignable.keys())
+
     def test_portlets__news_removed_from_right_column(self):
         from zope.component import getMultiAdapter
         from plone.portlets.interfaces import IPortletManager
@@ -264,6 +272,12 @@ class TestCase(IntegrationTestCase):
         column = getUtility(IPortletManager, name=u"plone.rightcolumn")
         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
         self.assertFalse('events' in assignable.keys())
+
+    ## browserlayer.xml
+    def test_browserlayer(self):
+        from sll.policy.browser.interfaces import ISllPolicyLayer
+        from plone.browserlayer import utils
+        self.failUnless(ISllPolicyLayer in utils.registered_layers())
 
     def test_disable_self_reg(self):
         perms = self.portal.rolesOfPermission(permission='Add portal member')

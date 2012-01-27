@@ -9,6 +9,7 @@
     manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
     template="viewlets/footer.pt"
     permission="zope.Public"
+    layer=".interfaces.ISllPolicyLayer"
     />
 
   <browser:viewlet
@@ -16,7 +17,7 @@
     manager="plone.app.layout.viewlets.interfaces.IContentViews"
     class=".viewlet.PathBarViewlet"
     permission="zope2.View"
-    layer="sll.policy.interfaces.ISLLPolicyLayer"
+    layer=".interfaces.ISllPolicyLayer"
     />
 
 </configure>

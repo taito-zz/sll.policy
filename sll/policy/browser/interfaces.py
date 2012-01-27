@@ -1,5 +1,5 @@
 from zope.interface import Interface
 
 
-class ISLLPolicyLayer(Interface):
+class ISllPolicyLayer(Interface):
     """Marker interface for browserlayer."""

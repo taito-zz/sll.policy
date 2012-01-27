@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
@@ -9,10 +10,6 @@
   <five:registerPackage package="." initialize=".initialize" />
   <includeDependencies package="." />
 
-  <!-- <include package="collective.pfg.payment" /> -->
-
-  <!-- <include package=".browser" /> -->
-
   <genericsetup:registerProfile
       name="default"
       title="sll.policy"
@@ -20,5 +17,10 @@
       description="Installs the sll.policy package"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
+
+  <include package=".browser" />
+
+  <cmf:registerDirectory
+     name="sll_policy"/>
 
 </configure>
