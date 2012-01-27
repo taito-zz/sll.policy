@@ -94,16 +94,27 @@ class SllPolicyLayer(PloneSandboxLayer):
 
     def setUpZope(self, app, configurationContext):
         """Set up Zope."""
+
+        # Required by Products.CMFPlone:plone-content to setup defaul plone site.
+        z2.installProduct(app, 'Products.PythonScripts')
+
         # Load ZCML
         import sll.policy
         self.loadZCML(package=sll.policy)
-        z2.installProduct(app, 'sll.policy')
+        # z2.installProduct(app, 'sll.policy')
         import sll.theme
         self.loadZCML(package=sll.theme)
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
         # Install into Plone site using portal_setup
+
+        # Installs all the Plone stuff. Workflows etc. to setup defaul plone site.
+        self.applyProfile(portal, 'Products.CMFPlone:plone')
+
+        # Install portal content. Including the Members folder! to setup defaul plone site.
+        self.applyProfile(portal, 'Products.CMFPlone:plone-content')
+
         self.applyProfile(portal, 'sll.policy:default')
         self.applyProfile(portal, 'sll.theme:default')
 

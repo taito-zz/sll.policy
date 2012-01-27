@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from plone.registry.interfaces import IRegistry
 from sll.policy.config import IDS
 from zope.component import getUtility
@@ -19,22 +20,37 @@ def setUpMembersFolder(context):
         exclude_from_nav(context, members)
 
 
-def createFolder(context, id):
+def createFolder(context, id, title=None, exclude=True):
     portal = context.getSite()
     folder = portal.get(id)
     if not folder:
+        title = title or id.capitalize()
         folder = portal[
             portal.invokeFactory(
                 'Folder',
                 id,
-                title=id.capitalize(),
+                title=title,
             )
         ]
         folder.reindexObject()
         log = context.getLogger(__name__)
         message = 'Folder "{0}" created.'.format(id)
         log.info(message)
-        exclude_from_nav(context, folder)
+        if exclude:
+            exclude_from_nav(context, folder)
+            message = 'Folder "{0}" excluded from navigation.'.format(id)
+            log.info(message)
+
+
+def remove_folder(context, folder_id):
+    portal = context.getSite()
+    folder = portal.get(folder_id)
+    if folder:
+        log = context.getLogger(__name__)
+        folder.unindexObject()
+        del portal[folder_id]
+        message = 'Folder "{0}" removed'.format(folder_id)
+        log.info(message)
 
 
 def add_inicie_cropimage_ids(context):
@@ -53,7 +69,19 @@ def setupVarious(context):
         return
 
     setUpMembersFolder(context)
+    items = ['ajankohtaista', 'tapahtumat']
+    for item in items:
+        createFolder(context, item, exclude=False)
+    createFolder(context, 'mita-me-teemme', title="Mitä me teemme", exclude=False)
+    createFolder(context, 'mita-sina-voit-tehda', title="Mitä sinä voit tehdä", exclude=False)
+    items = ['liity', 'lahjoita']
+    for item in items:
+        createFolder(context, item, exclude=False)
+    createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
     items = ['medialle', 'yhteistiedot', 'english', 'svenska']
     for item in items:
         createFolder(context, item)
+    folders = ['news', 'events']
+    for folder in folders:
+        remove_folder(context, folder)
     add_inicie_cropimage_ids(context)

@@ -248,17 +248,35 @@ class TestCase(IntegrationTestCase):
     #     javascripts = getToolByName(self.portal, 'portal_javascripts')
     #     self.assertFalse(javascripts.getResource("++resource++kukit.js").getAuthenticated())
 
+    ## portlets.xml
+    def test_portlets__news_removed_from_right_column(self):
+        from zope.component import getMultiAdapter
+        from plone.portlets.interfaces import IPortletManager
+        from plone.portlets.interfaces import IPortletAssignmentMapping
+        column = getUtility(IPortletManager, name=u"plone.rightcolumn")
+        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+        self.assertFalse('news' in assignable.keys())
+
+    def test_portlets__events_removed_from_right_column(self):
+        from zope.component import getMultiAdapter
+        from plone.portlets.interfaces import IPortletManager
+        from plone.portlets.interfaces import IPortletAssignmentMapping
+        column = getUtility(IPortletManager, name=u"plone.rightcolumn")
+        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+        self.assertFalse('events' in assignable.keys())
+
+    def test_disable_self_reg(self):
+        perms = self.portal.rolesOfPermission(permission='Add portal member')
+        anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
+        self.assertEqual(anon, '')
+
     def test_theme__enabled(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
         registry = getUtility(IRegistry)
         from plone.app.theming.interfaces import IThemeSettings
         settings = registry.forInterface(IThemeSettings)
         self.assertTrue(settings.enabled)
 
     def test_theme__rules(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
         registry = getUtility(IRegistry)
         from plone.app.theming.interfaces import IThemeSettings
         settings = registry.forInterface(IThemeSettings)
@@ -268,8 +286,6 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_theme__absolutePrefix(self):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
         registry = getUtility(IRegistry)
         from plone.app.theming.interfaces import IThemeSettings
         settings = registry.forInterface(IThemeSettings)
@@ -278,21 +294,70 @@ class TestCase(IntegrationTestCase):
             "/++theme++sll.theme"
         )
 
+    def test_ajankohtaista_folder_created(self):
+        folder = self.portal['ajankohtaista']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Ajankohtaista')
+
+    def test_tapahtumat_folder_created(self):
+        folder = self.portal['tapahtumat']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Tapahtumat')
+
+    def test_mita_me_teemme_folder_created(self):
+        folder = self.portal['mita-me-teemme']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Mitä me teemme')
+
+    def test_mita_sina_voit_tehda_folder_created(self):
+        folder = self.portal['mita-sina-voit-tehda']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Mitä sinä voit tehdä')
+
+    def test_liity_folder_created(self):
+        folder = self.portal['liity']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Liity')
+
+    def test_lahjoita_folder_created(self):
+        folder = self.portal['lahjoita']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Lahjoita')
+
+    def test_jarjesto_folder_created(self):
+        folder = self.portal['jarjesto']
+        self.assertFalse(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Järjestö')
+
     def test_medialle_folder_created(self):
         folder = self.portal['medialle']
         self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Medialle')
 
     def test_yhteistiedot_folder_created(self):
         folder = self.portal['yhteistiedot']
         self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Yhteistiedot')
 
     def test_english_folder_created(self):
         folder = self.portal['english']
         self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'English')
 
     def test_svenska_folder_created(self):
         folder = self.portal['svenska']
         self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Svenska')
+
+    def test_Member_folder_exclude_from_nav(self):
+        folder = self.portal['Members']
+        self.assertTrue(folder.exclude_from_nav())
+
+    def test_news_folder_removed(self):
+        self.assertRaises(KeyError, lambda: self.portal['news'])
+
+    def test_events_folder_removed(self):
+        self.assertRaises(KeyError, lambda: self.portal['events'])
 
     def test_inicie_cropimage_ids(self):
         registry = getUtility(IRegistry)
@@ -300,12 +365,12 @@ class TestCase(IntegrationTestCase):
             registry['inicie.cropimage.ids'],
             [
                 {
-                    'ratio_height': 3.0,
-                    'ratio_width': 4.0,
-                    'max_width': 240.0,
-                    'min_height': 180.0,
-                    'max_height': 180.0,
-                    'min_width': 240.0,
+                    'ratio_height': 15.0,
+                    'ratio_width': 17.0,
+                    'max_width': 170.0,
+                    'min_height': 150.0,
+                    'max_height': 150.0,
+                    'min_width': 170.0,
                     'id': 'feed'
                 }
             ]

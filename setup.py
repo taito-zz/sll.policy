@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='sll.policy',
-    version='0.7',
+    version='0.8',
     description="Turns plone site into SLL site.",
     long_description=open("README.rst").read(),
     # Get more strings from
