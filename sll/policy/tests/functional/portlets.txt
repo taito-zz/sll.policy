@@ -9,7 +9,13 @@ Go to manage-portlets page and check that 'portlets.Login' is not there::
     >>> 'portlets.Login' in browser.contents
     False
 
-Check that there are not right portlet column::
+Check that there are right portlet column::
 
+    >>> 'id="portletmanager-plone-rightcolumn"' in browser.contents
+    True
+
+Go to subfolder and check that there are no right column::
+
+    >>> browser.open('/liity/@@manage-portlets')
     >>> 'id="portletmanager-plone-rightcolumn"' in browser.contents
     False
