@@ -78,7 +78,7 @@ def setupVarious(context):
     for item in items:
         createFolder(context, item, exclude=False)
     createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
-    items = ['medialle', 'yhteistiedot', 'english', 'svenska']
+    items = ['medialle', 'yhteistiedot', 'english', 'svenska', 'info']
     for item in items:
         createFolder(context, item)
     folders = ['news', 'events']

@@ -431,6 +431,11 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(folder.exclude_from_nav())
         self.assertEqual(folder.Title(), 'Svenska')
 
+    def test_info_folder_created(self):
+        folder = self.portal['info']
+        self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Info')
+
     def test_Member_folder_exclude_from_nav(self):
         folder = self.portal['Members']
         self.assertTrue(folder.exclude_from_nav())

@@ -12,14 +12,14 @@
     layer=".interfaces.ISllPolicyLayer"
     />
 
-  <browser:viewlet
+  <!-- <browser:viewlet
     name="sll.footer"
     for="*"
     manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
     template="viewlets/footer.pt"
     permission="zope.Public"
     layer=".interfaces.ISllPolicyLayer"
-    />
+    / -->>
 
   <browser:viewlet
     name="plone.path_bar"
