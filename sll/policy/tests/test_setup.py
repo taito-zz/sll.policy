@@ -152,65 +152,74 @@ class TestCase(IntegrationTestCase):
         action = getattr(actions, 'dashboard')
         self.assertFalse(action.getProperty('visible'))
 
-    def test_sitemap(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'sitemap')
-        self.assertFalse(action.getProperty('visible'))
+    # def test_sitemap(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'sitemap')
+    #     self.assertFalse(action.getProperty('visible'))
 
-    def test_accessibility(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'accessibility')
-        self.assertFalse(action.getProperty('visible'))
+    # def test_accessibility(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'accessibility')
+    #     self.assertFalse(action.getProperty('visible'))
 
-    def test_contact(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'contact')
-        self.assertFalse(action.getProperty('visible'))
+    # def test_contact(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'contact')
+    #     self.assertFalse(action.getProperty('visible'))
 
-    def test_plone_setup(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'plone_setup')
-        self.assertFalse(action.getProperty('visible'))
+    # def test_plone_setup(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'plone_setup')
+    #     self.assertFalse(action.getProperty('visible'))
 
-    def test_medialle(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'medialle')
-        self.assertEqual(action.getProperty('title'), 'To Media')
-        self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/medialle')
-        self.assertEqual(action.getProperty('permissions'), ('View',))
-        self.assertTrue(action.getProperty('visible'))
+    # def test_medialle(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'medialle')
+    #     self.assertEqual(action.getProperty('title'), 'To Media')
+    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/medialle')
+    #     self.assertEqual(action.getProperty('permissions'), ('View',))
+    #     self.assertTrue(action.getProperty('visible'))
 
-    def test_yhteystiedot(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'yhteystiedot')
-        self.assertEqual(action.getProperty('title'), 'Contact')
-        self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/yhteystiedot')
-        self.assertEqual(action.getProperty('permissions'), ('View',))
-        self.assertTrue(action.getProperty('visible'))
+    # def test_yhteystiedot(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'yhteystiedot')
+    #     self.assertEqual(action.getProperty('title'), 'Contact')
+    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/yhteystiedot')
+    #     self.assertEqual(action.getProperty('permissions'), ('View',))
+    #     self.assertTrue(action.getProperty('visible'))
 
-    def test_english(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'english')
-        self.assertEqual(action.getProperty('title'), 'In English')
-        self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/english')
-        self.assertEqual(action.getProperty('permissions'), ('View',))
-        self.assertTrue(action.getProperty('visible'))
+    # def test_yrityksille(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'yrityksille')
+    #     self.assertEqual(action.getProperty('title'), 'To Companies')
+    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/yrityksille')
+    #     self.assertEqual(action.getProperty('permissions'), ('View',))
+    #     self.assertTrue(action.getProperty('visible'))
 
-    def test_svenska(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'site_actions')
-        action = getattr(actions, 'svenska')
-        self.assertEqual(action.getProperty('title'), 'In Swedish')
-        self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/svenska')
-        self.assertEqual(action.getProperty('permissions'), ('View',))
-        self.assertTrue(action.getProperty('visible'))
+    # def test_english(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'english')
+    #     self.assertEqual(action.getProperty('title'), 'In English')
+    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/english')
+    #     self.assertEqual(action.getProperty('permissions'), ('View',))
+    #     self.assertTrue(action.getProperty('visible'))
+
+    # def test_svenska(self):
+    #     tool = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(tool, 'site_actions')
+    #     action = getattr(actions, 'svenska')
+    #     self.assertEqual(action.getProperty('title'), 'In Swedish')
+    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/svenska')
+    #     self.assertEqual(action.getProperty('permissions'), ('View',))
+    #     self.assertTrue(action.getProperty('visible'))
 
     ## properties.xml
     def test_properties__title(self):
@@ -235,6 +244,12 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
             self.portal.getProperty('email_from_name'),
             'Suomen luonnonsuojeluliitto ry'
+        )
+
+    def test_properties_default_page(self):
+        self.assertEqual(
+            self.portal.getProperty('default_page'),
+            'sll-view'
         )
 
     ## propertiestool.xml
@@ -415,21 +430,31 @@ class TestCase(IntegrationTestCase):
         folder = self.portal['medialle']
         self.assertTrue(folder.exclude_from_nav())
         self.assertEqual(folder.Title(), 'Medialle')
+        self.assertEqual(folder.Subject(), ('actions',))
 
-    def test_yhteistiedot_folder_created(self):
-        folder = self.portal['yhteistiedot']
+    def test_yhteystiedot_folder_created(self):
+        folder = self.portal['yhteystiedot']
         self.assertTrue(folder.exclude_from_nav())
-        self.assertEqual(folder.Title(), 'Yhteistiedot')
+        self.assertEqual(folder.Title(), 'Yhteystiedot')
+        self.assertEqual(folder.Subject(), ('actions',))
+
+    def test_yrityksille_folder_created(self):
+        folder = self.portal['yrityksille']
+        self.assertTrue(folder.exclude_from_nav())
+        self.assertEqual(folder.Title(), 'Yrityksille')
+        self.assertEqual(folder.Subject(), ('actions',))
 
     def test_english_folder_created(self):
         folder = self.portal['english']
         self.assertTrue(folder.exclude_from_nav())
-        self.assertEqual(folder.Title(), 'English')
+        self.assertEqual(folder.Title(), 'In English')
+        self.assertEqual(folder.Subject(), ('actions',))
 
     def test_svenska_folder_created(self):
         folder = self.portal['svenska']
         self.assertTrue(folder.exclude_from_nav())
-        self.assertEqual(folder.Title(), 'Svenska')
+        self.assertEqual(folder.Title(), 'På Svenska')
+        self.assertEqual(folder.Subject(), ('actions',))
 
     def test_info_folder_created(self):
         folder = self.portal['info']

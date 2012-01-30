@@ -5,6 +5,8 @@
 
   <!-- Hide default Calendar portlet -->
   <portlet addview="portlets.Login" remove="true" />
+  <!-- Hide Classic portlet -->
+  <portlet addview="portlets.Classic" remove="true" />
 
   <!-- Remove portlets from left column -->
   <assignment remove="True" name="navigation" category="context" key="/"

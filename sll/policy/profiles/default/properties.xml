@@ -2,7 +2,7 @@
 <site>
  <property name="title">Luonnonsuojeluliitto</property>
  <property name="description">Suomen luonnonsuojeluliitto ry</property>
-<!-- <property name="default_page">front-page</property>-->
+ <property name="default_page">sll-view</property>
  <property name="email_from_address"
     type="string">webmaster@sll.fi</property>
  <property name="email_from_name"

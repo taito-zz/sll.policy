@@ -30,6 +30,7 @@ setup(
         'inicie.cropimage',
         'setuptools',
         'sll.theme',
+        'z3c.jbot',
         # -*- Extra requirements: -*-
     ],
     entry_points="""

@@ -7,7 +7,7 @@
     </object>
   </object>
 
-  <object name="site_actions" meta_type="CMF Action Category">
+<!--   <object name="site_actions" meta_type="CMF Action Category">
     <object name="sitemap" meta_type="CMF Action" i18n:domain="plone">
       <property name="visible">False</property>
     </object>
@@ -19,6 +19,18 @@
     </object>
     <object name="plone_setup" meta_type="CMF Action" i18n:domain="plone">
       <property name="visible">False</property>
+    </object>
+    <object name="yhteystiedot" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">Contact</property>
+      <property name="description" i18n:translate=""></property>
+      <property
+        name="url_expr">string:${portal_url}/yhteystiedot</property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions">
+        <element value="View"/>
+      </property>
+      <property name="visible">True</property>
     </object>
     <object name="medialle" meta_type="CMF Action" i18n:domain="sll.policy">
       <property name="title" i18n:translate="">To Media</property>
@@ -32,11 +44,11 @@
       </property>
       <property name="visible">True</property>
     </object>
-    <object name="yhteystiedot" meta_type="CMF Action" i18n:domain="sll.policy">
-      <property name="title" i18n:translate="">Contact</property>
+    <object name="yrityksille" meta_type="CMF Action" i18n:domain="sll.policy">
+      <property name="title" i18n:translate="">To Companies</property>
       <property name="description" i18n:translate=""></property>
       <property
-        name="url_expr">string:${portal_url}/yhteystiedot</property>
+        name="url_expr">string:${portal_url}/yrityksille</property>
       <property name="icon_expr"></property>
       <property name="available_expr"></property>
       <property name="permissions">
@@ -69,6 +81,6 @@
       <property name="visible">True</property>
     </object>
 
-  </object>
+  </object> -->
 
 </object>

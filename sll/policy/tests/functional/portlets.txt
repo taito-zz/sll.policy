@@ -3,10 +3,13 @@ Log in as the portal owner::
     >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
     >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
 
-Go to manage-portlets page and check that 'portlets.Login' is not there::
+Go to manage-portlets page and
+check that 'portlets.Login' and 'portlets.Classic' is not there::
 
     >>> browser.open('/@@manage-portlets')
     >>> 'portlets.Login' in browser.contents
+    False
+    >>> 'portlets.Classic' in browser.contents
     False
 
 Check that there are right portlet column::
