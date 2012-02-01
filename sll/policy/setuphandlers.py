@@ -37,8 +37,6 @@ def createFolder(context, id, title=None, exclude=True, Subject=None, View=None)
         log.info(message)
         if exclude:
             exclude_from_nav(context, folder)
-            message = 'Folder "{0}" excluded from navigation.'.format(id)
-            log.info(message)
         if Subject:
             folder.setSubject(Subject)
             message = 'Subject: "{0}" added to Folder: "{1}"'.format(Subject, id)
