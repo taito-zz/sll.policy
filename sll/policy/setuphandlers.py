@@ -20,7 +20,7 @@ def setUpMembersFolder(context):
         exclude_from_nav(context, members)
 
 
-def createFolder(context, id, title=None, exclude=True, Subject=None):
+def createFolder(context, id, title=None, exclude=True, Subject=None, View=None):
     portal = context.getSite()
     folder = portal.get(id)
     if not folder:
@@ -43,8 +43,11 @@ def createFolder(context, id, title=None, exclude=True, Subject=None):
             folder.setSubject(Subject)
             message = 'Subject: "{0}" added to Folder: "{1}"'.format(Subject, id)
             log.info(message)
+        if View:
+            folder.setLayout(View)
+            message = 'default_view for Folder: "{0}" set to Folder: "{1}"'.format(id, View)
+            log.info(message)
         folder.reindexObject()
-
 
 
 def remove_folder(context, folder_id):
@@ -74,35 +77,47 @@ def setupVarious(context):
         return
 
     setUpMembersFolder(context)
-    # items = ['ajankohtaista', 'tapahtumat']
-    # for item in items:
-    #     createFolder(context, item, exclude=False)
-    # createFolder(context, 'mita-me-teemme', title="Mitä me teemme", exclude=False)
-    # createFolder(context, 'mita-sina-voit-tehda', title="Mitä sinä voit tehdä", exclude=False)
-    # items = ['liity', 'lahjoita']
-    # for item in items:
-    #     createFolder(context, item, exclude=False)
-    # createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
-    # items = ['yhteystiedot', 'medialle', 'yrityksille']
-    # for item in items:
-    #     createFolder(context, item, Subject='actions')
-    # createFolder(context, 'english', title="In English", Subject='actions')
-    # createFolder(context, 'svenska', title="På Svenska", Subject='actions')
-    createFolder(context, 'info')
-    createFolder(context, 'svenska', title="På Svenska", Subject='actions')
-    createFolder(context, 'english', title="In English", Subject='actions')
-    items = ['yrityksille', 'medialle', 'yhteystiedot']
-    for item in items:
-        createFolder(context, item, Subject='actions')
-    createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
-    items = ['lahjoita', 'liity']
+    items = ['ajankohtaista', 'tapahtumat']
     for item in items:
         createFolder(context, item, exclude=False)
-    createFolder(context, 'mita-sina-voit-tehda', title="Mitä sinä voit tehdä", exclude=False)
-    createFolder(context, 'mita-me-teemme', title="Mitä me teemme", exclude=False)
-    items = ['tapahtumat', 'ajankohtaista']
+    createFolder(
+        context,
+        'mita-me-teemme',
+        title="Mitä me teemme",
+        exclude=False,
+        View='sll-view',
+    )
+    createFolder(
+        context,
+        'mita-sina-voit-tehda',
+        title="Mitä sinä voit tehdä",
+        exclude=False,
+        View='sll-view',
+    )
+    items = ['liity', 'lahjoita']
     for item in items:
-        createFolder(context, item, exclude=False)    
+        createFolder(context, item, exclude=False)
+    createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
+    items = ['yhteystiedot', 'medialle', 'yrityksille']
+    for item in items:
+        createFolder(context, item, Subject='actions')
+    createFolder(context, 'english', title="In English", Subject='actions')
+    createFolder(context, 'svenska', title="På Svenska", Subject='actions')
+    createFolder(context, 'info')
+    # createFolder(context, 'svenska', title="På Svenska", Subject='actions')
+    # createFolder(context, 'english', title="In English", Subject='actions')
+    # items = ['yrityksille', 'medialle', 'yhteystiedot']
+    # for item in items:
+    #     createFolder(context, item, Subject='actions')
+    # createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
+    # items = ['lahjoita', 'liity']
+    # for item in items:
+    #     createFolder(context, item, exclude=False)
+    # createFolder(context, 'mita-sina-voit-tehda', title="Mitä sinä voit tehdä", exclude=False)
+    # createFolder(context, 'mita-me-teemme', title="Mitä me teemme", exclude=False)
+    # items = ['tapahtumat', 'ajankohtaista']
+    # for item in items:
+    #     createFolder(context, item, exclude=False)
     folders = ['news', 'events']
     for folder in folders:
         remove_folder(context, folder)

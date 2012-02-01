@@ -405,11 +405,13 @@ class TestCase(IntegrationTestCase):
         folder = self.portal['mita-me-teemme']
         self.assertFalse(folder.exclude_from_nav())
         self.assertEqual(folder.Title(), 'Mitä me teemme')
+        self.assertEqual(folder.getLayout(), 'sll-view')
 
     def test_mita_sina_voit_tehda_folder_created(self):
         folder = self.portal['mita-sina-voit-tehda']
         self.assertFalse(folder.exclude_from_nav())
         self.assertEqual(folder.Title(), 'Mitä sinä voit tehdä')
+        self.assertEqual(folder.getLayout(), 'sll-view')
 
     def test_liity_folder_created(self):
         folder = self.portal['liity']
