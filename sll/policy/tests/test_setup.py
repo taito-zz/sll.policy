@@ -490,6 +490,23 @@ class TestCase(IntegrationTestCase):
             ]
         )
 
+    ## rolemap.xml
+    def test_content_rule(self):
+        items = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                "Content rules: Manage rules"
+            ) if item['selected'] == 'SELECTED'
+        ]
+        self.assertEqual(len(items), 2)
+        permissions = ['Site Administrator', 'Manager']
+        for item in items:
+            self.assertTrue(item in permissions)
+        self.assertFalse(
+            self.portal.acquiredRolesAreUsedBy(
+                "Content rules: Manage rules"
+            )
+        )
+
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['sll.policy'])
