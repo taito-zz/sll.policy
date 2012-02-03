@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='sll.policy',
-    version='0.8.1',
+    version='0.8.2',
     description="Turns plone site into SLL site.",
     long_description=open("README.rst").read(),
     # Get more strings from
@@ -31,6 +31,7 @@ setup(
         'inicie.cropimage',
         'setuptools',
         'sll.theme',
+        'z3c.autoinclude',
         'z3c.jbot',
         # -*- Extra requirements: -*-
     ],
