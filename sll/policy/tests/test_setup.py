@@ -140,7 +140,8 @@ class TestCase(IntegrationTestCase):
 
     def test_dependencies_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.theme'))
+        # self.failUnless(installer.isProductInstalled('sll.theme'))
+        self.failUnless(installer.isProductInstalled('sll.templates'))
         self.failUnless(installer.isProductInstalled('inicie.cropimage'))
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
         self.failUnless(installer.isProductInstalled('PloneFormGen'))
@@ -367,29 +368,29 @@ class TestCase(IntegrationTestCase):
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
 
-    def test_theme__enabled(self):
-        registry = getUtility(IRegistry)
-        from plone.app.theming.interfaces import IThemeSettings
-        settings = registry.forInterface(IThemeSettings)
-        self.assertTrue(settings.enabled)
+    # def test_theme__enabled(self):
+    #     registry = getUtility(IRegistry)
+    #     from plone.app.theming.interfaces import IThemeSettings
+    #     settings = registry.forInterface(IThemeSettings)
+    #     self.assertTrue(settings.enabled)
 
-    def test_theme__rules(self):
-        registry = getUtility(IRegistry)
-        from plone.app.theming.interfaces import IThemeSettings
-        settings = registry.forInterface(IThemeSettings)
-        self.assertEqual(
-            settings.rules,
-            "/++theme++sll.theme/rules.xml"
-        )
+    # def test_theme__rules(self):
+    #     registry = getUtility(IRegistry)
+    #     from plone.app.theming.interfaces import IThemeSettings
+    #     settings = registry.forInterface(IThemeSettings)
+    #     self.assertEqual(
+    #         settings.rules,
+    #         "/++theme++sll.theme/rules.xml"
+    #     )
 
-    def test_theme__absolutePrefix(self):
-        registry = getUtility(IRegistry)
-        from plone.app.theming.interfaces import IThemeSettings
-        settings = registry.forInterface(IThemeSettings)
-        self.assertEqual(
-            settings.absolutePrefix,
-            "/++theme++sll.theme"
-        )
+    # def test_theme__absolutePrefix(self):
+    #     registry = getUtility(IRegistry)
+    #     from plone.app.theming.interfaces import IThemeSettings
+    #     settings = registry.forInterface(IThemeSettings)
+    #     self.assertEqual(
+    #         settings.absolutePrefix,
+    #         "/++theme++sll.theme"
+    #     )
 
     def test_ajankohtaista_folder_created(self):
         folder = self.portal['ajankohtaista']
