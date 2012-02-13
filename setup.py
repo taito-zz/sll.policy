@@ -40,6 +40,7 @@ setup(
         'hexagonit.testing',
         'inicie.cropimage',
         'inicie.event_search_portlet',
+        'plone.browserlayer',
         'plone.app.theming',
         'setuptools',
         'sll.templates',
