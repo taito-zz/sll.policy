@@ -18,7 +18,7 @@
       handler="plone.app.portlets.exportimport.portlets.importPortlets">
       <depends name="componentregistry"/>
       <depends name="content"/>
-      <depends name="primacontrol.policy.various"/>
+      <depends name="sll.policy.various"/>
   </genericsetup:importStep>
 
 </configure>

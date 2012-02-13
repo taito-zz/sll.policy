@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='sll.policy',
-    version='0.8.2',
+    version='0.9',
     description="Turns plone site into SLL site.",
     long_description=open("README.rst").read(),
     # Get more strings from
@@ -16,7 +16,7 @@ setup(
     ],
     keywords='',
     author='Taito Horiuchi',
-    author_email='taito.horiuchi@inicie.net',
+    author_email='taito.horiuchi@abita.fi',
     url='',
     license='None-free',
     packages=find_packages(exclude=['ez_setup']),
@@ -24,16 +24,28 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'Products.NewSllSkin',
         'Products.PloneFormGen',
+        'Products.PFGExtendedMailAdapter',
+        'Products.PFGSelectionStringField',
+        'collective.folderlogo',
+        'collective.pfg.payment',
+        'collective.cart.core',
+        'collective.cart.shipping',
+        'collective.pfg.showrequest',
+        'collective.sharerizer',
+        'collective.portlet.fblikebox',
         'collective.contentleadimage',
         'five.grok',
         'hexagonit.testing',
         'inicie.cropimage',
+        'inicie.event_search_portlet',
+        'plone.app.theming',
         'setuptools',
-        'sll.theme',
+        'sll.templates',
+        # 'sll.theme',
         'z3c.autoinclude',
         'z3c.jbot',
-        # -*- Extra requirements: -*-
     ],
     entry_points="""
     # -*- Entry points: -*-

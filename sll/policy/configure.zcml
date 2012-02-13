@@ -7,7 +7,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="sll.policy">
 
-  <five:registerPackage package="." initialize=".initialize" />
+  <!-- <five:registerPackage package="." initialize=".initialize" /> -->
   <includeDependencies package="." />
   <grok:grok package="." />
 
