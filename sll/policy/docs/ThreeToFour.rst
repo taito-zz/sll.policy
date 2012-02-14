@@ -62,6 +62,11 @@ Plone-4::
 
     1. Add default_page to /sll Properties
     2. Migrate!
-    3. Create anothre plone site and copy portal_registry to the sll site.
+    3. Create another plone site and copy portal_registry to the sll site.
+    4. Install Diazo
+    5. Install sll.policy
+    6. Unlock
+    7. Pack
+    8. Rebuild catalog
 
 
