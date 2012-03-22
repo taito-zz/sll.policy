@@ -508,6 +508,17 @@ class TestCase(IntegrationTestCase):
             )
         )
 
+    def test_ISharingPageRole(self):
+        from zope.component import getUtilitiesFor
+        from plone.app.workflow.interfaces import ISharingPageRole
+        res = []
+        for name, utility in getUtilitiesFor(ISharingPageRole):
+            res.append(name)
+        self.assertEqual(
+            res,
+            [u'Contributor', u'Reviewer', u'Editor', u'Reader']
+        )
+
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['sll.policy'])

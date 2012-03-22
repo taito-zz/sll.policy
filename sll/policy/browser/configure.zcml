@@ -79,4 +79,13 @@
     layer=".interfaces.ISllPolicyLayer"
     />
 
+  <browser:page
+    name="sharing"
+    for="*"
+    class=".sharing.SLLSharingView"
+    permission="plone.DelegateRoles"
+    layer=".interfaces.ISllPolicyLayer"
+    />
+
+
 </configure>

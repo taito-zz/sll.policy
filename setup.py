@@ -44,7 +44,7 @@ setup(
         'plone.app.theming',
         'setuptools',
         'sll.templates',
-        # 'sll.theme',
+        'sll.theme',
         'z3c.autoinclude',
         'z3c.jbot',
     ],

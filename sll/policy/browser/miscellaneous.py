@@ -23,8 +23,8 @@ class Miscellaneous(BrowserView):
         )
 
     def unfeedable_from_top(self):
-       return (
-           IATDocument.providedBy(
+        return (
+            IATDocument.providedBy(
                 self.context
             ) or IATEvent.providedBy(
                 self.context
@@ -33,7 +33,7 @@ class Miscellaneous(BrowserView):
             )
         ) and ITopPageFeed.providedBy(
             self.context
-        ) 
+        )
 
     def feed_to_top(self):
         alsoProvides(self.context, ITopPageFeed)
