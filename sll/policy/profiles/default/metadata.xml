@@ -18,6 +18,6 @@
     <dependency>profile-Products.NewSllSkin:default</dependency>
     <dependency>profile-plone.app.theming:default</dependency>
     <dependency>profile-sll.templates:default</dependency>
-    <dependency>profile-sll.theme:default</dependency>
+    <!-- <dependency>profile-sll.theme:default</dependency> -->
   </dependencies>
 </metadata>
