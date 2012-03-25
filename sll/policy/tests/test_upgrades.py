@@ -1,7 +1,5 @@
 from sll.policy.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
-# from plone.registry.interfaces import IRegistry
-# from zope.component import getUtility
 
 
 class TestCase(IntegrationTestCase):
@@ -250,6 +248,10 @@ class TestCase(IntegrationTestCase):
             ['Document', 'Event', 'Folder', 'Link', 'News Item', 'Topic'],
             'two_states_workflow'
         )
-
+        catalog = getToolByName(self.portal, 'portal_catalog')
+        uids = [brain.UID for brain in catalog()]
         from sll.policy.upgrades import upgrade_3_to_4
         upgrade_3_to_4(self.portal)
+        new_uids = [brain.UID for brain in catalog()]
+        for uid in new_uids:
+            self.assertFalse(uid in uids)

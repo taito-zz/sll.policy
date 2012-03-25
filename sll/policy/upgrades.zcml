@@ -24,14 +24,34 @@
     title="Remove Reviewers group."
     />
 
-  <!-- <genericsetup:upgradeStep
-    description="This is done by reimporting the metadata.xml settings."
-    destination="3"
-    handler="sll.policy.upgrades.upgrade_2_to_3"
+  <genericsetup:upgradeStep
+    description=""
+    destination="4"
+    handler="sll.policy.upgrades.upgrade_3_to_4"
     profile="sll.policy:default"
     sortkey="1"
-    source="2"
-    title="Adds the sll.theme package."
-    /> -->
+    source="3"
+    title="Remove removable folder."
+    />
+
+  <genericsetup:upgradeStep
+    description="Copy and paste the whole site contents and update workflow for them."
+    destination="5"
+    handler="sll.policy.upgrades.upgrade_4_to_5"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="4"
+    title="Update whole contents."
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="6"
+    handler="sll.policy.upgrades.upgrade_5_to_6"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="5"
+    title="Rebuild catalog."
+    />
 
 </configure>
