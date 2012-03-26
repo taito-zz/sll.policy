@@ -4,7 +4,7 @@
   <object name="site_properties" meta_type="Plone Property Sheet">
       <property
         name="disable_nonfolderish_sections"
-        type="boolean">True</property>
+        type="boolean">False</property>
       <property name="default_language" type="string">fi</property>
       <property
         name="icon_visibility"

@@ -133,7 +133,8 @@ def update_contents(context, paths, logger=None):
             path = brain.getPath()
             ## exclude_from_nav
             if INavigationRoot.providedBy(folder):
-                if brain.review_state != 'published':
+                types = ['Document', 'Folder', 'FormFolder', 'News Item']
+                if (brain.Type in types) and (brain.review_state != 'published'):
                     message = "Start excluding '{0}' from navigation.".format(path)
                     logger.info(message)
                     obj.setExcludeFromNav(True)
@@ -172,9 +173,9 @@ def update_contents(context, paths, logger=None):
             new_path = brain.getPath()
             obj = brain.getObject()
             obj.setId(new_id)
+            path = '/'.join(obj.getPhysicalPath())
             message = "Path: '{0}' --> '{1}'".format(new_path, path)
             logger.info(message)
-            path = '/'.join(obj.getPhysicalPath())
             if path in will_be_published_paths:
                 message = "Start publishing '{0}'.".format(path)
                 logger.info(message)

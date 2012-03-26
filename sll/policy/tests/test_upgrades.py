@@ -22,6 +22,26 @@ class TestCase(IntegrationTestCase):
         groupstool = getToolByName(self.portal, 'portal_groups')
         self.failIf(groupstool.getGroupById('Reviewers'))
 
+    def test_upgrade_3_to_4(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+        self.portal.invokeFactory(
+            'Folder',
+            'removable',
+        )
+        self.portal.invokeFactory(
+            'Folder',
+            'copy_of_folder',
+        )
+        self.failUnless(self.portal['removable'])
+        self.failUnless(self.portal['copy_of_folder'])
+        from sll.policy.upgrades import upgrade_3_to_4
+        upgrade_3_to_4(self.portal)
+        self.assertRaises(KeyError, lambda:self.portal['removable'])
+        self.assertRaises(KeyError, lambda:self.portal['copy_of_folder'])
+
     def createStructure(self, folder):
         from plone.app.testing import TEST_USER_ID
         from plone.app.testing import setRoles
@@ -231,7 +251,7 @@ class TestCase(IntegrationTestCase):
         wftool.doActionFor(news04, 'hide')
         news04.reindexObject()
 
-    def test_upgrade_5_to_6(self):
+    def test_upgrade_4_to_5__contents(self):
         ## Create structure under plone root.
         self.createStructure(self.portal)
         ## Create structure under three folders under plone root.
@@ -242,6 +262,32 @@ class TestCase(IntegrationTestCase):
         ## Create structure under one folder under a folder under plone root.
         self.createStructure(folder01['folder01'])
 
+        ## exclude_from_nav
+        self.assertFalse(folder01.exclude_from_nav())
+        folder02 = self.portal['folder02']
+        self.assertFalse(folder02.exclude_from_nav())
+        link01 = self.portal['link01']
+        self.assertFalse(link01.exclude_from_nav())
+
+        catalog = getToolByName(self.portal, 'portal_catalog')
+        uids = [brain.UID for brain in catalog()]
+
+        from sll.policy.upgrades import upgrade_4_to_5
+        upgrade_4_to_5(self.portal)
+
+        ## exclude_from_nav
+        self.assertFalse(folder01.exclude_from_nav())
+        self.assertTrue(folder02.exclude_from_nav())
+        self.assertFalse(link01.exclude_from_nav())
+
+        new_uids = [brain.UID for brain in catalog()]
+        for uid in new_uids:
+            self.assertFalse(uid in uids)
+
+    def test_upgrade_4_to_5__workflow(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
         ## Change enable_wf_state_filtering.
         properties = getToolByName(self.portal, 'portal_properties')
         navtree_properties = getattr(properties, 'navtree_properties')
@@ -249,16 +295,8 @@ class TestCase(IntegrationTestCase):
         navtree_properties._updateProperty('enable_wf_state_filtering', True)
         self.assertTrue(navtree_properties.getProperty('enable_wf_state_filtering'))
 
-        ## exclude_from_nav
-        self.assertFalse(folder01.exclude_from_nav())
-        folder02 = self.portal['folder02']
-        self.assertFalse(folder02.exclude_from_nav())
-
-        catalog = getToolByName(self.portal, 'portal_catalog')
-        uids = [brain.UID for brain in catalog()]
-
-        from sll.policy.upgrades import upgrade_5_to_6
-        upgrade_5_to_6(self.portal)
+        from sll.policy.upgrades import upgrade_4_to_5
+        upgrade_4_to_5(self.portal)
 
         self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
 
@@ -280,13 +318,18 @@ class TestCase(IntegrationTestCase):
                 ('two_states_workflow',)
             )
 
-        ## exclude_from_nav
-        self.assertFalse(folder01.exclude_from_nav())
-        self.assertTrue(folder02.exclude_from_nav())
-
-        new_uids = [brain.UID for brain in catalog()]
-        for uid in new_uids:
-            self.assertFalse(uid in uids)
+    def test_upgrade_4_to_5__disable_nonfolderish_sections(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertFalse(site_properties.getProperty('disable_nonfolderish_sections'))
+        site_properties._updateProperty('disable_nonfolderish_sections', True)
+        self.assertTrue(site_properties.getProperty('disable_nonfolderish_sections'))
+        from sll.policy.upgrades import upgrade_4_to_5
+        upgrade_4_to_5(self.portal)
+        self.assertFalse(site_properties.getProperty('disable_nonfolderish_sections'))
 
     def test_upgrade_4_to_5__wf_states_to_show(self):
 
