@@ -74,35 +74,4 @@ def setupVarious(context):
     if context.readDataFile('sll.policy_various.txt') is None:
         return
 
-    # setUpMembersFolder(context)
-    # items = ['ajankohtaista', 'tapahtumat']
-    # for item in items:
-    #     createFolder(context, item, exclude=False)
-    # createFolder(
-    #     context,
-    #     'mita-me-teemme',
-    #     title="Mitä me teemme",
-    #     exclude=False,
-    #     View='sll-view',
-    # )
-    # createFolder(
-    #     context,
-    #     'mita-sina-voit-tehda',
-    #     title="Mitä sinä voit tehdä",
-    #     exclude=False,
-    #     View='sll-view',
-    # )
-    # items = ['liity', 'lahjoita']
-    # for item in items:
-    #     createFolder(context, item, exclude=False)
-    # createFolder(context, 'jarjesto', title="Järjestö", exclude=False)
-    # items = ['yhteystiedot', 'medialle', 'yrityksille']
-    # for item in items:
-    #     createFolder(context, item, Subject='actions')
-    # createFolder(context, 'english', title="In English", Subject='actions')
-    # createFolder(context, 'svenska', title="På Svenska", Subject='actions')
-    # createFolder(context, 'info')
-    # folders = ['news', 'events']
-    # for folder in folders:
-    #     remove_folder(context, folder)
     add_inicie_cropimage_ids(context)

@@ -1,5 +1,6 @@
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
+from plone.app.layout.navigation.interfaces import INavigationRoot
 
 import logging
 
@@ -29,6 +30,23 @@ def upgrade_2_to_3(context, logger=None):
     logger.info('Removed Reviewers group.')
 
 
+def upgrade_3_to_4(context, logger=None):
+    """"Delete Removable Folder."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    # Get portal
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    # Remove unnecessary contents
+    if portal.get('removable'):
+        logger.info('Start removing Removable Folder.')
+        portal.manage_delObjects(['removable'])
+        logger.info('Removable Folder Removed.')
+
+
 def update_contents(context, paths, logger=None):
     if logger is None:
         # Called as upgrade step: define our own logger.
@@ -51,6 +69,15 @@ def update_contents(context, paths, logger=None):
             obj = brain.getObject()
             folder = aq_parent(obj)
             path = brain.getPath()
+            ## exclude_from_nav
+            if INavigationRoot.providedBy(folder):
+                if brain.review_state != 'published':
+                    message = "Start excluding '{0}' from navigation.".format(path)
+                    logger.info(message)
+                    obj.setExcludeFromNav(True)
+                    message = "'{0}' excluded from navigation.".format(path)
+                    logger.info(message)
+
             ## Copy objects
             message = "Start copying '{0}'.".format(path)
             logger.info(message)
@@ -99,35 +126,51 @@ def update_contents(context, paths, logger=None):
         return paths
 
 
-def upgrade_3_to_4(context, logger=None):
-    """"Delete Removable Folder."""
-    if logger is None:
-        # Called as upgrade step: define our own logger.
-        logger = logging.getLogger(__name__)
-
-    # Get portal
-    portal_url = getToolByName(context, 'portal_url')
-    portal = portal_url.getPortalObject()
-
-    # Remove unnecessary contents
-    if portal.get('removable'):
-        logger.info('Start removing Removable Folder.')
-        portal.manage_delObjects(['removable'])
-        logger.info('Removable Folder Removed.')
-
-
 def upgrade_4_to_5(context, logger=None):
     """"Update workflow."""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
 
-    # First import workflow.xml
     setup = getToolByName(context, 'portal_setup')
 
+    # Update filtering on workflow state by import propertiestool.xml.
+    logger.info('Start reimporting propertiestool.xml.')
+    setup.runImportStepFromProfile(PROFILE_ID, 'propertiestool', run_dependencies=False, purge_old=False)
+    logger.info('Reimported propertiestool.xml.')
+
+    # Update propertiestool.xml
+    properties = getToolByName(context, 'portal_properties')
+    navtree_properties = getattr(properties, 'navtree_properties')
+    logger.info('Start updating enable_wf_state_filtering into False.')
+    navtree_properties._updateProperty('enable_wf_state_filtering', False)
+    logger.info('enable_wf_state_filtering updated to False.')
+
+    logger.info('Start emptying  wf_states_to_show.')
+    navtree_properties._updateProperty('wf_states_to_show', ())
+    logger.info('wf_states_to_show emptied.')
+
+    # First import workflow.xml
     logger.info('Start reimporting workflows.xml.')
     setup.runImportStepFromProfile(PROFILE_ID, 'workflow', run_dependencies=False, purge_old=False)
     logger.info('Reimported workflows.xml.')
+
+    # Update contents workflow.
+    contents = [
+        'Document',
+        'Event',
+        'File',
+        'Folder',
+        'FormFolder',
+        'Image',
+        'Link',
+        'News Item',
+        'Topic',
+    ]
+    logger.info('Start updating contents workflows to two_states_workflow.')
+    wftool = getToolByName(context, 'portal_workflow')
+    wftool.setChainForPortalTypes(contents, '(Default)')
+    logger.info('contents workflow updated into two_states_workflow.')
 
     # Get portal
     portal_url = getToolByName(context, 'portal_url')

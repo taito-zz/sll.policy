@@ -300,9 +300,17 @@ class TestCase(IntegrationTestCase):
     def test_propertiestool_navtree_properties__metaTypesNotToList(self):
         properties = getToolByName(self.portal, 'portal_properties')
         navtree_properties = getattr(properties, 'navtree_properties')
-        contents = ('Image', 'Event', 'Document', 'Topic', 'Link', 'File', 'News Item')
+        contents = ('Document', 'Folder', 'FormFolder', 'News Item')
+        for content in contents:
+            self.assertFalse(content in navtree_properties.getProperty('metaTypesNotToList'))
+        contents = ('Event', 'File', 'Image', 'Link', 'Topic')
         for content in contents:
             self.assertTrue(content in navtree_properties.getProperty('metaTypesNotToList'))
+
+    def test_propertiestool_navtree_properties__enable_wf_state_filtering(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        navtree_properties = getattr(properties, 'navtree_properties')
+        self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
 
     def test_propertiestool_cli_properties__allowed_types(self):
         properties = getToolByName(self.portal, 'portal_properties')
