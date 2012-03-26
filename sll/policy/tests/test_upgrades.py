@@ -231,7 +231,7 @@ class TestCase(IntegrationTestCase):
         wftool.doActionFor(news04, 'hide')
         news04.reindexObject()
 
-    def test_upgrade_4_to_5(self):
+    def test_upgrade_5_to_6(self):
         ## Create structure under plone root.
         self.createStructure(self.portal)
         ## Create structure under three folders under plone root.
@@ -250,8 +250,8 @@ class TestCase(IntegrationTestCase):
         )
         catalog = getToolByName(self.portal, 'portal_catalog')
         uids = [brain.UID for brain in catalog()]
-        from sll.policy.upgrades import upgrade_4_to_5
-        upgrade_4_to_5(self.portal)
+        from sll.policy.upgrades import upgrade_5_to_6
+        upgrade_5_to_6(self.portal)
         new_uids = [brain.UID for brain in catalog()]
         for uid in new_uids:
             self.assertFalse(uid in uids)

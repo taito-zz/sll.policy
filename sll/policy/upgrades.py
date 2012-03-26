@@ -79,16 +79,17 @@ def update_contents(context, paths, logger=None):
         wftool = getToolByName(folder, "portal_workflow")
 
         for brain in catalog(query):
-            new_id = brain.id[8:]
+            new_id = '_'.join(brain.id.split('_')[2:])
             new_path = brain.getPath()
             obj = brain.getObject()
             obj.setId(new_id)
+            message = "Path: '{0}' --> '{1}'".format(new_path, path)
+            logger.info(message)
             path = '/'.join(obj.getPhysicalPath())
-            if new_path in will_be_published_paths:
+            if path in will_be_published_paths:
                 message = "Start publishing '{0}'.".format(path)
                 logger.info(message)
                 wftool.doActionFor(obj, 'publish')
-                # obj.reindexObject(idxs=['review_state'])
                 message = "'{0}' published.".format(path)
                 logger.info(message)
 
@@ -117,6 +118,28 @@ def upgrade_3_to_4(context, logger=None):
 
 
 def upgrade_4_to_5(context, logger=None):
+    """Remove all id starting from copy_of..."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    catalog = getToolByName(context, 'portal_catalog')
+
+    brains = [brain for brain in catalog() if brain.id.startswith('copy')]
+    for brain in brains:
+        parent = aq_parent(brain.getObject())
+        path = brain.getPath()
+        ## Delete objects
+        message = "Start removing '{0}'.".format(path)
+        logger.info(message)
+        parent.manage_delObjects([brain.id])
+        message = "'{0}' removed.".format(path)
+        logger.info(message)
+
+    logger.info('All the contents id starting with "copy" removed.')
+
+
+def upgrade_5_to_6(context, logger=None):
     """"Update workflow."""
     if logger is None:
         # Called as upgrade step: define our own logger.
@@ -139,7 +162,7 @@ def upgrade_4_to_5(context, logger=None):
     logger.info('Whole Contents Updated.')
 
 
-def upgrade_5_to_6(context, logger=None):
+def upgrade_6_to_7(context, logger=None):
     """"Rebuild catalog."""
     if logger is None:
         # Called as upgrade step: define our own logger.

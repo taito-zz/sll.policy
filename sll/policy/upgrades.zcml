@@ -35,22 +35,32 @@
     />
 
   <genericsetup:upgradeStep
-    description="Copy and paste the whole site contents and update workflow for them."
+    description=""
     destination="5"
     handler="sll.policy.upgrades.upgrade_4_to_5"
     profile="sll.policy:default"
     sortkey="1"
     source="4"
-    title="Update whole contents."
+    title="Remove contents id start with copy."
     />
 
   <genericsetup:upgradeStep
-    description=""
+    description="Copy and paste the whole site contents and update workflow for them."
     destination="6"
     handler="sll.policy.upgrades.upgrade_5_to_6"
     profile="sll.policy:default"
     sortkey="1"
     source="5"
+    title="Update whole contents."
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="7"
+    handler="sll.policy.upgrades.upgrade_6_to_7"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="7"
     title="Rebuild catalog."
     />
 
