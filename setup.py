@@ -39,6 +39,7 @@ setup(
         'collective.sharerizer',
         'five.grok',
         'hexagonit.testing',
+        # 'inicie.cropimage',
         'inicie.event_search_portlet',
         'plone.app.theming',
         'plone.browserlayer',

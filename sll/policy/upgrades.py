@@ -1,6 +1,9 @@
 from Acquisition import aq_parent
 from Products.CMFCore.utils import getToolByName
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.registry.interfaces import IRegistry
+from sll.policy.config import IDS
+from zope.component import getUtility
 
 import logging
 
@@ -40,6 +43,27 @@ def upgrade_3_to_4(context, logger=None):
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
+    # Monkey patching getIntegrityBreaches method.
+    from plone.uuid.interfaces import IUUID
+    from plone.app.linkintegrity.info import LinkIntegrityInfo
+
+    def getSLLIntegrityBreaches(self):
+        """ return stored information regarding link integrity breaches
+            after removing circular references, confirmed items etc """
+        uuids_to_delete = [IUUID(obj, None) for obj in self.getDeletedItems()]
+        uuids_to_delete = set(filter(None, uuids_to_delete))    # filter `None`
+        breaches = dict(self.getIntegrityInfo().get('breaches', {}))
+        uuids_to_delete.update([IUUID(obj) for obj in breaches if obj is not None])
+        for target, sources in breaches.items():    # first remove deleted sources
+            for source in list(sources):
+                if IUUID(source) in uuids_to_delete:
+                    sources.remove(source)
+        for target, sources in breaches.items():    # then remove "empty" targets
+            if not sources or self.isConfirmedItem(target):
+                del breaches[target]
+        return breaches
+    LinkIntegrityInfo.getIntegrityBreaches = getSLLIntegrityBreaches
+
     # Remove unnecessary contents
     if portal.get('removable'):
         logger.info('Start removing Removable Folder.')
@@ -51,6 +75,28 @@ def update_contents(context, paths, logger=None):
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
+
+    # Monkey patch insertForwardIndexEntry method
+    from Products.PluginIndexes.UUIDIndex.UUIDIndex import UUIDIndex
+    from Products.PluginIndexes.common.UnIndex import _marker
+
+    def insertSLLForwardIndexEntry(self, entry, documentId):
+        """Take the entry provided and put it in the correct place
+        in the forward index.
+        """
+        if entry is None:
+            return
+
+        old_docid = self._index.get(entry, _marker)
+        if old_docid is _marker:
+            self._index[entry] = documentId
+            self._length.change(1)
+        elif old_docid != documentId:
+            self.removeForwardIndexEntry(entry, documentId)
+            # logger.error("A different document with value '%s' already "
+            #     "exists in the index.'" % entry)
+
+    UUIDIndex.insertForwardIndexEntry = insertSLLForwardIndexEntry
 
     catalog = getToolByName(context, 'portal_catalog')
 
@@ -115,7 +161,6 @@ def update_contents(context, paths, logger=None):
                 message = "Start publishing '{0}'.".format(path)
                 logger.info(message)
                 wftool.doActionFor(obj, 'publish')
-                # obj.reindexObject(idxs=['review_state'])
                 message = "'{0}' published.".format(path)
                 logger.info(message)
 
@@ -193,3 +238,22 @@ def upgrade_5_to_6(context, logger=None):
     logger.info('Start recataloging whole contents.')
     catalog.clearFindAndRebuild()
     logger.info('Whole Contents are now recataloged.')
+
+
+def upgrade_6_to_7(context, logger=None):
+    """"Setup collective.cropimage."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Start installing collective.cropimage.')
+    setup.runAllImportStepsFromProfile('profile-collective.cropimage:default', purge_old=False)
+    logger.info('Installed collective.cropimage.')
+
+    registry = getUtility(IRegistry)
+    registry['collective.cropimage.ids'] = IDS
+    keys = [item['id'] for item in IDS]
+    for key in keys:
+        message='collective.cropimage.ids updated with ID: "{0}"'.format(key)
+        logger.info(message)

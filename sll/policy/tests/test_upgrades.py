@@ -314,3 +314,35 @@ class TestCase(IntegrationTestCase):
     def test_upgrade_5_to_6(self):
         from sll.policy.upgrades import upgrade_5_to_6
         upgrade_5_to_6(self.portal)
+
+    def test_upgrade_6_to_7__collective_cropimage_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('collective.cropimage'))
+        installer.uninstallProducts(['collective.cropimage'])
+        self.failIf(installer.isProductInstalled('collective.cropimage'))
+
+        from sll.policy.upgrades import upgrade_6_to_7
+        upgrade_6_to_7(self.portal)
+
+        self.failUnless(installer.isProductInstalled('collective.cropimage'))
+
+    def test_upgrade_6_to_7__collective_cropimage_ids(self):
+        from sll.policy.upgrades import upgrade_6_to_7
+        upgrade_6_to_7(self.portal)
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+        self.assertEqual(
+            registry['collective.cropimage.ids'],
+            [
+                {
+                    'ratio_height': 15.0,
+                    'ratio_width': 17.0,
+                    'max_width': 170.0,
+                    'min_height': 150.0,
+                    'max_height': 150.0,
+                    'min_width': 170.0,
+                    'id': 'feed'
+                }
+            ]
+        )

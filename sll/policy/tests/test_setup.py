@@ -124,7 +124,6 @@
 
 from sll.policy.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
-from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
 
@@ -142,7 +141,7 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         # self.failUnless(installer.isProductInstalled('sll.theme'))
         self.failUnless(installer.isProductInstalled('sll.templates'))
-        self.failUnless(installer.isProductInstalled('inicie.cropimage'))
+        self.failUnless(installer.isProductInstalled('collective.cropimage'))
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
         self.failUnless(installer.isProductInstalled('PloneFormGen'))
 
@@ -482,22 +481,22 @@ class TestCase(IntegrationTestCase):
     # def test_events_folder_removed(self):
     #     self.assertRaises(KeyError, lambda: self.portal['events'])
 
-    def test_inicie_cropimage_ids(self):
-        registry = getUtility(IRegistry)
-        self.assertEqual(
-            registry['inicie.cropimage.ids'],
-            [
-                {
-                    'ratio_height': 15.0,
-                    'ratio_width': 17.0,
-                    'max_width': 170.0,
-                    'min_height': 150.0,
-                    'max_height': 150.0,
-                    'min_width': 170.0,
-                    'id': 'feed'
-                }
-            ]
-        )
+    # def test_inicie_cropimage_ids(self):
+    #     registry = getUtility(IRegistry)
+    #     self.assertEqual(
+    #         registry['inicie.cropimage.ids'],
+    #         [
+    #             {
+    #                 'ratio_height': 15.0,
+    #                 'ratio_width': 17.0,
+    #                 'max_width': 170.0,
+    #                 'min_height': 150.0,
+    #                 'max_height': 150.0,
+    #                 'min_width': 170.0,
+    #                 'id': 'feed'
+    #             }
+    #         ]
+    #     )
 
     ## rolemap.xml
     def test_content_rule(self):
