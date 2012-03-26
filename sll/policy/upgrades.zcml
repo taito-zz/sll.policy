@@ -25,13 +25,13 @@
     />
 
   <genericsetup:upgradeStep
-    description=""
+    description="Delete Removable Folder and copy_of_...."
     destination="4"
     handler="sll.policy.upgrades.upgrade_3_to_4"
     profile="sll.policy:default"
     sortkey="1"
     source="3"
-    title="Remove removable folder."
+    title="Remove objects"
     />
 
   <genericsetup:upgradeStep
@@ -41,17 +41,17 @@
     profile="sll.policy:default"
     sortkey="1"
     source="4"
-    title="Remove contents id start with copy."
+    title="Update contents"
     />
 
   <genericsetup:upgradeStep
-    description="Copy and paste the whole site contents and update workflow for them."
+    description=""
     destination="6"
     handler="sll.policy.upgrades.upgrade_5_to_6"
     profile="sll.policy:default"
     sortkey="1"
     source="5"
-    title="Update whole contents."
+    title="Rebuild catalog"
     />
 
   <genericsetup:upgradeStep
@@ -60,8 +60,8 @@
     handler="sll.policy.upgrades.upgrade_6_to_7"
     profile="sll.policy:default"
     sortkey="1"
-    source="7"
-    title="Rebuild catalog."
+    source="6"
+    title="Install collective.cropimage"
     />
 
 </configure>

@@ -34,7 +34,7 @@ def upgrade_2_to_3(context, logger=None):
 
 
 def upgrade_3_to_4(context, logger=None):
-    """"Delete Removable Folder."""
+    """"Delete Removable Folder and copy_of_...."""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -190,7 +190,7 @@ def update_contents(context, paths, logger=None):
 
 
 def upgrade_4_to_5(context, logger=None):
-    """"Update workflow."""
+    """"Update contents."""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -245,7 +245,7 @@ def upgrade_4_to_5(context, logger=None):
     logger.info('Whole Contents Updated.')
 
 
-def upgrade_6_to_7(context, logger=None):
+def upgrade_5_to_6(context, logger=None):
     """"Rebuild catalog."""
     if logger is None:
         # Called as upgrade step: define our own logger.
