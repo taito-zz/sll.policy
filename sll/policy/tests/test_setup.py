@@ -253,11 +253,6 @@ class TestCase(IntegrationTestCase):
         )
 
     ## propertiestool.xml
-    def test_disable_nonfolderish_sections(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_props = properties.site_properties
-        self.assertTrue(site_props.getProperty('disable_nonfolderish_sections'))
-
     def test_default_language(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_props = properties.site_properties
@@ -267,16 +262,6 @@ class TestCase(IntegrationTestCase):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
-
-    # def test_propertiestool_site_properties__disable_nonfolderish_sections(self):
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     site_properties = getattr(properties, 'site_properties')
-    #     self.assertTrue(site_properties.getProperty('disable_nonfolderish_sections'))
-
-    # def test_propertiestool_site_properties__use_email_as_login(self):
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     site_properties = getattr(properties, 'site_properties')
-    #     self.assertTrue(site_properties.getProperty('use_email_as_login'))
 
     def test_propertiestool_site_properties__icon_visibility(self):
         properties = getToolByName(self.portal, 'portal_properties')
@@ -318,10 +303,6 @@ class TestCase(IntegrationTestCase):
             cli_properties.getProperty('allowed_types'),
             ('Document', 'Event')
         )
-
-    # def test_tinymce__autoresize(self):
-    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
-    #     self.assertTrue(tinymce.autoresize)
 
     def test_tinymce__link_using_uids(self):
         tinymce = getToolByName(self.portal, 'portal_tinymce')
@@ -397,105 +378,6 @@ class TestCase(IntegrationTestCase):
     #     self.assertEqual(
     #         settings.absolutePrefix,
     #         "/++theme++sll.theme"
-    #     )
-
-    # def test_ajankohtaista_folder_created(self):
-    #     folder = self.portal['ajankohtaista']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Ajankohtaista')
-
-    # def test_tapahtumat_folder_created(self):
-    #     folder = self.portal['tapahtumat']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Tapahtumat')
-
-    # def test_mita_me_teemme_folder_created(self):
-    #     folder = self.portal['mita-me-teemme']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Mitä me teemme')
-    #     self.assertEqual(folder.getLayout(), 'sll-view')
-
-    # def test_mita_sina_voit_tehda_folder_created(self):
-    #     folder = self.portal['mita-sina-voit-tehda']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Mitä sinä voit tehdä')
-    #     self.assertEqual(folder.getLayout(), 'sll-view')
-
-    # def test_liity_folder_created(self):
-    #     folder = self.portal['liity']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Liity')
-
-    # def test_lahjoita_folder_created(self):
-    #     folder = self.portal['lahjoita']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Lahjoita')
-
-    # def test_jarjesto_folder_created(self):
-    #     folder = self.portal['jarjesto']
-    #     self.assertFalse(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Järjestö')
-
-    # def test_medialle_folder_created(self):
-    #     folder = self.portal['medialle']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Medialle')
-    #     self.assertEqual(folder.Subject(), ('actions',))
-
-    # def test_yhteystiedot_folder_created(self):
-    #     folder = self.portal['yhteystiedot']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Yhteystiedot')
-    #     self.assertEqual(folder.Subject(), ('actions',))
-
-    # def test_yrityksille_folder_created(self):
-    #     folder = self.portal['yrityksille']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Yrityksille')
-    #     self.assertEqual(folder.Subject(), ('actions',))
-
-    # def test_english_folder_created(self):
-    #     folder = self.portal['english']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'In English')
-    #     self.assertEqual(folder.Subject(), ('actions',))
-
-    # def test_svenska_folder_created(self):
-    #     folder = self.portal['svenska']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'På Svenska')
-    #     self.assertEqual(folder.Subject(), ('actions',))
-
-    # def test_info_folder_created(self):
-    #     folder = self.portal['info']
-    #     self.assertTrue(folder.exclude_from_nav())
-    #     self.assertEqual(folder.Title(), 'Info')
-
-    # def test_Member_folder_exclude_from_nav(self):
-    #     folder = self.portal['Members']
-    #     self.assertTrue(folder.exclude_from_nav())
-
-    # def test_news_folder_removed(self):
-    #     self.assertRaises(KeyError, lambda: self.portal['news'])
-
-    # def test_events_folder_removed(self):
-    #     self.assertRaises(KeyError, lambda: self.portal['events'])
-
-    # def test_inicie_cropimage_ids(self):
-    #     registry = getUtility(IRegistry)
-    #     self.assertEqual(
-    #         registry['inicie.cropimage.ids'],
-    #         [
-    #             {
-    #                 'ratio_height': 15.0,
-    #                 'ratio_width': 17.0,
-    #                 'max_width': 170.0,
-    #                 'min_height': 150.0,
-    #                 'max_height': 150.0,
-    #                 'min_width': 170.0,
-    #                 'id': 'feed'
-    #             }
-    #         ]
     #     )
 
     ## rolemap.xml
