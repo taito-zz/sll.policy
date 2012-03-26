@@ -38,13 +38,13 @@
       <element value="ATRelativePathCriterion"/>
       <element value="Image"/>
       <element value="Event"/>
-      <element value="Document"/>
       <element value="Topic"/>
       <element value="Link"/>
       <element value="File"/>
-      <element value="News Item"/>
     </property>
   </object>
+  <property name="enable_wf_state_filtering" type="boolean">False</property>
+  <property name="wf_states_to_show" type="lines"/>
 
  <object name="collective_cart_properties" meta_type="Plone Property Sheet">
   <property name="title">Cart Properties</property>

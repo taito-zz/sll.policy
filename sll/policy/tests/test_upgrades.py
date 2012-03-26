@@ -242,16 +242,108 @@ class TestCase(IntegrationTestCase):
         ## Create structure under one folder under a folder under plone root.
         self.createStructure(folder01['folder01'])
 
-        ## Change workflow.
-        wftool = getToolByName(self.portal, 'portal_workflow')
-        wftool.setChainForPortalTypes(
-            ['Document', 'Event', 'Folder', 'Link', 'News Item', 'Topic'],
-            'two_states_workflow'
-        )
+        ## Change enable_wf_state_filtering.
+        properties = getToolByName(self.portal, 'portal_properties')
+        navtree_properties = getattr(properties, 'navtree_properties')
+        self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
+        navtree_properties._updateProperty('enable_wf_state_filtering', True)
+        self.assertTrue(navtree_properties.getProperty('enable_wf_state_filtering'))
+
+        ## exclude_from_nav
+        self.assertFalse(folder01.exclude_from_nav())
+        folder02 = self.portal['folder02']
+        self.assertFalse(folder02.exclude_from_nav())
+
         catalog = getToolByName(self.portal, 'portal_catalog')
         uids = [brain.UID for brain in catalog()]
+
         from sll.policy.upgrades import upgrade_5_to_6
         upgrade_5_to_6(self.portal)
+
+        self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
+
+        wftool = getToolByName(self.portal, 'portal_workflow')
+        contents = [
+            'Document',
+            'Event',
+            'File',
+            'Folder',
+            'FormFolder',
+            'Image',
+            'Link',
+            'News Item',
+            'Topic',
+        ]
+        for content in contents:
+            self.assertEqual(
+                wftool.getChainForPortalType(content),
+                ('two_states_workflow',)
+            )
+
+        ## exclude_from_nav
+        self.assertFalse(folder01.exclude_from_nav())
+        self.assertTrue(folder02.exclude_from_nav())
+
         new_uids = [brain.UID for brain in catalog()]
         for uid in new_uids:
             self.assertFalse(uid in uids)
+
+    def test_upgrade_4_to_5__wf_states_to_show(self):
+
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+        properties = getToolByName(self.portal, 'portal_properties')
+        navtree_properties = getattr(properties, 'navtree_properties')
+        self.assertEqual(
+            navtree_properties.getProperty('wf_states_to_show'),
+            ()
+        )
+        navtree_properties._updateProperty('wf_states_to_show', ('published', 'private'))
+        self.assertEqual(
+            navtree_properties.getProperty('wf_states_to_show'),
+            ('published', 'private')
+        )
+        from sll.policy.upgrades import upgrade_4_to_5
+        upgrade_4_to_5(self.portal)
+        self.assertEqual(
+            navtree_properties.getProperty('wf_states_to_show'),
+            ()
+        )
+
+    def test_upgrade_5_to_6(self):
+        from sll.policy.upgrades import upgrade_5_to_6
+        upgrade_5_to_6(self.portal)
+
+    def test_upgrade_6_to_7__collective_cropimage_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('collective.cropimage'))
+        installer.uninstallProducts(['collective.cropimage'])
+        self.failIf(installer.isProductInstalled('collective.cropimage'))
+
+        from sll.policy.upgrades import upgrade_6_to_7
+        upgrade_6_to_7(self.portal)
+
+        self.failUnless(installer.isProductInstalled('collective.cropimage'))
+
+    def test_upgrade_6_to_7__collective_cropimage_ids(self):
+        from sll.policy.upgrades import upgrade_6_to_7
+        upgrade_6_to_7(self.portal)
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+        self.assertEqual(
+            registry['collective.cropimage.ids'],
+            [
+                {
+                    'ratio_height': 15.0,
+                    'ratio_width': 17.0,
+                    'max_width': 170.0,
+                    'min_height': 150.0,
+                    'max_height': 150.0,
+                    'min_width': 170.0,
+                    'id': 'feed'
+                }
+            ]
+        )
