@@ -40,7 +40,7 @@ setup(
         'five.grok',
         'hexagonit.testing',
         # 'inicie.cropimage',
-        'inicie.event_search_portlet',
+        'collective.event_search_portlet',
         'plone.app.theming',
         'plone.browserlayer',
         'setuptools',
