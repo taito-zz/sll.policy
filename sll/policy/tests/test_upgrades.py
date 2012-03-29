@@ -280,7 +280,17 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(folder02.exclude_from_nav())
         self.assertFalse(link01.exclude_from_nav())
 
-        new_uids = [brain.UID for brain in catalog()]
+        from Products.ATContentTypes.interfaces.document import IATDocument
+        from Products.ATContentTypes.interfaces.folder import IATFolder
+        object_provides = [
+            IATDocument.__identifier__,
+            IATFolder.__identifier__,
+        ]
+        query = {
+            'object_provides': object_provides,
+        }
+
+        new_uids = [brain.UID for brain in catalog(query)]
         for uid in new_uids:
             self.assertFalse(uid in uids)
 

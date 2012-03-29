@@ -1,4 +1,6 @@
 from Acquisition import aq_parent
+from Products.ATContentTypes.interfaces.document import IATDocument
+from Products.ATContentTypes.interfaces.folder import IATFolder
 from Products.CMFCore.utils import getToolByName
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.registry.interfaces import IRegistry
@@ -87,7 +89,7 @@ def upgrade_3_to_4(context, logger=None):
     logger.info('All the contents id starting with "copy" removed.')
 
 
-def update_contents(context, paths, logger=None):
+def update_contents(context, paths, count, logger=None):
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -116,14 +118,24 @@ def update_contents(context, paths, logger=None):
 
     catalog = getToolByName(context, 'portal_catalog')
 
+    object_provides = [
+        IATDocument.__identifier__,
+        IATFolder.__identifier__,
+    ]
+
     query = {
+        'object_provides': object_provides,
         'path': {
             'query': paths,
             'depth': 1,
-        }
+        },
     }
 
     brains = catalog(query)
+    message = 'There are {0} objects left to update.'.format(
+        count
+    )
+    logger.info(message)
     if brains:
         paths = [brain.getPath() for brain in brains]
         will_be_published_paths = []
@@ -169,6 +181,7 @@ def update_contents(context, paths, logger=None):
         wftool = getToolByName(folder, "portal_workflow")
 
         for brain in catalog(query):
+            count -= 1
             new_id = '_'.join(brain.id.split('_')[2:])
             new_path = brain.getPath()
             obj = brain.getObject()
@@ -185,7 +198,7 @@ def update_contents(context, paths, logger=None):
 
             obj.reindexObject()
 
-            message = "'{0}' updated.".format(path)
+            message = "'{0}' updated and {1} objects left".format(path, count)
             logger.info(message)
         return paths
 
@@ -240,9 +253,20 @@ def upgrade_4_to_5(context, logger=None):
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
+    catalog = getToolByName(context, 'portal_catalog')
+    object_provides = [
+        IATDocument.__identifier__,
+        IATFolder.__identifier__,
+    ]
+    query = {
+        'object_provides': object_provides,
+    }
+    count = len(catalog(query))
     paths = '/'.join(portal.getPhysicalPath())
     while paths:
-        paths = update_contents(context, paths, logger=logger)
+        paths = update_contents(context, paths, count, logger=logger)
+        if paths:
+            count -= len(paths)
     logger.info('Whole Contents Updated.')
 
 
