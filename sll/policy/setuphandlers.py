@@ -48,25 +48,14 @@
 #         folder.reindexObject()
 
 
-# def remove_folder(context, folder_id):
-#     portal = context.getSite()
-#     folder = portal.get(folder_id)
-#     if folder:
-#         log = context.getLogger(__name__)
-#         folder.unindexObject()
-#         del portal[folder_id]
-#         message = 'Folder "{0}" removed'.format(folder_id)
-#         log.info(message)
-
-
-# def add_collective_cropimage_ids(context):
-#     registry = getUtility(IRegistry)
-#     registry['collective.cropimage.ids'] = IDS
-#     keys = [item['id'] for item in IDS]
-#     log = context.getLogger(__name__)
-#     for key in keys:
-#         message='collective.cropimage.ids updated with ID: "{0}"'.format(key)
-#         log.info(message)
+def remove_folder(context, folder_ids):
+    portal = context.getSite()
+    ids = [fid for fid in folder_ids if portal.get(fid)]
+    if ids:
+        portal.manage_delObjects(ids)
+        message = 'Folder ID: {0} removed'.format(', '.join(ids))
+        log = context.getLogger(__name__)
+        log.info(message)
 
 
 def setupVarious(context):
@@ -74,4 +63,5 @@ def setupVarious(context):
     if context.readDataFile('sll.policy_various.txt') is None:
         return
 
-    # add_collective_cropimage_ids(context)
+    folder_ids = ['Members', 'news', 'events']
+    remove_folder(context, folder_ids)

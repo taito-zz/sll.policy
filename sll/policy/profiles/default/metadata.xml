@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>7</version>
+  <version>16</version>
   <dependencies>
     <dependency>profile-collective.cropimage:default</dependency>
     <dependency>profile-collective.contentleadimage:default</dependency>
@@ -12,7 +12,7 @@
     <dependency>profile-collective.cart.core:default</dependency>
     <dependency>profile-collective.cart.shipping:default</dependency>
     <dependency>profile-collective.pfg.showrequest:default</dependency>
-    <dependency>profile-inicie.event_search_portlet:default</dependency>
+    <dependency>profile-collective.event_search_portlet:default</dependency>
     <dependency>profile-collective.sharerizer:default</dependency>
     <dependency>profile-collective.portlet.fblikebox:default</dependency>
     <dependency>profile-Products.NewSllSkin:default</dependency>

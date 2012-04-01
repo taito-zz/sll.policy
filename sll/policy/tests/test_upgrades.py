@@ -251,48 +251,48 @@ class TestCase(IntegrationTestCase):
         wftool.doActionFor(news04, 'hide')
         news04.reindexObject()
 
-    def test_upgrade_4_to_5__contents(self):
-        ## Create structure under plone root.
-        self.createStructure(self.portal)
-        ## Create structure under three folders under plone root.
-        folder01 = self.portal['folder01']
-        self.createStructure(folder01)
-        self.createStructure(self.portal['folder02'])
-        self.createStructure(self.portal['folder03'])
-        ## Create structure under one folder under a folder under plone root.
-        self.createStructure(folder01['folder01'])
+    # def test_upgrade_4_to_5__contents(self):
+    #     ## Create structure under plone root.
+    #     self.createStructure(self.portal)
+    #     ## Create structure under three folders under plone root.
+    #     folder01 = self.portal['folder01']
+    #     self.createStructure(folder01)
+    #     self.createStructure(self.portal['folder02'])
+    #     self.createStructure(self.portal['folder03'])
+    #     ## Create structure under one folder under a folder under plone root.
+    #     self.createStructure(folder01['folder01'])
 
-        ## exclude_from_nav
-        self.assertFalse(folder01.exclude_from_nav())
-        folder02 = self.portal['folder02']
-        self.assertFalse(folder02.exclude_from_nav())
-        link01 = self.portal['link01']
-        self.assertFalse(link01.exclude_from_nav())
+    #     ## exclude_from_nav
+    #     self.assertFalse(folder01.exclude_from_nav())
+    #     folder02 = self.portal['folder02']
+    #     self.assertFalse(folder02.exclude_from_nav())
+    #     link01 = self.portal['link01']
+    #     self.assertFalse(link01.exclude_from_nav())
 
-        catalog = getToolByName(self.portal, 'portal_catalog')
-        uids = [brain.UID for brain in catalog()]
+    #     catalog = getToolByName(self.portal, 'portal_catalog')
+    #     uids = [brain.UID for brain in catalog()]
 
-        from sll.policy.upgrades import upgrade_4_to_5
-        upgrade_4_to_5(self.portal)
+    #     from sll.policy.upgrades import upgrade_4_to_5
+    #     upgrade_4_to_5(self.portal)
 
-        ## exclude_from_nav
-        self.assertFalse(folder01.exclude_from_nav())
-        self.assertTrue(folder02.exclude_from_nav())
-        self.assertFalse(link01.exclude_from_nav())
+    #     ## exclude_from_nav
+    #     self.assertFalse(folder01.exclude_from_nav())
+    #     self.assertTrue(folder02.exclude_from_nav())
+    #     self.assertFalse(link01.exclude_from_nav())
 
-        from Products.ATContentTypes.interfaces.document import IATDocument
-        from Products.ATContentTypes.interfaces.folder import IATFolder
-        object_provides = [
-            IATDocument.__identifier__,
-            IATFolder.__identifier__,
-        ]
-        query = {
-            'object_provides': object_provides,
-        }
+    #     from Products.ATContentTypes.interfaces.document import IATDocument
+    #     from Products.ATContentTypes.interfaces.folder import IATFolder
+    #     object_provides = [
+    #         IATDocument.__identifier__,
+    #         IATFolder.__identifier__,
+    #     ]
+    #     query = {
+    #         'object_provides': object_provides,
+    #     }
 
-        new_uids = [brain.UID for brain in catalog(query)]
-        for uid in new_uids:
-            self.assertFalse(uid in uids)
+    #     new_uids = [brain.UID for brain in catalog(query)]
+    #     for uid in new_uids:
+    #         self.assertFalse(uid in uids)
 
     def test_upgrade_4_to_5__workflow(self):
         from plone.app.testing import TEST_USER_ID
@@ -366,23 +366,186 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_upgrade_5_to_6(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+        folder01 = self.portal[
+            self.portal.invokeFactory(
+                'Folder',
+                'folder01',
+            )
+        ]
+        folder01.reindexObject()
+        folder02 = folder01[
+            folder01.invokeFactory(
+                'Folder',
+                'folder02',
+            )
+        ]
+        folder02.reindexObject()
+        catalog = getToolByName(self.portal, 'portal_catalog')
+
+        uids = [brain.UID for brain in catalog()]
+
         from sll.policy.upgrades import upgrade_5_to_6
         upgrade_5_to_6(self.portal)
 
-    def test_upgrade_6_to_7__collective_cropimage_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('collective.cropimage'))
-        installer.uninstallProducts(['collective.cropimage'])
-        self.failIf(installer.isProductInstalled('collective.cropimage'))
+        from Products.ATContentTypes.interfaces.folder import IATFolder
+        query = {
+            'object_provides': IATFolder.__identifier__,
+            'path': {
+                'query': '/'.join(self.portal.getPhysicalPath()),
+                'depth': 1,
+            },
+        }
+
+        new_uids = [brain.UID for brain in catalog(query)]
+        for uid in new_uids:
+            self.assertFalse(uid in uids)
+        self.failUnless(self.portal['folder01'])
+
+    def test_upgrade_6_to_7(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+        wftool = getToolByName(self.portal, "portal_workflow")
+
+        folder01 = self.portal[
+            self.portal.invokeFactory(
+                'Folder',
+                'folder01',
+            )
+        ]
+        folder01.reindexObject()
+        wftool.doActionFor(folder01, 'publish')
+        folder01.reindexObject(idxs=['review_state'])
+
+        folder02 = folder01[
+            folder01.invokeFactory(
+                'Folder',
+                'folder02',
+            )
+        ]
+        folder02.reindexObject()
+        wftool.doActionFor(folder02, 'publish')
+        folder02.reindexObject(idxs=['review_state'])
+
+        folder03 = folder02[
+            folder02.invokeFactory(
+                'Folder',
+                'folder03',
+            )
+        ]
+        folder03.reindexObject()
+
+        catalog = getToolByName(self.portal, 'portal_catalog')
+        uids = [brain.UID for brain in catalog()]
 
         from sll.policy.upgrades import upgrade_6_to_7
         upgrade_6_to_7(self.portal)
 
-        self.failUnless(installer.isProductInstalled('collective.cropimage'))
+        # from Products.ATContentTypes.interfaces.folder import IATFolder
+        # query = {
+        #     'object_provides': IATFolder.__identifier__,
+        #     'path': {
+        #         'query': '/'.join(self.portal.getPhysicalPath()),
+        #         'depth': 2,
+        #     },
+        # }
 
-    def test_upgrade_6_to_7__collective_cropimage_ids(self):
-        from sll.policy.upgrades import upgrade_6_to_7
-        upgrade_6_to_7(self.portal)
+        # new_uids = [brain.UID for brain in catalog(query)]
+        # for uid in new_uids:
+        self.assertFalse(self.portal['folder01']['folder02'].UID() in uids)
+        self.failUnless(self.portal['folder01']['folder02'])
+        self.failUnless(
+            wftool.getInfoFor(
+                self.portal['folder01'],
+                'review_state'
+            ),
+            'published'
+        )
+        self.failUnless(
+            wftool.getInfoFor(
+                self.portal['folder01']['folder02'],
+                'review_state'
+            ),
+            'published'
+        )
+        self.failUnless(
+            wftool.getInfoFor(
+                self.portal['folder01']['folder02']['folder03'],
+                'review_state'
+            ),
+            'private'
+        )
+
+    def test_copy_paste_remove_others(self):
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+        wftool = getToolByName(self.portal, "portal_workflow")
+
+        document01 = self.portal[
+            self.portal.invokeFactory(
+                'Document',
+                'document01',
+            )
+        ]
+        wftool.doActionFor(document01, 'publish')
+        document01.reindexObject()
+
+        document02 = self.portal[
+            self.portal.invokeFactory(
+                'Document',
+                'document02',
+            )
+        ]
+        document02.reindexObject()
+
+        catalog = getToolByName(self.portal, 'portal_catalog')
+        uids = [brain.UID for brain in catalog()]
+
+        from sll.policy.upgrades import copy_paste_remove_others
+
+        from Products.ATContentTypes.interfaces.document import IATDocument
+        copy_paste_remove_others(self.portal, IATDocument.__identifier__)
+
+        self.assertFalse(self.portal['document01'].UID() in uids)
+        self.assertFalse(self.portal['document02'].UID() in uids)
+        self.failUnless(
+            wftool.getInfoFor(
+                self.portal['document01'],
+                'review_state'
+            ),
+            'published'
+        )
+        self.failUnless(
+            wftool.getInfoFor(
+                self.portal['document02'],
+                'review_state'
+            ),
+            'private'
+        )
+
+    def test_upgrade_13_to_14(self):
+        portal_properties = getToolByName(self.portal, 'portal_properties')
+        navtree_properties = getattr(portal_properties, 'navtree_properties')
+        self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
+
+        navtree_properties._updateProperty('topLevel', 1)
+        self.assertEqual(navtree_properties.getProperty('topLevel'), 1)
+
+        from sll.policy.upgrades import upgrade_13_to_14
+        upgrade_13_to_14(self.portal)
+
+        self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
+
+    def test_upgrade_15_to_16__collective_cropimage_ids(self):
+        from sll.policy.upgrades import upgrade_15_to_16
+        upgrade_15_to_16(self.portal)
         from plone.registry.interfaces import IRegistry
         from zope.component import getUtility
         registry = getUtility(IRegistry)

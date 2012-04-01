@@ -408,6 +408,15 @@ class TestCase(IntegrationTestCase):
             [u'Contributor', u'Reviewer', u'Editor', u'Reader']
         )
 
+    def test_Members_folders_removed(self):
+        self.assertRaises(KeyError, lambda:self.portal['Members'])
+
+    def test_news_folders_removed(self):
+        self.assertRaises(KeyError, lambda:self.portal['news'])
+
+    def test_events_folders_removed(self):
+        self.assertRaises(KeyError, lambda:self.portal['events'])
+
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['sll.policy'])
