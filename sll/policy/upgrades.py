@@ -11,7 +11,6 @@ from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.registry.interfaces import IRegistry
 from sll.policy.config import IDS
 from zope.component import getUtility
-from plone.app.blob.interfaces import IATBlob
 
 import logging
 
@@ -47,31 +46,38 @@ def upgrade_3_to_4(context, logger=None):
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
 
+    # Update propertiestool.xml
+    properties = getToolByName(context, 'portal_properties')
+    site_properties = getattr(properties, 'site_properties')
+    logger.info('Disabling enable_link_integrity_checks.')
+    site_properties._updateProperty('enable_link_integrity_checks', False)
+    logger.info('Disabled enable_link_integrity_checks.')
+
     # Get portal
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
-    # Monkey patching getIntegrityBreaches method.
-    from plone.uuid.interfaces import IUUID
-    from plone.app.linkintegrity.info import LinkIntegrityInfo
+    # # Monkey patching getIntegrityBreaches method.
+    # from plone.uuid.interfaces import IUUID
+    # from plone.app.linkintegrity.info import LinkIntegrityInfo
 
-    def getSLLIntegrityBreaches(self):
-        """ return stored information regarding link integrity breaches
-            after removing circular references, confirmed items etc """
-        uuids_to_delete = [IUUID(obj, None) for obj in self.getDeletedItems()]
-        uuids_to_delete = set(filter(None, uuids_to_delete))    # filter `None`
-        breaches = dict(self.getIntegrityInfo().get('breaches', {}))
-        uuids_to_delete.update([IUUID(obj) for obj in breaches if obj is not None])
-        for target, sources in breaches.items():    # first remove deleted sources
-            for source in list(sources):
-                if IUUID(source) in uuids_to_delete:
-                    sources.remove(source)
-        for target, sources in breaches.items():    # then remove "empty" targets
-            if not sources or self.isConfirmedItem(target):
-                del breaches[target]
-        return breaches
+    # def getSLLIntegrityBreaches(self):
+    #     """ return stored information regarding link integrity breaches
+    #         after removing circular references, confirmed items etc """
+    #     uuids_to_delete = [IUUID(obj, None) for obj in self.getDeletedItems()]
+    #     uuids_to_delete = set(filter(None, uuids_to_delete))    # filter `None`
+    #     breaches = dict(self.getIntegrityInfo().get('breaches', {}))
+    #     uuids_to_delete.update([IUUID(obj) for obj in breaches if obj is not None])
+    #     for target, sources in breaches.items():    # first remove deleted sources
+    #         for source in list(sources):
+    #             if IUUID(source) in uuids_to_delete:
+    #                 sources.remove(source)
+    #     for target, sources in breaches.items():    # then remove "empty" targets
+    #         if not sources or self.isConfirmedItem(target):
+    #             del breaches[target]
+    #     return breaches
 
-    LinkIntegrityInfo.getIntegrityBreaches = getSLLIntegrityBreaches
+    # LinkIntegrityInfo.getIntegrityBreaches = getSLLIntegrityBreaches
 
     # Remove unnecessary contents
     if portal.get('removable'):
@@ -93,6 +99,10 @@ def upgrade_3_to_4(context, logger=None):
         logger.info(message)
 
     logger.info('All the contents id starting with "copy" removed.')
+
+    logger.info('Enabling enable_link_integrity_checks.')
+    site_properties._updateProperty('enable_link_integrity_checks', True)
+    logger.info('Enabled enable_link_integrity_checks.')
 
 
 def upgrade_4_to_5(context, logger=None):
