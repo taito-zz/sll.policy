@@ -469,16 +469,16 @@ def upgrade_13_to_14(context, logger=None):
     logger.info('Set topLevel to zero for navigation portlet.')
 
 
+# def upgrade_14_to_15(context, logger=None):
+#     if logger is None:
+#         # Called as upgrade step: define our own logger.
+#         logger = logging.getLogger(__name__)
+
+#     object_provides = IATBlob.__identifier__
+#     copy_paste_remove_others(context, object_provides, logger=logger)
+
+
 def upgrade_14_to_15(context, logger=None):
-    if logger is None:
-        # Called as upgrade step: define our own logger.
-        logger = logging.getLogger(__name__)
-
-    object_provides = IATBlob.__identifier__
-    copy_paste_remove_others(context, object_provides, logger=logger)
-
-
-def upgrade_15_to_16(context, logger=None):
     """"Setup collective.cropimage."""
     if logger is None:
         # Called as upgrade step: define our own logger.

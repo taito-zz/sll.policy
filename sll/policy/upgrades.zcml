@@ -134,7 +134,7 @@
     title="Update default topLevel to zero for navigation portlet."
     />
 
-  <genericsetup:upgradeStep
+<!--   <genericsetup:upgradeStep
     description=""
     destination="15"
     handler="sll.policy.upgrades.upgrade_14_to_15"
@@ -142,15 +142,15 @@
     sortkey="1"
     source="14"
     title="Copy paste and remove Blob Files."
-    />
+    /> -->
 
   <genericsetup:upgradeStep
     description=""
-    destination="16"
-    handler="sll.policy.upgrades.upgrade_15_to_16"
+    destination="15"
+    handler="sll.policy.upgrades.upgrade_14_to_15"
     profile="sll.policy:default"
     sortkey="1"
-    source="15"
+    source="14"
     title="Setup collective.cropimage."
     />
 

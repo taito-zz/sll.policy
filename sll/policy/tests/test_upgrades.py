@@ -543,9 +543,9 @@ class TestCase(IntegrationTestCase):
 
         self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
 
-    def test_upgrade_15_to_16__collective_cropimage_ids(self):
-        from sll.policy.upgrades import upgrade_15_to_16
-        upgrade_15_to_16(self.portal)
+    def test_upgrade_14_to_15__collective_cropimage_ids(self):
+        from sll.policy.upgrades import upgrade_14_to_15
+        upgrade_14_to_15(self.portal)
         from plone.registry.interfaces import IRegistry
         from zope.component import getUtility
         registry = getUtility(IRegistry)
