@@ -160,12 +160,12 @@ def upgrade_4_to_5(context, logger=None):
 
     for brain in brains:
         obj = brain.getObject()
+        path = brain.getPath()
         ## exclude_from_nav
         parent = aq_parent(obj)
         if INavigationRoot.providedBy(parent):
             types = ['Document', 'Folder', 'FormFolder', 'News Item']
             if (brain.portal_type in types) and (brain.review_state != 'published'):
-                path = brain.getPath()
                 message = "Start excluding '{0}' from navigation.".format(path)
                 logger.info(message)
                 obj.setExcludeFromNav(True)
