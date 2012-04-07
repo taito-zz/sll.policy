@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>16</version>
+  <version>15</version>
   <dependencies>
     <dependency>profile-collective.cropimage:default</dependency>
     <dependency>profile-collective.contentleadimage:default</dependency>

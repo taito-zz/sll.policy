@@ -134,16 +134,6 @@
     title="Update default topLevel to zero for navigation portlet."
     />
 
-<!--   <genericsetup:upgradeStep
-    description=""
-    destination="15"
-    handler="sll.policy.upgrades.upgrade_14_to_15"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="14"
-    title="Copy paste and remove Blob Files."
-    /> -->
-
   <genericsetup:upgradeStep
     description=""
     destination="15"
