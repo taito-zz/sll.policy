@@ -57,28 +57,6 @@ def upgrade_3_to_4(context, logger=None):
     portal_url = getToolByName(context, 'portal_url')
     portal = portal_url.getPortalObject()
 
-    # # Monkey patching getIntegrityBreaches method.
-    # from plone.uuid.interfaces import IUUID
-    # from plone.app.linkintegrity.info import LinkIntegrityInfo
-
-    # def getSLLIntegrityBreaches(self):
-    #     """ return stored information regarding link integrity breaches
-    #         after removing circular references, confirmed items etc """
-    #     uuids_to_delete = [IUUID(obj, None) for obj in self.getDeletedItems()]
-    #     uuids_to_delete = set(filter(None, uuids_to_delete))    # filter `None`
-    #     breaches = dict(self.getIntegrityInfo().get('breaches', {}))
-    #     uuids_to_delete.update([IUUID(obj) for obj in breaches if obj is not None])
-    #     for target, sources in breaches.items():    # first remove deleted sources
-    #         for source in list(sources):
-    #             if IUUID(source) in uuids_to_delete:
-    #                 sources.remove(source)
-    #     for target, sources in breaches.items():    # then remove "empty" targets
-    #         if not sources or self.isConfirmedItem(target):
-    #             del breaches[target]
-    #     return breaches
-
-    # LinkIntegrityInfo.getIntegrityBreaches = getSLLIntegrityBreaches
-
     # Remove unnecessary contents
     if portal.get('removable'):
         logger.info('Start removing Removable Folder.')
