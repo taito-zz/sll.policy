@@ -211,7 +211,7 @@ def copy_paste_remove(context, object_provides, depth, logger=None):
         'object_provides': object_provides,
         'path': {
             'query': paths,
-            'depth': depth-1,
+            'depth': depth - 1,
         },
     }
 
@@ -472,5 +472,20 @@ def upgrade_14_to_15(context, logger=None):
     registry['collective.cropimage.ids'] = IDS
     keys = [item['id'] for item in IDS]
     for key in keys:
-        message='collective.cropimage.ids updated with ID: "{0}"'.format(key)
+        message = 'collective.cropimage.ids updated with ID: "{0}"'.format(key)
         logger.info(message)
+
+
+def upgrade_15_to_16(context, logger=None):
+    """"Change theme to Sunburst Theme and uninstall Products.NewSLLSkin"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+    installer = getToolByName(context, 'portal_quickinstaller')
+    if installer.isProductInstalled('NewSllSkin'):
+        logger.info('Uninstalling NewSllSkin.')
+        installer.uninstallProducts(['NewSllSkin'])
+        portal_skins = getToolByName(context, 'portal_skins')
+        portal_skins.default_skin = 'Sunburst Theme'
+        portal_skins.manage_skinLayers(chosen=('NewSllSkin',), del_skin=True)
+        logger.info('Uninstalled NewSllSkin.')

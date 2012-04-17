@@ -39,8 +39,8 @@ class TestCase(IntegrationTestCase):
         self.failUnless(self.portal['copy_of_folder'])
         from sll.policy.upgrades import upgrade_3_to_4
         upgrade_3_to_4(self.portal)
-        self.assertRaises(KeyError, lambda:self.portal['removable'])
-        self.assertRaises(KeyError, lambda:self.portal['copy_of_folder'])
+        self.assertRaises(KeyError, lambda: self.portal['removable'])
+        self.assertRaises(KeyError, lambda: self.portal['copy_of_folder'])
 
     def createStructure(self, folder):
         from plone.app.testing import TEST_USER_ID
@@ -251,49 +251,6 @@ class TestCase(IntegrationTestCase):
         wftool.doActionFor(news04, 'hide')
         news04.reindexObject()
 
-    # def test_upgrade_4_to_5__contents(self):
-    #     ## Create structure under plone root.
-    #     self.createStructure(self.portal)
-    #     ## Create structure under three folders under plone root.
-    #     folder01 = self.portal['folder01']
-    #     self.createStructure(folder01)
-    #     self.createStructure(self.portal['folder02'])
-    #     self.createStructure(self.portal['folder03'])
-    #     ## Create structure under one folder under a folder under plone root.
-    #     self.createStructure(folder01['folder01'])
-
-    #     ## exclude_from_nav
-    #     self.assertFalse(folder01.exclude_from_nav())
-    #     folder02 = self.portal['folder02']
-    #     self.assertFalse(folder02.exclude_from_nav())
-    #     link01 = self.portal['link01']
-    #     self.assertFalse(link01.exclude_from_nav())
-
-    #     catalog = getToolByName(self.portal, 'portal_catalog')
-    #     uids = [brain.UID for brain in catalog()]
-
-    #     from sll.policy.upgrades import upgrade_4_to_5
-    #     upgrade_4_to_5(self.portal)
-
-    #     ## exclude_from_nav
-    #     self.assertFalse(folder01.exclude_from_nav())
-    #     self.assertTrue(folder02.exclude_from_nav())
-    #     self.assertFalse(link01.exclude_from_nav())
-
-    #     from Products.ATContentTypes.interfaces.document import IATDocument
-    #     from Products.ATContentTypes.interfaces.folder import IATFolder
-    #     object_provides = [
-    #         IATDocument.__identifier__,
-    #         IATFolder.__identifier__,
-    #     ]
-    #     query = {
-    #         'object_provides': object_provides,
-    #     }
-
-    #     new_uids = [brain.UID for brain in catalog(query)]
-    #     for uid in new_uids:
-    #         self.assertFalse(uid in uids)
-
     def test_upgrade_4_to_5__workflow(self):
         from plone.app.testing import TEST_USER_ID
         from plone.app.testing import setRoles
@@ -446,17 +403,6 @@ class TestCase(IntegrationTestCase):
         from sll.policy.upgrades import upgrade_6_to_7
         upgrade_6_to_7(self.portal)
 
-        # from Products.ATContentTypes.interfaces.folder import IATFolder
-        # query = {
-        #     'object_provides': IATFolder.__identifier__,
-        #     'path': {
-        #         'query': '/'.join(self.portal.getPhysicalPath()),
-        #         'depth': 2,
-        #     },
-        # }
-
-        # new_uids = [brain.UID for brain in catalog(query)]
-        # for uid in new_uids:
         self.assertFalse(self.portal['folder01']['folder02'].UID() in uids)
         self.failUnless(self.portal['folder01']['folder02'])
         self.failUnless(
@@ -563,3 +509,13 @@ class TestCase(IntegrationTestCase):
                 }
             ]
         )
+
+    def test_upgrades_15_to_16(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('NewSllSkin'))
+        from sll.policy.upgrades import upgrade_15_to_16
+        upgrade_15_to_16(self.portal)
+        self.assertFalse(installer.isProductInstalled('NewSllSkin'))
+        portal_skins = getToolByName(self.portal, 'portal_skins')
+        self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
+        self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())

@@ -144,4 +144,15 @@
     title="Setup collective.cropimage."
     />
 
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="16"
+    handler="sll.policy.upgrades.upgrade_15_to_16"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="15"
+    title="Uninstall NewSllSkin"
+    />
+
 </configure>

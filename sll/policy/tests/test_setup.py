@@ -152,74 +152,12 @@ class TestCase(IntegrationTestCase):
         action = getattr(actions, 'dashboard')
         self.assertFalse(action.getProperty('visible'))
 
-    # def test_sitemap(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'sitemap')
-    #     self.assertFalse(action.getProperty('visible'))
-
-    # def test_accessibility(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'accessibility')
-    #     self.assertFalse(action.getProperty('visible'))
-
-    # def test_contact(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'contact')
-    #     self.assertFalse(action.getProperty('visible'))
-
-    # def test_plone_setup(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'plone_setup')
-    #     self.assertFalse(action.getProperty('visible'))
-
-    # def test_medialle(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'medialle')
-    #     self.assertEqual(action.getProperty('title'), 'To Media')
-    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/medialle')
-    #     self.assertEqual(action.getProperty('permissions'), ('View',))
-    #     self.assertTrue(action.getProperty('visible'))
-
-    # def test_yhteystiedot(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'yhteystiedot')
-    #     self.assertEqual(action.getProperty('title'), 'Contact')
-    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/yhteystiedot')
-    #     self.assertEqual(action.getProperty('permissions'), ('View',))
-    #     self.assertTrue(action.getProperty('visible'))
-
-    # def test_yrityksille(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'yrityksille')
-    #     self.assertEqual(action.getProperty('title'), 'To Companies')
-    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/yrityksille')
-    #     self.assertEqual(action.getProperty('permissions'), ('View',))
-    #     self.assertTrue(action.getProperty('visible'))
-
-    # def test_english(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'english')
-    #     self.assertEqual(action.getProperty('title'), 'In English')
-    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/english')
-    #     self.assertEqual(action.getProperty('permissions'), ('View',))
-    #     self.assertTrue(action.getProperty('visible'))
-
-    # def test_svenska(self):
-    #     tool = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(tool, 'site_actions')
-    #     action = getattr(actions, 'svenska')
-    #     self.assertEqual(action.getProperty('title'), 'In Swedish')
-    #     self.assertEqual(action.getProperty('url_expr'), 'string:${portal_url}/svenska')
-    #     self.assertEqual(action.getProperty('permissions'), ('View',))
-    #     self.assertTrue(action.getProperty('visible'))
+    def test_metadata__version(self):
+        setup = getToolByName(self.portal, 'portal_setup')
+        self.assertEqual(
+            setup.getVersionForProfile('profile-sll.policy:default'),
+            u'16'
+        )
 
     ## properties.xml
     def test_properties__title(self):
@@ -409,13 +347,13 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_Members_folders_removed(self):
-        self.assertRaises(KeyError, lambda:self.portal['Members'])
+        self.assertRaises(KeyError, lambda: self.portal['Members'])
 
     def test_news_folders_removed(self):
-        self.assertRaises(KeyError, lambda:self.portal['news'])
+        self.assertRaises(KeyError, lambda: self.portal['news'])
 
     def test_events_folders_removed(self):
-        self.assertRaises(KeyError, lambda:self.portal['events'])
+        self.assertRaises(KeyError, lambda: self.portal['events'])
 
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
