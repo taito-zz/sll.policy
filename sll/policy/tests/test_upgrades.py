@@ -511,11 +511,16 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_upgrades_15_to_16(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.assertTrue(installer.isProductInstalled('NewSllSkin'))
+        ## Need to add portlet_kartta first...
+        portal_skins = getToolByName(self.portal, 'portal_skins')
+        custom = portal_skins['custom']
+        from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate
+        manage_addPageTemplate(custom, 'aaa', text='')
+        manage_addPageTemplate(custom, 'portlet_kartta', text='')
         from sll.policy.upgrades import upgrade_15_to_16
         upgrade_15_to_16(self.portal)
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.assertFalse(installer.isProductInstalled('NewSllSkin'))
-        portal_skins = getToolByName(self.portal, 'portal_skins')
         self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
         self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())
+        self.assertEqual(custom.objectIds(), ['aaa'])

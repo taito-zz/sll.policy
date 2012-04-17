@@ -11,6 +11,8 @@
   <!-- Remove portlets from left column -->
   <assignment remove="True" name="navigation" category="context" key="/"
               manager="plone.leftcolumn" type="portlets.Navigation" />
+  <assignment remove="True" name="portlet_kartta" category="context" key="/"
+              manager="plone.leftcolumn" type="portlets.Navigation" />
 
   <!-- Remove portlets from right column -->
   <assignment remove="True" name="news" category="context" key="/"

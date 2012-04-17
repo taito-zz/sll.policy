@@ -489,3 +489,24 @@ def upgrade_15_to_16(context, logger=None):
         portal_skins.default_skin = 'Sunburst Theme'
         portal_skins.manage_skinLayers(chosen=('NewSllSkin',), del_skin=True)
         logger.info('Uninstalled NewSllSkin.')
+
+        setup = getToolByName(context, 'portal_setup')
+        logger.info('Removing portlet_kartta')
+        setup.runImportStepFromProfile(PROFILE_ID, 'portlets', run_dependencies=False, purge_old=False)
+        logger.info('Removed portlet_kartta')
+
+        logger.info('Remove unnecessary objects')
+        custom = portal_skins['custom']
+        items = [
+            item for item in [
+                'ploneCustom.css',
+                'portlet_kartta',
+            ] if item in custom.objectIds()
+        ]
+        if items:
+            text = ', '.join(items)
+            message = 'Removing {0}.'.format(text)
+            logger.info(message)
+            custom.manage_delObjects(items)
+            message = 'Removed {0}.'.format(text)
+            logger.info(message)
