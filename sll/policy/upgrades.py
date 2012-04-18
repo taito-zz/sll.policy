@@ -546,8 +546,8 @@ def upgrade_16_to_17(context, logger=None):
         (
             u'plone.skip_links',
             u'plone.personal_bar',
-            u'plone.app.i18n.locales.languageselector',
             u'plone.site_actions',
+            u'plone.app.i18n.locales.languageselector',
             u'plone.searchbox',
             u'plone.logo',
             u'plone.global_sections',
@@ -602,7 +602,7 @@ def upgrade_18_to_19(context, logger=None):
 
 
 def upgrade_19_to_20(context, logger=None):
-    """Hide colophon"""
+    """Hide colophon and show site_actions"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -615,5 +615,17 @@ def upgrade_19_to_20(context, logger=None):
     logger.info('Hid plone.colophon.')
 
     logger.info('Hiding plone.site_actions.')
-    storage.setOrder('plone.portalheader', '*', (u'plone.colophon', u'plone.site_actions'))
+    storage.setOrder(
+        'plone.portalheader',
+        '*',
+        (
+            u'plone.skip_links',
+            u'plone.personal_bar',
+            u'plone.site_actions',
+            u'plone.app.i18n.locales.languageselector',
+            u'plone.searchbox',
+            u'plone.logo',
+            u'plone.global_sections',
+        )
+    )
     logger.info('Hid plone.site_actions.')

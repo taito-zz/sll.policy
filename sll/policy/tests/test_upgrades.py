@@ -549,8 +549,8 @@ class TestCase(IntegrationTestCase):
             (
                 u'plone.skip_links',
                 u'plone.personal_bar',
-                u'plone.app.i18n.locales.languageselector',
                 u'plone.site_actions',
+                u'plone.app.i18n.locales.languageselector',
                 u'plone.searchbox',
                 u'plone.logo',
                 u'plone.global_sections',
@@ -612,5 +612,17 @@ class TestCase(IntegrationTestCase):
             (
                 u'plone.colophon',
                 u'plone.site_actions',
+            )
+        )
+        self.assertEqual(
+            storage.getOrder('plone.portalheader', '*'),
+            (
+                u'plone.skip_links',
+                u'plone.personal_bar',
+                u'plone.site_actions',
+                u'plone.app.i18n.locales.languageselector',
+                u'plone.searchbox',
+                u'plone.logo',
+                u'plone.global_sections',
             )
         )
