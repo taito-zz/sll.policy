@@ -533,8 +533,8 @@ class TestCase(IntegrationTestCase):
         storage = getUtility(IViewletSettingsStorage)
         storage.setHidden('plone.portaltop', '*', (u'plone.header',))
         self.assertTrue(u'plone.header' in storage.getHidden('plone.portaltop', '*'))
-        storage.setHidden('plone.header', '*', (u'plone.logo',))
-        self.assertTrue(u'plone.logo' in storage.getHidden('plone.header', '*'))
+        storage.setHidden('plone.portalheader', '*', (u'plone.logo',))
+        self.assertTrue(u'plone.logo' in storage.getHidden('plone.portalheader', '*'))
         from sll.policy.upgrades import upgrade_16_to_17
         upgrade_16_to_17(self.portal)
         self.assertEqual(
@@ -545,17 +545,18 @@ class TestCase(IntegrationTestCase):
         )
         self.assertFalse(storage.getHidden('plone.portaltop', '*'))
         self.assertEqual(
-            storage.getOrder('plone.header', '*'),
+            storage.getOrder('plone.portalheader', '*'),
             (
                 u'plone.skip_links',
                 u'plone.personal_bar',
                 u'plone.app.i18n.locales.languageselector',
+                u'plone.site_actions',
                 u'plone.searchbox',
                 u'plone.logo',
                 u'plone.global_sections',
             )
         )
-        self.assertEqual(storage.getHidden('plone.header', '*'), ())
+        self.assertEqual(storage.getHidden('plone.portalheader', '*'), ())
 
     def test_upgrades_17_to_18(self):
         tausta = self.portal[
@@ -587,4 +588,29 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
             folder_logo_properties.getProperty('background_image_id'),
             ''
+        )
+
+    def test_upgrades_18_to_19(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        product = 'plonetheme.classic'
+        installer.installProduct(product)
+        self.assertTrue(installer.isProductInstalled(product))
+        from sll.policy.upgrades import upgrade_18_to_19
+        upgrade_18_to_19(self.portal)
+        self.assertFalse(installer.isProductInstalled(product))
+
+    def test_upgrades_19_to_20(self):
+        from zope.component import getUtility
+        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+        storage = getUtility(IViewletSettingsStorage)
+        storage.setHidden('plone.portalfooter', '*', (u'plone.footer',))
+        self.assertEqual(storage.getHidden('plone.portalfooter', '*'), (u'plone.footer',))
+        from sll.policy.upgrades import upgrade_19_to_20
+        upgrade_19_to_20(self.portal)
+        self.assertEqual(
+            storage.getHidden('plone.portalfooter', '*'),
+            (
+                u'plone.colophon',
+                u'plone.site_actions',
+            )
         )

@@ -535,25 +535,26 @@ def upgrade_16_to_17(context, logger=None):
     from zope.component import getUtility
     from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
     storage = getUtility(IViewletSettingsStorage)
-    logger.info('Unhiding plone.header.')
+    logger.info('Unhiding plone.portalheader.')
     storage.setHidden('plone.portaltop', '*', ())
-    logger.info('Unhid plone.header.')
+    logger.info('Unhid plone.portalheader.')
 
-    logger.info('Ordering plone.header.')
+    logger.info('Ordering plone.portalheader.')
     storage.setOrder(
-        'plone.header',
+        'plone.portalheader',
         '*',
         (
             u'plone.skip_links',
             u'plone.personal_bar',
             u'plone.app.i18n.locales.languageselector',
+            u'plone.site_actions',
             u'plone.searchbox',
             u'plone.logo',
             u'plone.global_sections',
         )
     )
-    storage.setHidden('plone.header', '*', ())
-    logger.info('Ordered plone.header.')
+    storage.setHidden('plone.portalheader', '*', ())
+    logger.info('Ordered plone.portalheader.')
 
 
 def upgrade_17_to_18(context, logger=None):
@@ -582,3 +583,37 @@ def upgrade_17_to_18(context, logger=None):
         background_image_id='',
     )
     logger.info('Removed background.')
+
+
+def upgrade_18_to_19(context, logger=None):
+    """Uninstall plonetheme.classic"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    installer = getToolByName(context, 'portal_quickinstaller')
+    product = 'plonetheme.classic'
+    if installer.isProductInstalled('plonetheme.classic'):
+        message = 'Uninstalling {0}.'.format(product)
+        logger.info(message)
+        installer.uninstallProducts(['plonetheme.classic'])
+        message = 'Uninstalled {0}.'.format(product)
+        logger.info(message)
+
+
+def upgrade_19_to_20(context, logger=None):
+    """Hide colophon"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    from zope.component import getUtility
+    from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+    storage = getUtility(IViewletSettingsStorage)
+    logger.info('Hiding plone.colophon.')
+    storage.setHidden('plone.portalfooter', '*', (u'plone.colophon', u'plone.site_actions'))
+    logger.info('Hid plone.colophon.')
+
+    logger.info('Hiding plone.site_actions.')
+    storage.setOrder('plone.portalheader', '*', (u'plone.colophon', u'plone.site_actions'))
+    logger.info('Hid plone.site_actions.')

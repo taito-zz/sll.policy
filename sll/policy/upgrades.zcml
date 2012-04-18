@@ -175,4 +175,24 @@
     title="Remove log background"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="19"
+    handler="sll.policy.upgrades.upgrade_18_to_19"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="18"
+    title="Uninstall plonetheme.classic"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="20"
+    handler="sll.policy.upgrades.upgrade_19_to_20"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="19"
+    title="Hide colophon and show site_actions"
+    />
+
 </configure>
