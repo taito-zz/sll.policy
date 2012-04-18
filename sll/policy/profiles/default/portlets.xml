@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <portlets
-    xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-    i18n:domain="sll.policy">
+  i18n:domain="sll.policy"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  >
 
   <!-- Hide default Calendar portlet -->
   <portlet addview="portlets.Login" remove="true" />
@@ -9,22 +10,29 @@
   <portlet addview="portlets.Classic" remove="true" />
 
   <!-- Remove portlets from left column -->
-  <assignment remove="True" name="navigation" category="context" key="/"
-              manager="plone.leftcolumn" type="portlets.Navigation" />
+  <!-- <assignment remove="True" name="navigation" category="context" key="/"
+              manager="plone.leftcolumn" type="portlets.Navigation" /> -->
   <assignment remove="True" name="portlet_kartta" category="context" key="/"
               manager="plone.leftcolumn" type="portlets.Navigation" />
+  <assignment remove="True" name="tiedotteet" category="context" key="/" manager="plone.leftcolumn" />
+  <assignment remove="True" name="suomen-luonnonsuojeluliiton-jaesenenae" category="context" key="/" manager="plone.leftcolumn" />
+  <assignment remove="True" name="recent-items" category="context" key="/" manager="plone.leftcolumn" />
+  <assignment remove="True" name="Cart" category="context" key="/" manager="plone.leftcolumn" />
+
 
   <!-- Remove portlets from right column -->
   <assignment remove="True" name="news" category="context" key="/"
               manager="plone.rightcolumn" type="portlets.News" />
   <assignment remove="True" name="events" category="context" key="/"
               manager="plone.rightcolumn" type="portlets.Events" />
+  <assignment remove="True" name="bannerit" category="context" key="/" manager="plone.rightcolumn" />
+  <assignment remove="True" name="review-list" category="context" key="/" manager="plone.rightcolumn" />
 
   <!-- Assign portlets to left column -->
   <!-- <assignment
     name="navigation"
     category="context"
-    key="/mita-me-teemme"
+    key="/"
     manager="plone.leftcolumn"
     type="portlets.Navigation"
     visible="True"
@@ -37,19 +45,14 @@
     <property name="root"></property>
   </assignment>
   <assignment
-    name="navigation"
+    name="recent-items"
     category="context"
-    key="/mita-sina-voit-tehda"
+    key="/"
     manager="plone.leftcolumn"
-    type="portlets.Navigation"
+    type="portlets.Recent"
     visible="True"
     >
-    <property name="topLevel">1</property>
-    <property name="currentFolderOnly">False</property>
-    <property name="name"></property>
-    <property name="includeTop">False</property>
-    <property name="bottomLevel">0</property>
-    <property name="root"></property>
+    <property name="count">10</property>
   </assignment> -->
 
 </portlets>

@@ -491,7 +491,7 @@ def upgrade_14_to_15(context, logger=None):
 
 
 def upgrade_15_to_16(context, logger=None):
-    """Change theme to Sunburst Theme and uninstall Products.NewSLLSkin"""
+    """Change theme to Sunburst Theme and uninstall Products.NewSLLSkin update portlets"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -629,3 +629,15 @@ def upgrade_19_to_20(context, logger=None):
         )
     )
     logger.info('Hid plone.site_actions.')
+
+
+def upgrade_20_to_21(context, logger=None):
+    """Clean up browserlayer"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    from plone.browserlayer import utils
+    logger.info('Unregistering inicie.cropimage')
+    utils.unregister_layer('inicie.cropimage')
+    logger.info('Unregistered inicie.cropimage')

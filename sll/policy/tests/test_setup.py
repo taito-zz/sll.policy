@@ -127,7 +127,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'20'
+            u'21'
         )
 
     ## properties.xml
@@ -230,13 +230,13 @@ class TestCase(IntegrationTestCase):
     #     self.assertFalse(javascripts.getResource("++resource++kukit.js").getAuthenticated())
 
     ## portlets.xml
-    def test_portlets__navigation_removed_from_left_column(self):
-        from zope.component import getMultiAdapter
-        from plone.portlets.interfaces import IPortletManager
-        from plone.portlets.interfaces import IPortletAssignmentMapping
-        column = getUtility(IPortletManager, name=u"plone.leftcolumn")
-        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-        self.assertFalse('navigation' in assignable.keys())
+    # def test_portlets__navigation_removed_from_left_column(self):
+    #     from zope.component import getMultiAdapter
+    #     from plone.portlets.interfaces import IPortletManager
+    #     from plone.portlets.interfaces import IPortletAssignmentMapping
+    #     column = getUtility(IPortletManager, name=u"plone.leftcolumn")
+    #     assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
+    #     self.assertFalse('navigation' in assignable.keys())
 
     def test_portlets__news_removed_from_right_column(self):
         from zope.component import getMultiAdapter

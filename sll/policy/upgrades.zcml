@@ -195,4 +195,14 @@
     title="Hide colophon and show site_actions"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="21"
+    handler="sll.policy.upgrades.upgrade_20_to_21"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="20"
+    title="Clean up browserlayer"
+    />
+
 </configure>
