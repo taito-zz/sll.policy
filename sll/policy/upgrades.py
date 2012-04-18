@@ -510,3 +510,59 @@ def upgrade_15_to_16(context, logger=None):
             custom.manage_delObjects(items)
             message = 'Removed {0}.'.format(text)
             logger.info(message)
+
+def upgrade_16_to_17(context, logger=None):
+    """"Update plone.portaltop"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    from zope.component import getUtility
+    from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+    storage = getUtility(IViewletSettingsStorage)
+    logger.info('Unhiding plone.header.')
+    storage.setHidden('plone.portaltop', '*', ())
+    logger.info('Unhid plone.header.')
+
+    logger.info('Ordering plone.header.')
+    storage.setOrder(
+        'plone.header',
+        '*',
+        (
+            u'plone.skip_links',
+            u'plone.personal_bar',
+            u'plone.app.i18n.locales.languageselector',
+            u'plone.searchbox',
+            u'plone.logo',
+            u'plone.global_sections',
+        )
+    )
+    storage.setHidden('plone.header', '*', ())
+    logger.info('Ordered plone.header.')
+
+def upgrade_17_to_18(context, logger=None):
+    """"Remove ylapalkin-tausta.png"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    # Get portal
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    oid = 'ylapalkin-tausta.png'
+    if portal.get(oid):
+        message = 'Removing {0}'.format(oid)
+        logger.info(message)
+        portal.manage_delObjects([oid])
+        message = 'Removed {0}'.format(oid)
+        logger.info(message)
+
+    properties = getToolByName(context, 'portal_properties')
+    folder_logo_properties = getattr(properties, 'folder_logo_properties')
+    logger.info('Removing backgroud.')
+    folder_logo_properties.manage_changeProperties(
+        background_color='',
+        background_image_id='',
+    )
+    logger.info('Removed background.')

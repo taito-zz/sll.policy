@@ -526,3 +526,65 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
         self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())
         self.assertEqual(custom.objectIds(), ['aaa'])
+
+    def test_upgrades_16_to_17(self):
+        from zope.component import getUtility
+        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+        storage = getUtility(IViewletSettingsStorage)
+        storage.setHidden('plone.portaltop', '*', (u'plone.header',))
+        self.assertTrue(u'plone.header' in storage.getHidden('plone.portaltop', '*'))
+        storage.setHidden('plone.header', '*', (u'plone.logo',))
+        self.assertTrue(u'plone.logo' in storage.getHidden('plone.header', '*'))
+        from sll.policy.upgrades import upgrade_16_to_17
+        upgrade_16_to_17(self.portal)
+        self.assertEqual(
+            storage.getOrder('plone.portaltop', '*'),
+            (
+                u'plone.header',
+            )
+        )
+        self.assertFalse(storage.getHidden('plone.portaltop', '*'))
+        self.assertEqual(
+            storage.getOrder('plone.header', '*'),
+            (
+                u'plone.skip_links',
+                u'plone.personal_bar',
+                u'plone.app.i18n.locales.languageselector',
+                u'plone.searchbox',
+                u'plone.logo',
+                u'plone.global_sections',
+            )
+        )
+        self.assertEqual(storage.getHidden('plone.header', '*'), ())
+
+    def test_upgrades_17_to_18(self):
+        tausta = self.portal[
+            self.portal.invokeFactory('Document', 'ylapalkin-tausta.png')
+        ]
+        tausta.reindexObject()
+        self.failUnless(self.portal['ylapalkin-tausta.png'])
+        properties = getToolByName(self.portal, 'portal_properties')
+        folder_logo_properties = getattr(properties, 'folder_logo_properties')
+        folder_logo_properties.manage_changeProperties(
+            background_color='white',
+            background_image_id='image',
+        )
+        self.assertEqual(
+            folder_logo_properties.getProperty('background_color'),
+            'white'
+        )
+        self.assertEqual(
+            folder_logo_properties.getProperty('background_image_id'),
+            'image'
+        )
+        from sll.policy.upgrades import upgrade_17_to_18
+        upgrade_17_to_18(self.portal)
+        self.assertRaises(KeyError, lambda: self.portal['ylapalkin-tausta.png'])
+        self.assertEqual(
+            folder_logo_properties.getProperty('background_color'),
+            ''
+        )
+        self.assertEqual(
+            folder_logo_properties.getProperty('background_image_id'),
+            ''
+        )

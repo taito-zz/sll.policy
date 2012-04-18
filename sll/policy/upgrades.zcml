@@ -155,4 +155,14 @@
     title="Uninstall NewSllSkin"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="17"
+    handler="sll.policy.upgrades.upgrade_16_to_17"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="16"
+    title="Update plone.portaltop"
+    />
+
 </configure>

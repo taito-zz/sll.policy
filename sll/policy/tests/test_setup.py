@@ -127,7 +127,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'16'
+            u'17'
         )
 
     ## properties.xml
