@@ -165,4 +165,14 @@
     title="Update plone.portaltop"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="18"
+    handler="sll.policy.upgrades.upgrade_17_to_18"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="17"
+    title="Remove log background"
+    />
+
 </configure>

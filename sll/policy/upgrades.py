@@ -93,7 +93,12 @@ def upgrade_4_to_5(context, logger=None):
 
     # Update filtering on workflow state by import propertiestool.xml.
     logger.info('Start reimporting propertiestool.xml.')
-    setup.runImportStepFromProfile(PROFILE_ID, 'propertiestool', run_dependencies=False, purge_old=False)
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'propertiestool',
+        run_dependencies=False,
+        purge_old=False
+    )
     logger.info('Reimported propertiestool.xml.')
 
     # Update propertiestool.xml
@@ -109,7 +114,12 @@ def upgrade_4_to_5(context, logger=None):
 
     # First import workflow.xml
     logger.info('Start reimporting workflows.xml.')
-    setup.runImportStepFromProfile(PROFILE_ID, 'workflow', run_dependencies=False, purge_old=False)
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'workflow',
+        run_dependencies=False,
+        purge_old=False
+    )
     logger.info('Reimported workflows.xml.')
 
     # Update contents workflow.
@@ -143,7 +153,11 @@ def upgrade_4_to_5(context, logger=None):
         parent = aq_parent(obj)
         if INavigationRoot.providedBy(parent):
             types = ['Document', 'Folder', 'FormFolder', 'News Item']
-            if (brain.portal_type in types) and (brain.review_state != 'published'):
+            if (
+                brain.portal_type in types
+            ) and (
+                brain.review_state != 'published'
+            ):
                 message = "Start excluding '{0}' from navigation.".format(path)
                 logger.info(message)
                 obj.setExcludeFromNav(True)
@@ -458,7 +472,7 @@ def upgrade_13_to_14(context, logger=None):
 
 
 def upgrade_14_to_15(context, logger=None):
-    """"Setup collective.cropimage."""
+    """Setup collective.cropimage."""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -477,7 +491,7 @@ def upgrade_14_to_15(context, logger=None):
 
 
 def upgrade_15_to_16(context, logger=None):
-    """"Change theme to Sunburst Theme and uninstall Products.NewSLLSkin"""
+    """Change theme to Sunburst Theme and uninstall Products.NewSLLSkin"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -511,8 +525,9 @@ def upgrade_15_to_16(context, logger=None):
             message = 'Removed {0}.'.format(text)
             logger.info(message)
 
+
 def upgrade_16_to_17(context, logger=None):
-    """"Update plone.portaltop"""
+    """Update plone.portaltop"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -540,8 +555,9 @@ def upgrade_16_to_17(context, logger=None):
     storage.setHidden('plone.header', '*', ())
     logger.info('Ordered plone.header.')
 
+
 def upgrade_17_to_18(context, logger=None):
-    """"Remove ylapalkin-tausta.png"""
+    """Remove log background"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
