@@ -7,6 +7,9 @@ class TestCase(IntegrationTestCase):
 
     def setUp(self):
         self.portal = self.layer['portal']
+        from plone.app.testing import TEST_USER_ID
+        from plone.app.testing import setRoles
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_upgrade_1_to_2(self):
         from sll.policy.upgrades import upgrade_1_to_2
@@ -511,7 +514,6 @@ class TestCase(IntegrationTestCase):
         )
 
     def test_upgrades_15_to_16(self):
-        ## Need to add portlet_kartta first...
         portal_skins = getToolByName(self.portal, 'portal_skins')
         custom = portal_skins['custom']
         from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate

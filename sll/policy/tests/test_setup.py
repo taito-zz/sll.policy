@@ -1,26 +1,11 @@
 # -*- coding: utf-8 -*-
 
-# from Products.CMFCore.utils import getToolByName
-# from plone.portlets.interfaces import IPortletAssignmentMapping
-# from plone.portlets.interfaces import IPortletManager
-# from sll.policy.tests.base import TestCase
-# from zope.component import getMultiAdapter
-# from zope.component import getUtility
-
-# import unittest2 as unittest
-
-
-# class TestSetup(TestCase):
-
 #     def afterSetUp(self):
 #         self.installer = getToolByName(self.portal, 'portal_quickinstaller')
 #         self.properties = getToolByName(self.portal, 'portal_properties')
 #         self.ccp = getattr(self.properties, 'collective_cart_properties')
 #         self.cppp = getattr(self.properties, 'collective_pfg_payment_properties')
 #         self.flp = getattr(self.properties, 'folder_logo_properties')
-
-#     def test_sll_policy_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('sll.policy'))
 
 #     def test_is_collective_folderlogo_installed(self):
 #         self.failUnless(self.installer.isProductInstalled('collective.folderlogo'))
@@ -48,20 +33,6 @@
 
 #     # def test_is_new_ssl_skin_installed(self):
 #     #     self.failUnless(self.installer.isProductInstalled('NewSllSkin'))
-
-#     ## browserlayer.xml
-#     def test_browserlayer(self):
-#         from sll.policy.interfaces import ISLLPolicyLayer
-#         from plone.browserlayer import utils
-#         self.failUnless(ISLLPolicyLayer in utils.registered_layers())
-
-#     ## properties.xml
-#     def test_portal_email_from_name(self):
-#         self.assertEquals('Luonnonsuojeluliitto', self.portal.getProperty('title'))
-#         self.assertEquals('Suomen luonnonsuojeluliitto ry', self.portal.getProperty('description'))
-#         self.assertEquals("front-page", self.portal.getProperty('default_page'))
-#         self.assertEquals('webmaster@sll.fi', self.portal.getProperty('email_from_address'))
-#         self.assertEquals('Suomen luonnonsuojeluliitto ry', self.portal.getProperty('email_from_name'))
 
 #     ## propertiestool.xml
 #     def test_collective_cart_properties(self):
@@ -122,8 +93,8 @@
 # #        self.failIf(hasattr(self.actions.object, 'edit_order_number'))
 #         pass
 
-from sll.policy.tests.base import IntegrationTestCase
 from Products.CMFCore.utils import getToolByName
+from sll.policy.tests.base import IntegrationTestCase
 from zope.component import getUtility
 
 

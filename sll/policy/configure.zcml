@@ -1,26 +1,25 @@
 <?xml version="1.0"?>
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five"
-    xmlns:grok="http://namespaces.zope.org/grok"
-    xmlns:i18n="http://namespaces.zope.org/i18n"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="sll.policy">
+  i18n_domain="sll.policy"
+  xmlns:five="http://namespaces.zope.org/five"
+  xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+  xmlns:grok="http://namespaces.zope.org/grok"
+  xmlns:i18n="http://namespaces.zope.org/i18n"
+  xmlns="http://namespaces.zope.org/zope"
+  >
 
-  <!-- <five:registerPackage package="." initialize=".initialize" /> -->
   <includeDependencies package="." />
   <grok:grok package="." />
 
   <genericsetup:registerProfile
-      name="default"
-      title="sll.policy"
-      directory="profiles/default"
-      description="Installs the sll.policy package"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
+    description="Installs the sll.policy package"
+    directory="profiles/default"
+    name="default"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    title="sll.policy"
+    />
 
   <include package=".browser" />
   <include file="upgrades.zcml"/>
-
 
 </configure>
