@@ -626,3 +626,69 @@ class TestCase(IntegrationTestCase):
                 u'plone.global_sections',
             )
         )
+
+    def test_upgrades_21_to_22(self):
+        folder01 = self.portal[
+            self.portal.invokeFactory(
+                'Folder',
+                'folder01',
+            )
+        ]
+        folder01.setExcludeFromNav(False)
+        folder01.reindexObject()
+
+        folder02 = folder01[
+            folder01.invokeFactory(
+                'Folder',
+                'folder02',
+            )
+        ]
+        folder02.setExcludeFromNav(False)
+        folder02.reindexObject()
+
+        liity = self.portal[
+            self.portal.invokeFactory(
+                'Folder',
+                'liity',
+            )
+        ]
+        liity.setExcludeFromNav(True)
+        liity.reindexObject()
+
+        self.assertFalse(folder01.getExcludeFromNav())
+        self.assertTrue(liity.getExcludeFromNav())
+
+        from sll.policy.upgrades import upgrade_21_to_22
+        upgrade_21_to_22(self.portal)
+        self.assertTrue(folder01.getExcludeFromNav())
+        self.assertFalse(folder02.getExcludeFromNav())
+        self.assertFalse(liity.getExcludeFromNav())
+
+    def test_upgrades_22_to_23(self):
+        index_html = self.portal[
+            self.portal.invokeFactory(
+                'Document',
+                'index_html',
+            )
+        ]
+        index_html.reindexObject()
+        self.portal.setLayout('index_html')
+
+        from sll.policy.upgrades import upgrade_22_to_23
+        upgrade_22_to_23(self.portal)
+
+        self.assertRaises(AttributeError, lambda: self.portal['index_html'])
+        self.assertEqual(self.portal.getLayout(), 'sll-view')
+
+    def test_upgrades_23_to_24(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        if installer.isProductInstalled('sll.portlet'):
+            installer.uninstallProducts(['sll.portlet'])
+        if installer.isProductInstalled('sll.theme'):
+            installer.uninstallProducts(['sll.theme'])
+
+        from sll.policy.upgrades import upgrade_23_to_24
+        upgrade_23_to_24(self.portal)
+
+        self.assertTrue(installer.isProductInstalled('sll.portlet'))
+        self.assertTrue(installer.isProductInstalled('sll.theme'))

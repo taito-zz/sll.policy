@@ -28,12 +28,12 @@
   <assignment remove="True" name="bannerit" category="context" key="/" manager="plone.rightcolumn" />
   <assignment remove="True" name="review-list" category="context" key="/" manager="plone.rightcolumn" />
 
-  <!-- Assign portlets to left column -->
-  <!-- <assignment
+  <!-- Assign portlets to right column -->
+  <assignment
     name="navigation"
     category="context"
     key="/"
-    manager="plone.leftcolumn"
+    manager="plone.rightcolumn"
     type="portlets.Navigation"
     visible="True"
     >
@@ -45,15 +45,24 @@
     <property name="root"></property>
   </assignment>
   <assignment
+    name="sll-map"
+    category="context"
+    key="/"
+    manager="plone.rightcolumn"
+    type="portlet.SLLMap"
+    visible="True"
+    >
+  </assignment>
+  <assignment
     name="recent-items"
     category="context"
     key="/"
-    manager="plone.leftcolumn"
+    manager="plone.rightcolumn"
     type="portlets.Recent"
     visible="True"
     >
-    <property name="count">10</property>
-  </assignment> -->
+    <property name="count">5</property>
+  </assignment>
 
 </portlets>
 

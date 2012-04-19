@@ -205,4 +205,34 @@
     title="Clean up browserlayer"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="22"
+    handler="sll.policy.upgrades.upgrade_21_to_22"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="21"
+    title="Update tabs"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="23"
+    handler="sll.policy.upgrades.upgrade_22_to_23"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="22"
+    title="Setting front page to sll-view"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="24"
+    handler="sll.policy.upgrades.upgrade_23_to_24"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="23"
+    title="Installs sll.portlet and sll.theme"
+    />
+
 </configure>

@@ -116,6 +116,14 @@ class TestCase(IntegrationTestCase):
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
         self.failUnless(installer.isProductInstalled('PloneFormGen'))
 
+    def test_sll_portlet_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.portlet'))
+
+    def test_sll_theme_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.theme'))
+
     ## actions.xml
     def test_dashboard(self):
         tool = getToolByName(self.portal, 'portal_actions')
@@ -127,7 +135,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'21'
+            u'24'
         )
 
     ## properties.xml

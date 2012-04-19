@@ -641,3 +641,102 @@ def upgrade_20_to_21(context, logger=None):
     logger.info('Unregistering inicie.cropimage')
     utils.unregister_layer('inicie.cropimage')
     logger.info('Unregistered inicie.cropimage')
+
+
+def upgrade_21_to_22(context, logger=None):
+    """Update tabs"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    # Get portal
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+    catalog = getToolByName(context, 'portal_catalog')
+    query = {
+        'path': {
+            'query': '/'.join(portal.getPhysicalPath()),
+            'depth': 1,
+        }
+    }
+
+    # First exclude_from_nav all  onject under portal.
+    for brain in catalog(query):
+        if not brain.exclude_from_nav:
+            oid = brain.id
+            obj = brain.getObject()
+            message = "Excluding '{0}' from navigation.".format(oid)
+            logger.info(message)
+            obj.setExcludeFromNav(True)
+            obj.reindexObject(idxs=['exclude_from_nav'])
+            message = "Excluded '{0}' from navigation.".format(oid)
+            logger.info(message)
+
+    ids = [
+        'ajankohtaista',
+        'tapahtumat',
+        'mita-meteemme',
+        'mita-sina-voit-tehda',
+        'liity',
+        'lahjoita',
+        'jarjesto',
+    ]
+    for oid in ids:
+        obj = portal.get(oid)
+        if obj:
+            message = "Including '{0}' to navigation.".format(oid)
+            logger.info(message)
+            obj.setExcludeFromNav(False)
+            obj.reindexObject(idxs=['exclude_from_nav'])
+            message = "Included '{0}' to navigation.".format(oid)
+            logger.info(message)
+
+
+def upgrade_22_to_23(context, logger=None):
+    """Setting front page to sll-view"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    # Get portal
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    oid = 'index_html'
+    obj = portal.get(oid)
+    if obj:
+        logger.info('Moving index_html to copy_of_index_html.')
+        objs = portal.manage_copyObjects([oid])
+        portal.manage_pasteObjects(objs)
+        portal.manage_delObjects([oid])
+        logger.info('Moved index_html to copy_of_index_html.')
+
+    logger.info('Reinstalling sll.templates.')
+    installer = getToolByName(context, 'portal_quickinstaller')
+    installer.reinstallProducts(['sll.templates'])
+    logger.info('Reinstalled sll.templates.')
+
+    logger.info('Setting view to sll-view.')
+    portal.setLayout('sll-view')
+    logger.info('Set view to sll-view.')
+
+
+def upgrade_23_to_24(context, logger=None):
+    """Installs sll.portlet and sll.theme"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    installer = getToolByName(context, 'portal_quickinstaller')
+
+    if not installer.isProductInstalled('sll.portlet'):
+        logger.info('Reinstalling sll.portlet.')
+        installer.reinstallProducts(['sll.portlet'])
+        setup = getToolByName(context, 'portal_setup')
+        setup.runImportStepFromProfile(PROFILE_ID, 'portlets', run_dependencies=False, purge_old=False)
+        logger.info('Reinstalled sll.portlet.')
+
+    if not installer.isProductInstalled('sll.theme'):
+        logger.info('Reinstalling sll.templates.')
+        installer.reinstallProducts(['sll.theme'])
+        logger.info('Reinstalled sll.theme.')
