@@ -731,12 +731,12 @@ def upgrade_23_to_24(context, logger=None):
 
     if not installer.isProductInstalled('sll.portlet'):
         logger.info('Reinstalling sll.portlet.')
-        installer.reinstallProducts(['sll.portlet'])
+        installer.installProducts(['sll.portlet'])
         setup = getToolByName(context, 'portal_setup')
         setup.runImportStepFromProfile(PROFILE_ID, 'portlets', run_dependencies=False, purge_old=False)
         logger.info('Reinstalled sll.portlet.')
 
     if not installer.isProductInstalled('sll.theme'):
         logger.info('Reinstalling sll.templates.')
-        installer.reinstallProducts(['sll.theme'])
+        installer.installProducts(['sll.theme'])
         logger.info('Reinstalled sll.theme.')

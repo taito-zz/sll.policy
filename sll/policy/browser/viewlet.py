@@ -1,8 +1,9 @@
-from plone.app.layout.viewlets.common import PathBarViewlet
-from Acquisition import aq_inner, aq_parent
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.app.layout.viewlets.common import PathBarViewlet
 from zope.component import getMultiAdapter
 
 
@@ -11,7 +12,8 @@ class HeadViewlet(PathBarViewlet):
     index = ViewPageTemplateFile('viewlets/head.pt')
 
     def update(self):
-        self.request.set('disable_plone.rightcolumn', True)
+        if not IPloneSiteRoot.providedBy(self.context):
+            self.request.set('disable_plone.rightcolumn', True)
 
 
 class PathBarViewlet(PathBarViewlet):

@@ -10,7 +10,7 @@
 
   <browser:viewlet
     name="sll.head"
-    for="Products.ATContentTypes.interfaces.folder.IATFolder "
+    for="*"
     manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
     class=".viewlet.HeadViewlet"
     permission="zope.Public"

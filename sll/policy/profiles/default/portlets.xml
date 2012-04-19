@@ -33,7 +33,7 @@
     name="navigation"
     category="context"
     key="/"
-    manager="plone.rightcolumn"
+    manager="plone.leftcolumn"
     type="portlets.Navigation"
     visible="True"
     >
