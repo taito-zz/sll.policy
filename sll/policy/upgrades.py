@@ -772,7 +772,7 @@ def upgrade_24_to_25(context, logger=None):
 
 
 def upgrade_25_to_26(context, logger=None):
-    """Remove twitter button."""
+    """Remove twitter button"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
