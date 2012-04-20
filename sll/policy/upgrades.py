@@ -9,8 +9,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.PloneFormGen.interfaces import IPloneFormGenForm
 from plone.app.layout.navigation.interfaces import INavigationRoot
 from plone.registry.interfaces import IRegistry
+from sll.policy.browser.interfaces import ITopPageFeed as IBaseTopPageFeed
 from sll.policy.config import IDS
+from sll.templates.browser.interfaces import ITopPageFeed
 from zope.component import getUtility
+from zope.interface import alsoProvides
+from zope.interface import noLongerProvides
 
 import logging
 
@@ -740,3 +744,60 @@ def upgrade_23_to_24(context, logger=None):
         logger.info('Reinstalling sll.templates.')
         installer.installProducts(['sll.theme'])
         logger.info('Reinstalled sll.theme.')
+
+
+def upgrade_24_to_25(context, logger=None):
+    """Update ITopPageFeed"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    catalog = getToolByName(context, 'portal_catalog')
+    query = {'object_provides': IBaseTopPageFeed.__identifier__}
+    for brain in catalog(query):
+        bid = brain.id
+        obj = brain.getObject()
+        message = 'Getting rid of sll.policy.browser.interfaces.ITopPageFeed from {0}'.format(bid)
+        logger.info(message)
+        noLongerProvides(obj, IBaseTopPageFeed)
+        message = 'Got rid of sll.policy.browser.interfaces.ITopPageFeed from {0}'.format(bid)
+        logger.info(message)
+
+        message = 'Applying sll.templates.browser.interfaces.ITopPageFeed to {0}'.format(bid)
+        logger.info(message)
+        alsoProvides(obj, ITopPageFeed)
+        message = 'Applied sll.templates.browser.interfaces.ITopPageFeed to {0}'.format(bid)
+        obj.reindexObject(idxs=['object_provides'])
+        logger.info(message)
+
+
+def upgrade_25_to_26(context, logger=None):
+    """Remove twitter button."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    portal_actions = getToolByName(context, 'portal_actions')
+    document_actions = getattr(portal_actions, 'document_actions')
+    if hasattr(document_actions, 'addtofavorites'):
+        logger.info('Removing addtofavorites.')
+        document_actions.manage_delObjects(['addtofavorites'])
+        logger.info('Removed addtofavorites.')
+
+
+def upgrade_26_to_27(context, logger=None):
+    """Make mark_special_links to false"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    setup = getToolByName(context, 'portal_setup')
+    # Update filtering on workflow state by import propertiestool.xml.
+    logger.info('Start reimporting propertiestool.xml.')
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'propertiestool',
+        run_dependencies=False,
+        purge_old=False
+    )
+    logger.info('Reimported propertiestool.xml.')

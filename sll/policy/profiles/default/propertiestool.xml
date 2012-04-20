@@ -2,19 +2,22 @@
 <object name="portal_properties" meta_type="Plone Properties Tool">
 
   <object name="site_properties" meta_type="Plone Property Sheet">
-      <property
-        name="disable_nonfolderish_sections"
-        type="boolean">False</property>
-      <property name="default_language" type="string">fi</property>
-      <property
-        name="icon_visibility"
-        type="string">authenticated</property>
-      <property
-        name="exposeDCMetaTags"
-        type="boolean">True</property>
-      <property
-        name="enable_sitemap"
-        type="boolean">True</property>
+    <property
+      name="disable_nonfolderish_sections"
+      type="boolean">False</property>
+    <property name="default_language" type="string">fi</property>
+    <property
+      name="icon_visibility"
+      type="string">authenticated</property>
+    <property
+      name="exposeDCMetaTags"
+      type="boolean">True</property>
+    <property
+      name="enable_sitemap"
+      type="boolean">True</property>
+    <property
+      name="mark_special_links"
+      type="string">false</property>
   </object>
 
   <object name="navtree_properties" meta_type="Plone Property Sheet">

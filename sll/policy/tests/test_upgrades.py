@@ -692,3 +692,63 @@ class TestCase(IntegrationTestCase):
 
         self.assertTrue(installer.isProductInstalled('sll.portlet'))
         self.assertTrue(installer.isProductInstalled('sll.theme'))
+
+    def createContents(self, parent, Type, amount=1):
+        objs = set([])
+        for num in range(amount, amount + 1):
+            oid = '{0}{1:05d}'.format(Type.replace(' ', '').lower(), num)
+            cid = oid.capitalize()
+            obj = parent[
+                parent.invokeFactory(
+                        Type,
+                        oid,
+                        title='Title of {0}'.format(cid),
+                        description='Description of {0}'.format(cid),
+                    )
+            ]
+            obj.reindexObject()
+            objs.add(obj)
+        return objs
+
+    def test_upgrades_24_to_25(self):
+        objs = self.createContents(self.portal, 'Folder')
+        obj = list(objs)[0]
+        from sll.policy.browser.interfaces import ITopPageFeed
+        from zope.interface import alsoProvides
+        alsoProvides(obj, ITopPageFeed)
+        obj.reindexObject(idxs=['object_provides'])
+        self.assertTrue(ITopPageFeed.providedBy(obj))
+        from sll.templates.browser.interfaces import ITopPageFeed
+        self.assertFalse(ITopPageFeed.providedBy(obj))
+
+        from sll.policy.upgrades import upgrade_24_to_25
+        upgrade_24_to_25(self.portal)
+
+        from sll.policy.browser.interfaces import ITopPageFeed
+        self.assertFalse(ITopPageFeed.providedBy(obj))
+        from sll.templates.browser.interfaces import ITopPageFeed
+        self.assertTrue(ITopPageFeed.providedBy(obj))
+
+    def test_upgrades_25_to_26(self):
+        portal_actions = getToolByName(self.portal, 'portal_actions')
+        document_actions = getattr(portal_actions, 'document_actions')
+        document_actions.manage_addFolder('addtofavorites')
+
+        self.failUnless(document_actions['addtofavorites'])
+
+        from sll.policy.upgrades import upgrade_25_to_26
+        upgrade_25_to_26(self.portal)
+
+        self.assertRaises(KeyError, lambda: document_actions['addtofavorites'])
+
+    def test_upgrades_26_to_27(self):
+        portal_properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(portal_properties, 'site_properties')
+        site_properties.manage_changeProperties(mark_special_links="true")
+
+        self.assertEqual(site_properties.getProperty('mark_special_links'), 'true')
+
+        from sll.policy.upgrades import upgrade_26_to_27
+        upgrade_26_to_27(self.portal)
+
+        self.assertEqual(site_properties.getProperty('mark_special_links'), 'false')
