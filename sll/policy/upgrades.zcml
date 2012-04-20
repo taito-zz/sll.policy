@@ -235,4 +235,34 @@
     title="Installs sll.portlet and sll.theme"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="25"
+    handler="sll.policy.upgrades.upgrade_24_to_25"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="24"
+    title="Update ITopPageFeed"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="26"
+    handler="sll.policy.upgrades.upgrade_25_to_26"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="25"
+    title="Remove twitter button"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="27"
+    handler="sll.policy.upgrades.upgrade_26_to_27"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="26"
+    title="Make mark_special_links to false"
+    />
+
 </configure>
