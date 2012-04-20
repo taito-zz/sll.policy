@@ -44,42 +44,6 @@
     />
 
   <browser:page
-    name="feedable-to-top"
-    for="*"
-    class=".miscellaneous.Miscellaneous"
-    permission="cmf.ManagePortal"
-    attribute="feedable_to_top"
-    layer=".interfaces.ISllPolicyLayer"
-    />
-
-  <browser:page
-    name="unfeedable-from-top"
-    for="*"
-    class=".miscellaneous.Miscellaneous"
-    permission="cmf.ManagePortal"
-    attribute="unfeedable_from_top"
-    layer=".interfaces.ISllPolicyLayer"
-    />
-
-  <browser:page
-    name="feed-to-top"
-    for="*"
-    class=".miscellaneous.Miscellaneous"
-    permission="cmf.ManagePortal"
-    attribute="feed_to_top"
-    layer=".interfaces.ISllPolicyLayer"
-    />
-
-  <browser:page
-    name="unfeed-from-top"
-    for="*"
-    class=".miscellaneous.Miscellaneous"
-    permission="cmf.ManagePortal"
-    attribute="unfeed_from_top"
-    layer=".interfaces.ISllPolicyLayer"
-    />
-
-  <browser:page
     name="sharing"
     for="*"
     class=".sharing.SLLSharingView"

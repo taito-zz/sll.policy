@@ -7,31 +7,4 @@
     </object>
   </object>
 
-  <object name="object_buttons" meta_type="CMF Action Category">
-    <object name="feed_to_top" meta_type="CMF Action" i18n:domain="sll.policy">
-     <property name="title" i18n:translate="">Feed to Top</property>
-     <property name="description" i18n:translate="">Make feedable to top page.</property>
-     <property
-        name="url_expr">string:${globals_view/getCurrentObjectUrl}/@@feed-to-top</property>
-     <property
-        name="available_expr">python: object.restrictedTraverse("feedable-to-top")()</property>
-     <property name="permissions">
-      <element value="Manage portal"/>
-     </property>
-     <property name="visible">True</property>
-    </object>
-    <object name="unfeed_from_top" meta_type="CMF Action" i18n:domain="sll.policy">
-     <property name="title" i18n:translate="">Unfeed from Top</property>
-     <property name="description" i18n:translate="">Make unfeedable from top page.</property>
-     <property
-        name="url_expr">string:${globals_view/getCurrentObjectUrl}/@@unfeed-from-top</property>
-     <property
-        name="available_expr">python: object.restrictedTraverse("unfeedable-from-top")()</property>
-     <property name="permissions">
-      <element value="Manage portal"/>
-     </property>
-     <property name="visible">True</property>
-    </object>
-  </object>
-
 </object>
