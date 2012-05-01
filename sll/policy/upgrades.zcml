@@ -4,7 +4,7 @@
   xmlns="http://namespaces.zope.org/zope"
   >
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="2"
     handler="sll.policy.upgrades.upgrade_1_to_2"
@@ -142,7 +142,7 @@
     sortkey="1"
     source="14"
     title="Setup collective.cropimage."
-    />
+    /> -->
 
 
   <genericsetup:upgradeStep

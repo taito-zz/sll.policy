@@ -84,14 +84,14 @@
   <property name="capital" type="boolean">True</property>
 
   <!-- For testing -->
-  <property name="mac" type="string">6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ</property>
+  <!-- <property name="mac" type="string">6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ</property> -->
  </object>
 
  <object name="folder_logo_properties" meta_type="Plone Property Sheet">
   <property name="title">Folder Logo Properties</property>
   <property name="logo_id" type="string">ylapalkin-logo.png</property>
-  <property name="background_color" type="string">#5b905b</property>
-  <property name="background_image_id" type="string">ylapalkin-tausta.png</property>
+  <property name="background_color" type="string"></property>
+  <property name="background_image_id" type="string"></property>
  </object>
 
  <object name="cli_properties" meta_type="Plone Property Sheet">
