@@ -681,7 +681,7 @@ def upgrade_21_to_22(context, logger=None):
     ids = [
         'ajankohtaista',
         'tapahtumat',
-        'mita-meteemme',
+        'mita-me-teemme',
         'mita-sina-voit-tehda',
         'liity',
         'lahjoita',
