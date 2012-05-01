@@ -676,7 +676,6 @@ class TestCase(IntegrationTestCase):
 
         from sll.policy.upgrades import upgrade_22_to_23
         upgrade_22_to_23(self.portal)
-
         self.assertRaises(AttributeError, lambda: self.portal['index_html'])
         self.assertEqual(self.portal.getLayout(), 'sll-view')
 

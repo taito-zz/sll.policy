@@ -2,21 +2,18 @@
 <metadata>
   <version>27</version>
   <dependencies>
-    <!-- <dependency>profile-collective.cropimage:default</dependency> -->
-    <!-- <dependency>profile-collective.contentleadimage:default</dependency> -->
     <dependency>profile-Products.PloneFormGen:default</dependency>
     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
     <dependency>profile-Products.PFGSelectionStringField:default</dependency>
     <dependency>profile-collective.folderlogo:default</dependency>
     <dependency>profile-collective.pfg.payment:default</dependency>
-    <dependency>profile-collective.cart.core:default</dependency>
-    <dependency>profile-collective.cart.shipping:default</dependency>
+    <!-- <dependency>profile-collective.cart.core:default</dependency> -->
+    <!-- <dependency>profile-collective.cart.shipping:default</dependency> -->
     <dependency>profile-collective.pfg.showrequest:default</dependency>
-    <dependency>profile-collective.event_search_portlet:default</dependency>
     <dependency>profile-collective.sharerizer:default</dependency>
     <dependency>profile-collective.portlet.fblikebox:default</dependency>
     <dependency>profile-Products.NewSllSkin:default</dependency>
-    <dependency>profile-plone.app.theming:default</dependency>
+    <!-- <dependency>profile-plone.app.theming:default</dependency> -->
     <dependency>profile-sll.templates:default</dependency>
     <dependency>profile-sll.portlet:default</dependency>
     <dependency>profile-sll.theme:default</dependency>
