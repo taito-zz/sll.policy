@@ -476,7 +476,7 @@ PROFILE_ID = 'profile-sll.policy:default'
 #     logger.info('Set topLevel to zero for navigation portlet.')
 
 
-def upgrade_14_to_15(context, logger=None):
+def set_cropimage(context, logger):
     """Setup collective.cropimage."""
     if logger is None:
         # Called as upgrade step: define our own logger.
@@ -840,3 +840,5 @@ def upgrade_28_to_29(context, logger=None):
                     obj.reindexObject(idxs=['object_provides'])
                     message = 'Made {0} navigation root.'.format(oid)
                     logger.info(message)
+
+    set_cropimage(context, logger)

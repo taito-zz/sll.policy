@@ -492,26 +492,26 @@ class TestCase(IntegrationTestCase):
 
     #     self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
 
-    def test_upgrade_14_to_15__collective_cropimage_ids(self):
-        from sll.policy.upgrades import upgrade_14_to_15
-        upgrade_14_to_15(self.portal)
-        from plone.registry.interfaces import IRegistry
-        from zope.component import getUtility
-        registry = getUtility(IRegistry)
-        self.assertEqual(
-            registry['collective.cropimage.ids'],
-            [
-                {
-                    'ratio_height': 15.0,
-                    'ratio_width': 17.0,
-                    'max_width': 170.0,
-                    'min_height': 150.0,
-                    'max_height': 150.0,
-                    'min_width': 170.0,
-                    'id': 'feed'
-                }
-            ]
-        )
+    # def test_upgrade_14_to_15__collective_cropimage_ids(self):
+    #     from sll.policy.upgrades import upgrade_14_to_15
+    #     upgrade_14_to_15(self.portal)
+    #     from plone.registry.interfaces import IRegistry
+    #     from zope.component import getUtility
+    #     registry = getUtility(IRegistry)
+    #     self.assertEqual(
+    #         registry['collective.cropimage.ids'],
+    #         [
+    #             {
+    #                 'ratio_height': 15.0,
+    #                 'ratio_width': 17.0,
+    #                 'max_width': 170.0,
+    #                 'min_height': 150.0,
+    #                 'max_height': 150.0,
+    #                 'min_width': 170.0,
+    #                 'id': 'feed'
+    #             }
+    #         ]
+    #     )
 
     def test_upgrades_15_to_16(self):
         portal_skins = getToolByName(self.portal, 'portal_skins')
