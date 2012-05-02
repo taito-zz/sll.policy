@@ -52,6 +52,7 @@
     type="portlet.SLLMap"
     visible="True"
     >
+    <property name="name">Paikallistoiminta</property>
   </assignment>
   <assignment
     name="recent-items"

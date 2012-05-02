@@ -132,7 +132,7 @@
     sortkey="1"
     source="13"
     title="Update default topLevel to zero for navigation portlet."
-    />
+    /> -->
 
   <genericsetup:upgradeStep
     description=""
@@ -142,7 +142,7 @@
     sortkey="1"
     source="14"
     title="Setup collective.cropimage."
-    /> -->
+    />
 
 
   <genericsetup:upgradeStep
@@ -263,6 +263,16 @@
     sortkey="1"
     source="26"
     title="Make mark_special_links to false"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="28"
+    handler="sll.policy.upgrades.upgrade_27_to_28"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="27"
+    title="Make yhdistykset navigation root"
     />
 
 </configure>

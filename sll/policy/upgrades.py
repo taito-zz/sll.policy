@@ -5,14 +5,15 @@
 # from Products.ATContentTypes.interfaces.link import IATLink
 # from Products.ATContentTypes.interfaces.news import IATNewsItem
 # from Products.ATContentTypes.interfaces.topic import IATTopic
-from Products.CMFCore.utils import getToolByName
 # from Products.PloneFormGen.interfaces import IPloneFormGenForm
-# from plone.app.layout.navigation.interfaces import INavigationRoot
-# from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
+from plone.app.layout.navigation.interfaces import INavigationRoot
+from plone.registry.interfaces import IRegistry
 from sll.policy.browser.interfaces import ITopPageFeed as IBaseTopPageFeed
-# from sll.policy.config import IDS
+from sll.policy.config import IDS
+from sll.policy.config import YHDISTYKSET
 from sll.templates.browser.interfaces import ITopPageFeed
-# from zope.component import getUtility
+from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.interface import noLongerProvides
 
@@ -475,23 +476,23 @@ PROFILE_ID = 'profile-sll.policy:default'
 #     logger.info('Set topLevel to zero for navigation portlet.')
 
 
-# def upgrade_14_to_15(context, logger=None):
-#     """Setup collective.cropimage."""
-#     if logger is None:
-#         # Called as upgrade step: define our own logger.
-#         logger = logging.getLogger(__name__)
+def upgrade_14_to_15(context, logger=None):
+    """Setup collective.cropimage."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
 
-#     setup = getToolByName(context, 'portal_setup')
-#     logger.info('Start installing collective.cropimage.')
-#     setup.runAllImportStepsFromProfile('profile-collective.cropimage:default', purge_old=False)
-#     logger.info('Installed collective.cropimage.')
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Start installing collective.cropimage.')
+    setup.runAllImportStepsFromProfile('profile-collective.cropimage:default', purge_old=False)
+    logger.info('Installed collective.cropimage.')
 
-#     registry = getUtility(IRegistry)
-#     registry['collective.cropimage.ids'] = IDS
-#     keys = [item['id'] for item in IDS]
-#     for key in keys:
-#         message = 'collective.cropimage.ids updated with ID: "{0}"'.format(key)
-#         logger.info(message)
+    registry = getUtility(IRegistry)
+    registry['collective.cropimage.ids'] = IDS
+    keys = [item['id'] for item in IDS]
+    for key in keys:
+        message = 'collective.cropimage.ids updated with ID: "{0}"'.format(key)
+        logger.info(message)
 
 
 def upgrade_15_to_16(context, logger=None):
@@ -815,3 +816,27 @@ def upgrade_27_to_28(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(PROFILE_ID, 'actions', run_dependencies=False, purge_old=False)
     logger.info('Made login unvisible.')
+
+
+def upgrade_28_to_29(context, logger=None):
+    """Make yhdistykset navigation root"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    # Get portal
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+
+    for piiri in YHDISTYKSET.keys():
+        parent = portal.get(piiri)
+        if parent is not None:
+            for oid in YHDISTYKSET[piiri]:
+                obj = parent.get(oid)
+                if obj:
+                    message = 'Making {0} navigation root.'.format(oid)
+                    logger.info(message)
+                    alsoProvides(obj, INavigationRoot)
+                    obj.reindexObject(idxs=['object_provides'])
+                    message = 'Made {0} navigation root.'.format(oid)
+                    logger.info(message)
