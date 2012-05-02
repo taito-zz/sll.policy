@@ -751,3 +751,15 @@ class TestCase(IntegrationTestCase):
         upgrade_26_to_27(self.portal)
 
         self.assertEqual(site_properties.getProperty('mark_special_links'), 'false')
+
+    def test_upgrades_27_to_28(self):
+        portal_actions = getToolByName(self.portal, 'portal_actions')
+        actions = getattr(portal_actions, 'user')
+        action = getattr(actions, 'login')
+        action.manage_changeProperties(visible=True)
+        self.assertTrue(action.getProperty('visible'))
+
+        from sll.policy.upgrades import upgrade_27_to_28
+        upgrade_27_to_28(self.portal)
+
+        self.assertFalse(action.getProperty('visible'))

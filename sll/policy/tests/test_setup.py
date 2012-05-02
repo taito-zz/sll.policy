@@ -124,11 +124,16 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.theme'))
 
-    ## actions.xml
-    def test_dashboard(self):
+    def test_actions__dashboard(self):
         tool = getToolByName(self.portal, 'portal_actions')
         actions = getattr(tool, 'user')
         action = getattr(actions, 'dashboard')
+        self.assertFalse(action.getProperty('visible'))
+
+    def test_actions__login(self):
+        tool = getToolByName(self.portal, 'portal_actions')
+        actions = getattr(tool, 'user')
+        action = getattr(actions, 'login')
         self.assertFalse(action.getProperty('visible'))
 
     def test_metadata__version(self):

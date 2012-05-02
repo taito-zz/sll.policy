@@ -1,18 +1,18 @@
-from Acquisition import aq_parent
-from Products.ATContentTypes.interfaces.document import IATDocument
-from Products.ATContentTypes.interfaces.event import IATEvent
-from Products.ATContentTypes.interfaces.folder import IATFolder
-from Products.ATContentTypes.interfaces.link import IATLink
-from Products.ATContentTypes.interfaces.news import IATNewsItem
-from Products.ATContentTypes.interfaces.topic import IATTopic
+# from Acquisition import aq_parent
+# from Products.ATContentTypes.interfaces.document import IATDocument
+# from Products.ATContentTypes.interfaces.event import IATEvent
+# from Products.ATContentTypes.interfaces.folder import IATFolder
+# from Products.ATContentTypes.interfaces.link import IATLink
+# from Products.ATContentTypes.interfaces.news import IATNewsItem
+# from Products.ATContentTypes.interfaces.topic import IATTopic
 from Products.CMFCore.utils import getToolByName
-from Products.PloneFormGen.interfaces import IPloneFormGenForm
-from plone.app.layout.navigation.interfaces import INavigationRoot
-from plone.registry.interfaces import IRegistry
+# from Products.PloneFormGen.interfaces import IPloneFormGenForm
+# from plone.app.layout.navigation.interfaces import INavigationRoot
+# from plone.registry.interfaces import IRegistry
 from sll.policy.browser.interfaces import ITopPageFeed as IBaseTopPageFeed
-from sll.policy.config import IDS
+# from sll.policy.config import IDS
 from sll.templates.browser.interfaces import ITopPageFeed
-from zope.component import getUtility
+# from zope.component import getUtility
 from zope.interface import alsoProvides
 from zope.interface import noLongerProvides
 
@@ -803,3 +803,15 @@ def upgrade_26_to_27(context, logger=None):
         purge_old=False
     )
     logger.info('Reimported propertiestool.xml.')
+
+
+def upgrade_27_to_28(context, logger=None):
+    """Make login unvisible"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    logger.info('Making login unvisible.')
+    setup = getToolByName(context, 'portal_setup')
+    setup.runImportStepFromProfile(PROFILE_ID, 'actions', run_dependencies=False, purge_old=False)
+    logger.info('Made login unvisible.')
