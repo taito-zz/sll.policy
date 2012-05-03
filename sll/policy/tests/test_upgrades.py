@@ -649,7 +649,7 @@ class TestCase(IntegrationTestCase):
         liity = self.portal[
             self.portal.invokeFactory(
                 'Folder',
-                'liity',
+                'liity-uusi',
             )
         ]
         liity.setExcludeFromNav(True)

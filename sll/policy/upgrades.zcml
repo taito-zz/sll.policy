@@ -272,6 +272,16 @@
     profile="sll.policy:default"
     sortkey="1"
     source="27"
+    title="Make login unvisible"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="29"
+    handler="sll.policy.upgrades.upgrade_28_to_29"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="28"
     title="Make yhdistykset navigation root"
     />
 

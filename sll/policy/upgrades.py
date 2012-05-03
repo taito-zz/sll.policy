@@ -684,8 +684,8 @@ def upgrade_21_to_22(context, logger=None):
         'tapahtumat',
         'mita-me-teemme',
         'mita-sina-voit-tehda',
-        'liity',
-        'lahjoita',
+        'liity-uusi',
+        'lahjoita-uusi',
         'jarjesto',
     ]
     for oid in ids:
