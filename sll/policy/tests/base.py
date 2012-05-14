@@ -35,7 +35,7 @@ class SllPolicyLayer(PloneSandboxLayer):
 
     def tearDownZope(self, app):
         """Tear down Zope."""
-        z2.uninstallProduct(app, 'sll.policy')
+        # z2.uninstallProduct(app, 'sll.policy')
 
 
 FIXTURE = SllPolicyLayer()

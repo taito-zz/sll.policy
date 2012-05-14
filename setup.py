@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='sll.policy',
-    version='0.10',
+    version='1.0',
     description="Turns plone site into SLL site.",
     long_description=open("README.rst").read(),
     # Get more strings from
@@ -25,7 +25,6 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Products.NewSllSkin',
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
         'Products.PloneFormGen',
@@ -35,11 +34,9 @@ setup(
         'collective.pfg.payment',
         'collective.pfg.showrequest',
         'collective.portlet.fblikebox',
-        # 'collective.searchevent',
         'collective.sharerizer',
         'five.grok',
         'hexagonit.testing',
-        # 'plone.app.theming',
         'plone.browserlayer',
         'setuptools',
         'sll.portlet',

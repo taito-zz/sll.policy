@@ -11,7 +11,7 @@
     Override portlet import step to include primacontrol.policy.various
     step dependency to it.
   -->
-  <genericsetup:importStep
+  <!-- <genericsetup:importStep
       name="portlets"
       title="Portlets"
       description="Import portlet managers, types, assignments and blacklistings"
@@ -19,6 +19,6 @@
       <depends name="componentregistry"/>
       <depends name="content"/>
       <depends name="sll.policy.various"/>
-  </genericsetup:importStep>
+  </genericsetup:importStep> -->
 
 </configure>

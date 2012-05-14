@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from hexagonit.testing.browser import Browser
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
@@ -43,6 +44,12 @@ def setUp(self):
     # Set the site back in English mode to make testing easier.
     portal.portal_languages.manage_setLanguageSettings('en', ['en', 'fi'])
 
+    user2 = 'test_user_2_'
+    regtool = getToolByName(portal, 'portal_registration')
+    regtool.addMember(user2, user2)
+    setRoles(portal, user2, ['Editor'])
+    self.globs['user2'] = user2
+
     transaction.commit()
 
 
@@ -75,5 +82,5 @@ def test_suite():
     return unittest.TestSuite([
         # DocFileSuite('functional/author.txt'),
         # DocFileSuite('functional/browser.txt'),
-        # DocFileSuite('functional/portlets.txt'),
+        DocFileSuite('functional/portlets.txt'),
         ])

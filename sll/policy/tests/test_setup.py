@@ -1,15 +1,5 @@
 # -*- coding: utf-8 -*-
 
-#     def afterSetUp(self):
-#         self.installer = getToolByName(self.portal, 'portal_quickinstaller')
-#         self.properties = getToolByName(self.portal, 'portal_properties')
-#         self.ccp = getattr(self.properties, 'collective_cart_properties')
-#         self.cppp = getattr(self.properties, 'collective_pfg_payment_properties')
-#         self.flp = getattr(self.properties, 'folder_logo_properties')
-
-#     def test_is_collective_folderlogo_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('collective.folderlogo'))
-
 #     def test_is_collective_pfg_payment_installed(self):
 #         self.failUnless(self.installer.isProductInstalled('collective.pfg.payment'))
 
@@ -21,18 +11,6 @@
 
 #     def test_is_collective_pfg_showrequest_installed(self):
 #         self.failUnless(self.installer.isProductInstalled('collective.pfg.showrequest'))
-
-#     def test_is_plone_form_gen_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('PloneFormGen'))
-
-#     def test_is_pfg_extended_mail_adapter_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('PFGExtendedMailAdapter'))
-
-#     def test_is_pfg_selection_string_field_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('PFGSelectionStringField'))
-
-#     # def test_is_new_ssl_skin_installed(self):
-#     #     self.failUnless(self.installer.isProductInstalled('NewSllSkin'))
 
 #     ## propertiestool.xml
 #     def test_collective_cart_properties(self):
@@ -66,32 +44,6 @@
 #         self.assertEquals('|', self.cppp.getProperty('separator'))
 #         self.assertEquals(True, self.cppp.getProperty('capital'))
 
-#     def test_folder_logo_properties(self):
-#         self.assertEquals('ylapalkin-logo.png', self.flp.getProperty('logo_id'))
-#         self.assertEquals('#5b905b', self.flp.getProperty('background_color'))
-#         self.assertEquals('ylapalkin-tausta.png', self.flp.getProperty('background_image_id'))
-
-
-#     def test_left_portlet(self):
-#         column = getUtility(IPortletManager, name=u"plone.leftcolumn")
-#         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-#         self.failIf(u'Cart' in assignable.keys())
-
-#     def test_right_portlet(self):
-#         column = getUtility(IPortletManager, name=u"plone.rightcolumn")
-#         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-#         self.failUnless(u'Cart' in assignable.keys())
-
-#     ## Uninstalling
-#     def test_uninstall(self):
-# #        self.installer.uninstallProducts(['sll.policy'])
-# #        self.failUnless(not self.installer.isProductInstalled('sll.policy'))
-# #        ids = [action.id for action in self.controlpanel.listActions()]
-# #        self.failUnless('collective_pfg_payment_config' not in ids)
-# #        self.failIf(hasattr(self.actions.object_buttons, 'make_order_number_aware'))
-# #        self.failIf(hasattr(self.actions.object_buttons, 'make_order_number_unaware'))
-# #        self.failIf(hasattr(self.actions.object, 'edit_order_number'))
-#         pass
 
 from Products.CMFCore.utils import getToolByName
 from sll.policy.tests.base import IntegrationTestCase
@@ -110,7 +62,6 @@ class TestCase(IntegrationTestCase):
 
     def test_dependencies_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
-        # self.failUnless(installer.isProductInstalled('sll.theme'))
         self.failUnless(installer.isProductInstalled('sll.templates'))
         self.failUnless(installer.isProductInstalled('collective.cropimage'))
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
@@ -140,7 +91,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'29'
+            u'30'
         )
 
     ## properties.xml
@@ -226,6 +177,54 @@ class TestCase(IntegrationTestCase):
             ('Document', 'Event')
         )
 
+    def test_rolemap__Manage_portlets__rolesOfPermission(self):
+        permission = "Portlets: Manage portlets"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+
+    def test_rolemap__Manage_portlets__acquiredRolesAreUsedBy(self):
+        permission = "Portlets: Manage portlets"
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )
+
+    def test_rolemap__Manage_own_portlets__rolesOfPermission(self):
+        permission = "Portlets: Manage own portlets"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+
+    def test_rolemap__Manage_own_portlets__acquiredRolesAreUsedBy(self):
+        permission = "Portlets: Manage own portlets"
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )
+
     def test_tinymce__link_using_uids(self):
         tinymce = getToolByName(self.portal, 'portal_tinymce')
         self.assertTrue(tinymce.link_using_uids)
@@ -237,19 +236,6 @@ class TestCase(IntegrationTestCase):
     # def test_tinymce__toolbar_backcolor(self):
     #     tinymce = getToolByName(self.portal, 'portal_tinymce')
     #     self.assertTrue(tinymce.toolbar_backcolor)
-
-    # def test_jsregistry__kukit(self):
-    #     javascripts = getToolByName(self.portal, 'portal_javascripts')
-    #     self.assertFalse(javascripts.getResource("++resource++kukit.js").getAuthenticated())
-
-    ## portlets.xml
-    # def test_portlets__navigation_removed_from_left_column(self):
-    #     from zope.component import getMultiAdapter
-    #     from plone.portlets.interfaces import IPortletManager
-    #     from plone.portlets.interfaces import IPortletAssignmentMapping
-    #     column = getUtility(IPortletManager, name=u"plone.leftcolumn")
-    #     assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-    #     self.assertFalse('navigation' in assignable.keys())
 
     def test_portlets__news_removed_from_right_column(self):
         from zope.component import getMultiAdapter

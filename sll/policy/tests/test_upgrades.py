@@ -1,5 +1,4 @@
 from sll.policy.tests.base import IntegrationTestCase
-from Products.CMFCore.utils import getToolByName
 
 
 class TestCase(IntegrationTestCase):
@@ -513,277 +512,284 @@ class TestCase(IntegrationTestCase):
     #         ]
     #     )
 
-    def test_upgrades_15_to_16(self):
-        portal_skins = getToolByName(self.portal, 'portal_skins')
-        custom = portal_skins['custom']
-        from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate
-        manage_addPageTemplate(custom, 'aaa', text='')
-        manage_addPageTemplate(custom, 'portlet_kartta', text='')
-        from sll.policy.upgrades import upgrade_15_to_16
-        upgrade_15_to_16(self.portal)
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.assertFalse(installer.isProductInstalled('NewSllSkin'))
-        self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
-        self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())
-        self.assertEqual(custom.objectIds(), ['aaa'])
+    # def test_upgrades_15_to_16(self):
+    #     portal_skins = getToolByName(self.portal, 'portal_skins')
+    #     custom = portal_skins['custom']
+    #     from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate
+    #     manage_addPageTemplate(custom, 'aaa', text='')
+    #     manage_addPageTemplate(custom, 'portlet_kartta', text='')
+    #     from sll.policy.upgrades import upgrade_15_to_16
+    #     upgrade_15_to_16(self.portal)
+    #     installer = getToolByName(self.portal, 'portal_quickinstaller')
+    #     self.assertFalse(installer.isProductInstalled('NewSllSkin'))
+    #     self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
+    #     self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())
+    #     self.assertEqual(custom.objectIds(), ['aaa'])
 
-    def test_upgrades_16_to_17(self):
-        from zope.component import getUtility
-        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-        storage = getUtility(IViewletSettingsStorage)
-        storage.setHidden('plone.portaltop', '*', (u'plone.header',))
-        self.assertTrue(u'plone.header' in storage.getHidden('plone.portaltop', '*'))
-        storage.setHidden('plone.portalheader', '*', (u'plone.logo',))
-        self.assertTrue(u'plone.logo' in storage.getHidden('plone.portalheader', '*'))
-        from sll.policy.upgrades import upgrade_16_to_17
-        upgrade_16_to_17(self.portal)
-        self.assertEqual(
-            storage.getOrder('plone.portaltop', '*'),
-            (
-                u'plone.header',
-            )
-        )
-        self.assertFalse(storage.getHidden('plone.portaltop', '*'))
-        self.assertEqual(
-            storage.getOrder('plone.portalheader', '*'),
-            (
-                u'plone.skip_links',
-                u'plone.personal_bar',
-                u'plone.site_actions',
-                u'plone.app.i18n.locales.languageselector',
-                u'plone.searchbox',
-                u'plone.logo',
-                u'plone.global_sections',
-            )
-        )
-        self.assertEqual(storage.getHidden('plone.portalheader', '*'), ())
+    # def test_upgrades_16_to_17(self):
+    #     from zope.component import getUtility
+    #     from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+    #     storage = getUtility(IViewletSettingsStorage)
+    #     storage.setHidden('plone.portaltop', '*', (u'plone.header',))
+    #     self.assertTrue(u'plone.header' in storage.getHidden('plone.portaltop', '*'))
+    #     storage.setHidden('plone.portalheader', '*', (u'plone.logo',))
+    #     self.assertTrue(u'plone.logo' in storage.getHidden('plone.portalheader', '*'))
+    #     from sll.policy.upgrades import upgrade_16_to_17
+    #     upgrade_16_to_17(self.portal)
+    #     self.assertEqual(
+    #         storage.getOrder('plone.portaltop', '*'),
+    #         (
+    #             u'plone.header',
+    #         )
+    #     )
+    #     self.assertFalse(storage.getHidden('plone.portaltop', '*'))
+    #     self.assertEqual(
+    #         storage.getOrder('plone.portalheader', '*'),
+    #         (
+    #             u'plone.skip_links',
+    #             u'plone.personal_bar',
+    #             u'plone.site_actions',
+    #             u'plone.app.i18n.locales.languageselector',
+    #             u'plone.searchbox',
+    #             u'plone.logo',
+    #             u'plone.global_sections',
+    #         )
+    #     )
+    #     self.assertEqual(storage.getHidden('plone.portalheader', '*'), ())
 
-    def test_upgrades_17_to_18(self):
-        tausta = self.portal[
-            self.portal.invokeFactory('Document', 'ylapalkin-tausta.png')
-        ]
-        tausta.reindexObject()
-        self.failUnless(self.portal['ylapalkin-tausta.png'])
-        properties = getToolByName(self.portal, 'portal_properties')
-        folder_logo_properties = getattr(properties, 'folder_logo_properties')
-        folder_logo_properties.manage_changeProperties(
-            background_color='white',
-            background_image_id='image',
-        )
-        self.assertEqual(
-            folder_logo_properties.getProperty('background_color'),
-            'white'
-        )
-        self.assertEqual(
-            folder_logo_properties.getProperty('background_image_id'),
-            'image'
-        )
-        from sll.policy.upgrades import upgrade_17_to_18
-        upgrade_17_to_18(self.portal)
-        self.assertRaises(KeyError, lambda: self.portal['ylapalkin-tausta.png'])
-        self.assertEqual(
-            folder_logo_properties.getProperty('background_color'),
-            ''
-        )
-        self.assertEqual(
-            folder_logo_properties.getProperty('background_image_id'),
-            ''
-        )
+    # def test_upgrades_17_to_18(self):
+    #     tausta = self.portal[
+    #         self.portal.invokeFactory('Document', 'ylapalkin-tausta.png')
+    #     ]
+    #     tausta.reindexObject()
+    #     self.failUnless(self.portal['ylapalkin-tausta.png'])
+    #     properties = getToolByName(self.portal, 'portal_properties')
+    #     folder_logo_properties = getattr(properties, 'folder_logo_properties')
+    #     folder_logo_properties.manage_changeProperties(
+    #         background_color='white',
+    #         background_image_id='image',
+    #     )
+    #     self.assertEqual(
+    #         folder_logo_properties.getProperty('background_color'),
+    #         'white'
+    #     )
+    #     self.assertEqual(
+    #         folder_logo_properties.getProperty('background_image_id'),
+    #         'image'
+    #     )
+    #     from sll.policy.upgrades import upgrade_17_to_18
+    #     upgrade_17_to_18(self.portal)
+    #     self.assertRaises(KeyError, lambda: self.portal['ylapalkin-tausta.png'])
+    #     self.assertEqual(
+    #         folder_logo_properties.getProperty('background_color'),
+    #         ''
+    #     )
+    #     self.assertEqual(
+    #         folder_logo_properties.getProperty('background_image_id'),
+    #         ''
+    #     )
 
-    def test_upgrades_18_to_19(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        product = 'plonetheme.classic'
-        installer.installProduct(product)
-        self.assertTrue(installer.isProductInstalled(product))
-        from sll.policy.upgrades import upgrade_18_to_19
-        upgrade_18_to_19(self.portal)
-        self.assertFalse(installer.isProductInstalled(product))
+    # def test_upgrades_18_to_19(self):
+    #     installer = getToolByName(self.portal, 'portal_quickinstaller')
+    #     product = 'plonetheme.classic'
+    #     installer.installProduct(product)
+    #     self.assertTrue(installer.isProductInstalled(product))
+    #     from sll.policy.upgrades import upgrade_18_to_19
+    #     upgrade_18_to_19(self.portal)
+    #     self.assertFalse(installer.isProductInstalled(product))
 
-    def test_upgrades_19_to_20(self):
-        from zope.component import getUtility
-        from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-        storage = getUtility(IViewletSettingsStorage)
-        storage.setHidden('plone.portalfooter', '*', (u'plone.footer',))
-        self.assertEqual(storage.getHidden('plone.portalfooter', '*'), (u'plone.footer',))
-        from sll.policy.upgrades import upgrade_19_to_20
-        upgrade_19_to_20(self.portal)
-        self.assertEqual(
-            storage.getHidden('plone.portalfooter', '*'),
-            (
-                u'plone.colophon',
-                u'plone.site_actions',
-            )
-        )
-        self.assertEqual(
-            storage.getOrder('plone.portalheader', '*'),
-            (
-                u'plone.skip_links',
-                u'plone.personal_bar',
-                u'plone.site_actions',
-                u'plone.app.i18n.locales.languageselector',
-                u'plone.searchbox',
-                u'plone.logo',
-                u'plone.global_sections',
-            )
-        )
+    # def test_upgrades_19_to_20(self):
+    #     from zope.component import getUtility
+    #     from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
+    #     storage = getUtility(IViewletSettingsStorage)
+    #     storage.setHidden('plone.portalfooter', '*', (u'plone.footer',))
+    #     self.assertEqual(storage.getHidden('plone.portalfooter', '*'), (u'plone.footer',))
+    #     from sll.policy.upgrades import upgrade_19_to_20
+    #     upgrade_19_to_20(self.portal)
+    #     self.assertEqual(
+    #         storage.getHidden('plone.portalfooter', '*'),
+    #         (
+    #             u'plone.colophon',
+    #             u'plone.site_actions',
+    #         )
+    #     )
+    #     self.assertEqual(
+    #         storage.getOrder('plone.portalheader', '*'),
+    #         (
+    #             u'plone.skip_links',
+    #             u'plone.personal_bar',
+    #             u'plone.site_actions',
+    #             u'plone.app.i18n.locales.languageselector',
+    #             u'plone.searchbox',
+    #             u'plone.logo',
+    #             u'plone.global_sections',
+    #         )
+    #     )
 
-    def test_upgrades_21_to_22(self):
-        folder01 = self.portal[
-            self.portal.invokeFactory(
-                'Folder',
-                'folder01',
-            )
-        ]
-        folder01.setExcludeFromNav(False)
-        folder01.reindexObject()
+    # def test_upgrades_21_to_22(self):
+    #     folder01 = self.portal[
+    #         self.portal.invokeFactory(
+    #             'Folder',
+    #             'folder01',
+    #         )
+    #     ]
+    #     folder01.setExcludeFromNav(False)
+    #     folder01.reindexObject()
 
-        folder02 = folder01[
-            folder01.invokeFactory(
-                'Folder',
-                'folder02',
-            )
-        ]
-        folder02.setExcludeFromNav(False)
-        folder02.reindexObject()
+    #     folder02 = folder01[
+    #         folder01.invokeFactory(
+    #             'Folder',
+    #             'folder02',
+    #         )
+    #     ]
+    #     folder02.setExcludeFromNav(False)
+    #     folder02.reindexObject()
 
-        liity = self.portal[
-            self.portal.invokeFactory(
-                'Folder',
-                'liity-uusi',
-            )
-        ]
-        liity.setExcludeFromNav(True)
-        liity.reindexObject()
+    #     liity = self.portal[
+    #         self.portal.invokeFactory(
+    #             'Folder',
+    #             'liity-uusi',
+    #         )
+    #     ]
+    #     liity.setExcludeFromNav(True)
+    #     liity.reindexObject()
 
-        self.assertFalse(folder01.getExcludeFromNav())
-        self.assertTrue(liity.getExcludeFromNav())
+    #     self.assertFalse(folder01.getExcludeFromNav())
+    #     self.assertTrue(liity.getExcludeFromNav())
 
-        from sll.policy.upgrades import upgrade_21_to_22
-        upgrade_21_to_22(self.portal)
-        self.assertTrue(folder01.getExcludeFromNav())
-        self.assertFalse(folder02.getExcludeFromNav())
-        self.assertFalse(liity.getExcludeFromNav())
+    #     from sll.policy.upgrades import upgrade_21_to_22
+    #     upgrade_21_to_22(self.portal)
+    #     self.assertTrue(folder01.getExcludeFromNav())
+    #     self.assertFalse(folder02.getExcludeFromNav())
+    #     self.assertFalse(liity.getExcludeFromNav())
 
-    def test_upgrades_22_to_23(self):
-        index_html = self.portal[
-            self.portal.invokeFactory(
-                'Document',
-                'index_html',
-            )
-        ]
-        index_html.reindexObject()
-        self.portal.setLayout('index_html')
+    # def test_upgrades_26_to_27(self):
+    #     portal_properties = getToolByName(self.portal, 'portal_properties')
+    #     site_properties = getattr(portal_properties, 'site_properties')
+    #     site_properties.manage_changeProperties(mark_special_links="true")
 
-        from sll.policy.upgrades import upgrade_22_to_23
-        upgrade_22_to_23(self.portal)
-        self.assertRaises(AttributeError, lambda: self.portal['index_html'])
-        self.assertEqual(self.portal.getLayout(), 'sll-view')
+    #     self.assertEqual(site_properties.getProperty('mark_special_links'), 'true')
 
-    def test_upgrades_23_to_24(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        if installer.isProductInstalled('sll.portlet'):
-            installer.uninstallProducts(['sll.portlet'])
-        if installer.isProductInstalled('sll.theme'):
-            installer.uninstallProducts(['sll.theme'])
+    #     from sll.policy.upgrades import upgrade_26_to_27
+    #     upgrade_26_to_27(self.portal)
 
-        from sll.policy.upgrades import upgrade_23_to_24
-        upgrade_23_to_24(self.portal)
+    #     self.assertEqual(site_properties.getProperty('mark_special_links'), 'false')
 
-        self.assertTrue(installer.isProductInstalled('sll.portlet'))
-        self.assertTrue(installer.isProductInstalled('sll.theme'))
+    # def test_upgrades_27_to_28(self):
+    #     portal_actions = getToolByName(self.portal, 'portal_actions')
+    #     actions = getattr(portal_actions, 'user')
+    #     action = getattr(actions, 'login')
+    #     action.manage_changeProperties(visible=True)
+    #     self.assertTrue(action.getProperty('visible'))
 
-    def createContents(self, parent, Type, amount=1):
-        objs = set([])
-        for num in range(amount, amount + 1):
-            oid = '{0}{1:05d}'.format(Type.replace(' ', '').lower(), num)
-            cid = oid.capitalize()
-            obj = parent[
-                parent.invokeFactory(
-                        Type,
-                        oid,
-                        title='Title of {0}'.format(cid),
-                        description='Description of {0}'.format(cid),
-                    )
-            ]
-            obj.reindexObject()
-            objs.add(obj)
-        return objs
+    #     from sll.policy.upgrades import upgrade_27_to_28
+    #     upgrade_27_to_28(self.portal)
 
-    def test_upgrades_24_to_25(self):
-        objs = self.createContents(self.portal, 'Folder')
-        obj = list(objs)[0]
-        from sll.policy.browser.interfaces import ITopPageFeed
-        from zope.interface import alsoProvides
-        alsoProvides(obj, ITopPageFeed)
-        obj.reindexObject(idxs=['object_provides'])
-        self.assertTrue(ITopPageFeed.providedBy(obj))
-        from sll.templates.browser.interfaces import ITopPageFeed
-        self.assertFalse(ITopPageFeed.providedBy(obj))
+    #     self.assertFalse(action.getProperty('visible'))
 
-        from sll.policy.upgrades import upgrade_24_to_25
-        upgrade_24_to_25(self.portal)
+    # def test_upgrades_28_to_29(self):
+    #     piiri = self.portal[
+    #         self.portal.invokeFactory('Folder', 'lappi')
+    #     ]
+    #     piiri.reindexObject()
+    #     ylitornio = piiri[
+    #         piiri.invokeFactory('Folder', 'ylitornio')
+    #     ]
+    #     ylitornio.reindexObject()
+    #     aaa = piiri[
+    #         piiri.invokeFactory('Folder', 'aaa')
+    #     ]
+    #     aaa.reindexObject()
 
-        from sll.policy.browser.interfaces import ITopPageFeed
-        self.assertFalse(ITopPageFeed.providedBy(obj))
-        from sll.templates.browser.interfaces import ITopPageFeed
-        self.assertTrue(ITopPageFeed.providedBy(obj))
+    #     from plone.app.layout.navigation.interfaces import INavigationRoot
+    #     self.assertFalse(INavigationRoot.providedBy(ylitornio))
+    #     self.assertFalse(INavigationRoot.providedBy(aaa))
 
-    def test_upgrades_25_to_26(self):
-        portal_actions = getToolByName(self.portal, 'portal_actions')
-        document_actions = getattr(portal_actions, 'document_actions')
-        document_actions.manage_addFolder('addtofavorites')
+    #     from sll.policy.upgrades import upgrade_28_to_29
+    #     upgrade_28_to_29(self.portal)
 
-        self.failUnless(document_actions['addtofavorites'])
-
-        from sll.policy.upgrades import upgrade_25_to_26
-        upgrade_25_to_26(self.portal)
-
-        self.assertRaises(KeyError, lambda: document_actions['addtofavorites'])
-
-    def test_upgrades_26_to_27(self):
-        portal_properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(portal_properties, 'site_properties')
-        site_properties.manage_changeProperties(mark_special_links="true")
-
-        self.assertEqual(site_properties.getProperty('mark_special_links'), 'true')
-
-        from sll.policy.upgrades import upgrade_26_to_27
-        upgrade_26_to_27(self.portal)
-
-        self.assertEqual(site_properties.getProperty('mark_special_links'), 'false')
-
-    def test_upgrades_27_to_28(self):
-        portal_actions = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(portal_actions, 'user')
-        action = getattr(actions, 'login')
-        action.manage_changeProperties(visible=True)
-        self.assertTrue(action.getProperty('visible'))
-
-        from sll.policy.upgrades import upgrade_27_to_28
-        upgrade_27_to_28(self.portal)
-
-        self.assertFalse(action.getProperty('visible'))
+    #     self.assertTrue(INavigationRoot.providedBy(ylitornio))
+    #     self.assertFalse(INavigationRoot.providedBy(aaa))
 
     def test_upgrades_28_to_29(self):
-        piiri = self.portal[
-            self.portal.invokeFactory('Folder', 'lappi')
-        ]
-        piiri.reindexObject()
-        ylitornio = piiri[
-            piiri.invokeFactory('Folder', 'ylitornio')
-        ]
-        ylitornio.reindexObject()
-        aaa = piiri[
-            piiri.invokeFactory('Folder', 'aaa')
-        ]
-        aaa.reindexObject()
 
-        from plone.app.layout.navigation.interfaces import INavigationRoot
-        self.assertFalse(INavigationRoot.providedBy(ylitornio))
-        self.assertFalse(INavigationRoot.providedBy(aaa))
+        permission = "Portlets: Manage portlets"
+        self.portal.manage_permission(permission, roles=['Manager'])
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Manager',
+            ]
+        )
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            ''
+        )
 
-        from sll.policy.upgrades import upgrade_28_to_29
-        upgrade_28_to_29(self.portal)
+        permission = "Portlets: Manage own portlets"
+        self.portal.manage_permission(permission, roles=['Manager'])
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Manager',
+            ]
+        )
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            ''
+        )
 
-        self.assertTrue(INavigationRoot.providedBy(ylitornio))
-        self.assertFalse(INavigationRoot.providedBy(aaa))
+        from sll.policy.upgrades import upgrade_29_to_30
+        upgrade_29_to_30(self.portal)
+
+        permission = "Portlets: Manage portlets"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )
+
+        permission = "Portlets: Manage own portlets"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )

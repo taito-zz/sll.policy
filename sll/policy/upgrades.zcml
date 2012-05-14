@@ -145,7 +145,7 @@
     /> -->
 
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="16"
     handler="sll.policy.upgrades.upgrade_15_to_16"
@@ -283,6 +283,6 @@
     sortkey="1"
     source="28"
     title="Make yhdistykset navigation root"
-    />
+    /> -->
 
 </configure>
