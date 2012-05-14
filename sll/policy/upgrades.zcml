@@ -285,4 +285,14 @@
     title="Make yhdistykset navigation root"
     /> -->
 
+    <genericsetup:upgradeStep
+    description="Reimport rolemap.xml for portlets."
+    destination="30"
+    handler="sll.policy.upgrades.upgrade_29_to_30"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="29"
+    title="Reimport rolemap.xml"
+    />
+
 </configure>

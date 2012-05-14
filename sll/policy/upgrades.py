@@ -517,12 +517,12 @@ PROFILE_ID = 'profile-sll.policy:default'
 #     set_cropimage(context, logger)
 
 def upgrade_29_to_30(context, logger=None):
-    """Reimport rolemaps.xml for portlets."""
+    """Reimport rolemap.xml for portlets."""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
 
-    logger.info('Setting roles for portler permissions.')
+    logger.info('Setting roles for portlet permissions.')
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(PROFILE_ID, 'rolemap', run_dependencies=False, purge_old=False)
-    logger.info('Set roles for portler permissions.')
+    logger.info('Set roles for portlet permissions.')
