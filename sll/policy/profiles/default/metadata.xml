@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>30</version>
+  <version>31</version>
   <dependencies>
     <dependency>profile-Products.PloneFormGen:default</dependency>
     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
@@ -12,7 +12,6 @@
     <dependency>profile-collective.pfg.showrequest:default</dependency>
     <dependency>profile-collective.sharerizer:default</dependency>
     <dependency>profile-collective.portlet.fblikebox:default</dependency>
-    <!-- <dependency>profile-Products.NewSllSkin:default</dependency> -->
     <dependency>profile-sll.templates:default</dependency>
     <dependency>profile-sll.portlet:default</dependency>
     <dependency>profile-sll.theme:default</dependency>

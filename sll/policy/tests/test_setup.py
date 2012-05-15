@@ -91,7 +91,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'30'
+            u'31'
         )
 
     ## properties.xml
@@ -126,6 +126,14 @@ class TestCase(IntegrationTestCase):
         )
 
     ## propertiestool.xml
+    def test_propertiestool_site_properties__default_editor(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertEqual(
+            site_properties.getProperty('default_editor'),
+            'TinyMCE'
+        )
+
     def test_default_language(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_props = properties.site_properties
@@ -135,6 +143,14 @@ class TestCase(IntegrationTestCase):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
+
+    def test_propertiestool_site_properties__external_links_open_new_window(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertEqual(
+            site_properties.getProperty('external_links_open_new_window'),
+            'true'
+        )
 
     def test_propertiestool_site_properties__icon_visibility(self):
         properties = getToolByName(self.portal, 'portal_properties')
@@ -220,6 +236,54 @@ class TestCase(IntegrationTestCase):
 
     def test_rolemap__Manage_own_portlets__acquiredRolesAreUsedBy(self):
         permission = "Portlets: Manage own portlets"
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )
+
+    def test_rolemap__Add_collection_portlet__rolesOfPermission(self):
+        permission = "plone.portlet.collection: Add collection portlet"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+
+    def test_rolemap__Add_collection_portlet__acquiredRolesAreUsedBy(self):
+        permission = "plone.portlet.collection: Add collection portlet"
+        self.assertEqual(
+            self.portal.acquiredRolesAreUsedBy(permission),
+            'CHECKED'
+        )
+
+    def test_rolemap__Add_static_portlet__rolesOfPermission(self):
+        permission = "plone.portlet.static: Add static portlet"
+        roles = [
+            item['name'] for item in self.portal.rolesOfPermission(
+                permission
+            ) if item['selected'] == 'SELECTED'
+        ]
+        roles.sort()
+        self.assertEqual(
+            roles,
+            [
+                'Editor',
+                'Manager',
+                'Site Administrator',
+            ]
+        )
+
+    def test_rolemap__Add_static_portlet__acquiredRolesAreUsedBy(self):
+        permission = "plone.portlet.static: Add static portlet"
         self.assertEqual(
             self.portal.acquiredRolesAreUsedBy(permission),
             'CHECKED'

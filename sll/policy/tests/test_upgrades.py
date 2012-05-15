@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from sll.policy.tests.base import IntegrationTestCase
 
 
@@ -711,9 +712,9 @@ class TestCase(IntegrationTestCase):
     #     self.assertTrue(INavigationRoot.providedBy(ylitornio))
     #     self.assertFalse(INavigationRoot.providedBy(aaa))
 
-    def test_upgrades_28_to_29(self):
+    def test_upgrades_30_to_31(self):
 
-        permission = "Portlets: Manage portlets"
+        permission = "plone.portlet.collection: Add collection portlet"
         self.portal.manage_permission(permission, roles=['Manager'])
         roles = [
             item['name'] for item in self.portal.rolesOfPermission(
@@ -732,7 +733,7 @@ class TestCase(IntegrationTestCase):
             ''
         )
 
-        permission = "Portlets: Manage own portlets"
+        permission = "plone.portlet.static: Add static portlet"
         self.portal.manage_permission(permission, roles=['Manager'])
         roles = [
             item['name'] for item in self.portal.rolesOfPermission(
@@ -751,10 +752,19 @@ class TestCase(IntegrationTestCase):
             ''
         )
 
-        from sll.policy.upgrades import upgrade_29_to_30
-        upgrade_29_to_30(self.portal)
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        site_properties.manage_changeProperties(default_editor=None, external_links_open_new_window='false')
+        self.failIf(site_properties.getProperty('default_editor'))
+        self.assertEqual(
+                site_properties.getProperty('external_links_open_new_window'),
+                'false'
+        )
 
-        permission = "Portlets: Manage portlets"
+        from sll.policy.upgrades import upgrade_30_to_31
+        upgrade_30_to_31(self.portal)
+
+        permission = "plone.portlet.collection: Add collection portlet"
         roles = [
             item['name'] for item in self.portal.rolesOfPermission(
                 permission
@@ -774,7 +784,7 @@ class TestCase(IntegrationTestCase):
             'CHECKED'
         )
 
-        permission = "Portlets: Manage own portlets"
+        permission = "plone.portlet.static: Add static portlet"
         roles = [
             item['name'] for item in self.portal.rolesOfPermission(
                 permission
@@ -792,4 +802,12 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
             self.portal.acquiredRolesAreUsedBy(permission),
             'CHECKED'
+        )
+        self.assertEqual(
+            site_properties.getProperty('default_editor'),
+            'TinyMCE'
+        )
+        self.assertEqual(
+                site_properties.getProperty('external_links_open_new_window'),
+                'true'
         )

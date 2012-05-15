@@ -516,7 +516,7 @@ PROFILE_ID = 'profile-sll.policy:default'
 
 #     set_cropimage(context, logger)
 
-def upgrade_29_to_30(context, logger=None):
+def upgrade_30_to_31(context, logger=None):
     """Reimport rolemap.xml for portlets."""
     if logger is None:
         # Called as upgrade step: define our own logger.
@@ -526,3 +526,12 @@ def upgrade_29_to_30(context, logger=None):
     setup = getToolByName(context, 'portal_setup')
     setup.runImportStepFromProfile(PROFILE_ID, 'rolemap', run_dependencies=False, purge_old=False)
     logger.info('Set roles for portlet permissions.')
+
+    logger.info('Setting default editor to TinyMCE.')
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'propertiestool',
+        run_dependencies=False,
+        purge_old=False
+    )
+    logger.info('Set default editor to TinyMCE.')
