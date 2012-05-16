@@ -1,3 +1,5 @@
+from Products.ATContentTypes.interfaces.file import IATFile
+from Products.ATContentTypes.interfaces.image import IATImage
 from Products.CMFCore.utils import getToolByName
 
 import logging
@@ -535,3 +537,24 @@ def upgrade_30_to_31(context, logger=None):
         purge_old=False
     )
     logger.info('Set default editor to TinyMCE.')
+
+    workflow = getToolByName(context, 'portal_workflow')
+    workflow.setChainForPortalTypes(('File', 'Image', ), 'two_states_workflow')
+    catalog = getToolByName(context, 'portal_catalog')
+    query = {
+        'object_provides': [
+            IATFile.__identifier__,
+            IATImage.__identifier__,
+        ],
+    }
+    brains = catalog(query)
+    for brain in brains:
+        bid = brain.id
+        obj = brain.getObject()
+        if workflow.getInfoFor(obj, "review_state") == 'private':
+            message = 'Publishing {0}'.format(bid)
+            logger.info(message)
+            workflow.doActionFor(obj, 'publish')
+            message = 'Published {0}'.format(bid)
+            logger.info(message)
+    workflow.setChainForPortalTypes(('File', 'Image', ), '')

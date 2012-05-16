@@ -761,6 +761,19 @@ class TestCase(IntegrationTestCase):
                 'false'
         )
 
+        workflow = getToolByName(self.portal, 'portal_workflow')
+        workflow.setChainForPortalTypes(('Image', ), 'two_states_workflow')
+        image = self.portal[
+            self.portal.invokeFactory(
+                'Image',
+                'image',
+            )
+        ]
+        self.assertEqual(
+            workflow.getInfoFor(image, "review_state"),
+            'private'
+        )
+
         from sll.policy.upgrades import upgrade_30_to_31
         upgrade_30_to_31(self.portal)
 
@@ -810,4 +823,15 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
                 site_properties.getProperty('external_links_open_new_window'),
                 'true'
+        )
+
+        from Products.CMFCore.WorkflowCore import WorkflowException
+        self.assertRaises(
+            WorkflowException,
+            lambda: workflow.getInfoFor(image, "review_state")
+        )
+        workflow.setChainForPortalTypes(('Image', ), 'two_states_workflow')
+        self.assertEqual(
+            workflow.getInfoFor(image, "review_state"),
+            'published'
         )
