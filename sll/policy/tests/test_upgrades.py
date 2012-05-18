@@ -774,6 +774,12 @@ class TestCase(IntegrationTestCase):
             'private'
         )
 
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        packages = ['abita.development', 'collective.searchevent']
+        installer.uninstallProducts(['abita.development', 'collective.searchevent'])
+        for pac in packages:
+            self.failIf(installer.isProductInstalled(pac))
+
         from sll.policy.upgrades import upgrade_30_to_31
         upgrade_30_to_31(self.portal)
 
@@ -835,3 +841,6 @@ class TestCase(IntegrationTestCase):
             workflow.getInfoFor(image, "review_state"),
             'published'
         )
+
+        for pac in packages:
+            self.failUnless(installer.isProductInstalled(pac))

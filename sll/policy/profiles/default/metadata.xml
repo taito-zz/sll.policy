@@ -5,11 +5,13 @@
     <dependency>profile-Products.PloneFormGen:default</dependency>
     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
     <dependency>profile-Products.PFGSelectionStringField:default</dependency>
+    <dependency>profile-abita.development:default</dependency>
     <dependency>profile-collective.folderlogo:default</dependency>
     <dependency>profile-collective.pfg.payment:default</dependency>
     <!-- <dependency>profile-collective.cart.core:default</dependency> -->
     <!-- <dependency>profile-collective.cart.shipping:default</dependency> -->
     <dependency>profile-collective.pfg.showrequest:default</dependency>
+    <dependency>profile-collective.searchevent:default</dependency>
     <dependency>profile-collective.sharerizer:default</dependency>
     <dependency>profile-collective.portlet.fblikebox:default</dependency>
     <dependency>profile-sll.templates:default</dependency>

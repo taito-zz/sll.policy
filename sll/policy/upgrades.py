@@ -558,3 +558,15 @@ def upgrade_30_to_31(context, logger=None):
             message = 'Published {0}'.format(bid)
             logger.info(message)
     workflow.setChainForPortalTypes(('File', 'Image', ), '')
+
+    installer = getToolByName(context, 'portal_quickinstaller')
+    packages = ['abita.development', 'collective.searchevent']
+    pacs = []
+    for pac in packages:
+        if not installer.isProductInstalled(pac):
+            pacs.append(pac)
+    message = 'Installing {0}.'.format(', '.join(pacs))
+    logger.info(message)
+    installer.installProducts(pacs)
+    message = 'Installed {0}.'.format(', '.join(pacs))
+    logger.info(message)
