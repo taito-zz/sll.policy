@@ -844,3 +844,44 @@ class TestCase(IntegrationTestCase):
 
         for pac in packages:
             self.failUnless(installer.isProductInstalled(pac))
+
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+        registry['collective.searchevent.collections'] = []
+        self.assertEqual(
+            registry['collective.searchevent.collections'],
+            []
+        )
+
+        from sll.policy.upgrades import upgrade_30_to_31
+        upgrade_30_to_31(self.portal)
+
+        self.assertEqual(
+            registry['collective.searchevent.collections'],
+            [
+                {
+                    'id': 'SLL',
+                    'limit': 10,
+                    'paths': set(
+                        [
+                            'sll/etela-hame',
+                            'sll/etela-karjala',
+                            'sll/etela-savo',
+                            'sll/kainuu',
+                            'sll/keski-suomi',
+                            'sll/kymenlaakso',
+                            'sll/lappi',
+                            'sll/pirkanmaa',
+                            'sll/pohjanmaa',
+                            'sll/pohjois-karjala',
+                            'sll/pohjois-pohjanmaa',
+                            'sll/satakunta',
+                            'sll/uusimaa',
+                            'sll/varsinais-suomi',
+                        ]
+                    ),
+                    'tags': [],
+                }
+            ]
+        )

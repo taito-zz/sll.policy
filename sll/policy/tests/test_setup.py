@@ -397,6 +397,40 @@ class TestCase(IntegrationTestCase):
     def test_events_folders_removed(self):
         self.assertRaises(KeyError, lambda: self.portal['events'])
 
+
+    def test_setuphandlers__set_collections(self):
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+        self.assertEqual(
+            registry['collective.searchevent.collections'],
+            [
+                {
+                    'id': 'SLL',
+                    'limit': 10,
+                    'paths': set(
+                        [
+                            'sll/etela-hame',
+                            'sll/etela-karjala',
+                            'sll/etela-savo',
+                            'sll/kainuu',
+                            'sll/keski-suomi',
+                            'sll/kymenlaakso',
+                            'sll/lappi',
+                            'sll/pirkanmaa',
+                            'sll/pohjanmaa',
+                            'sll/pohjois-karjala',
+                            'sll/pohjois-pohjanmaa',
+                            'sll/satakunta',
+                            'sll/uusimaa',
+                            'sll/varsinais-suomi',
+                        ]
+                    ),
+                    'tags': [],
+                }
+            ]
+        )
+
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['sll.policy'])

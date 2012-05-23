@@ -1,6 +1,8 @@
 from Products.ATContentTypes.interfaces.file import IATFile
 from Products.ATContentTypes.interfaces.image import IATImage
 from Products.CMFCore.utils import getToolByName
+from sll.policy.setuphandlers import set_collections
+
 
 import logging
 
@@ -518,6 +520,7 @@ PROFILE_ID = 'profile-sll.policy:default'
 
 #     set_cropimage(context, logger)
 
+
 def upgrade_30_to_31(context, logger=None):
     """Reimport rolemap.xml for portlets."""
     if logger is None:
@@ -570,3 +573,5 @@ def upgrade_30_to_31(context, logger=None):
     installer.installProducts(pacs)
     message = 'Installed {0}.'.format(', '.join(pacs))
     logger.info(message)
+
+    set_collections(context, logger=logger)
