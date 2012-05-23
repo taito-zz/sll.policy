@@ -99,7 +99,7 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'31'
+            u'32'
         )
 
     ## properties.xml
@@ -425,9 +425,16 @@ class TestCase(IntegrationTestCase):
                             'sll/varsinais-suomi',
                         ]
                     ),
-                    'tags': [],
+                    'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
                 }
             ]
+        )
+
+    def test_setuphanlders__folder__tapahtumat__layout(self):
+        folder = self.portal['tapahtumat']
+        self.assertEqual(
+            folder.getLayout(),
+            'search-results'
         )
 
     def test_uninstall(self):

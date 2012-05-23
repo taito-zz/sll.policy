@@ -574,4 +574,17 @@ def upgrade_30_to_31(context, logger=None):
     message = 'Installed {0}.'.format(', '.join(pacs))
     logger.info(message)
 
+
+def upgrade_31_to_32(context, logger=None):
+    """Set collections, search-result to tapahtumat default view."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
     set_collections(context, logger=logger)
+
+    portal_url = getToolByName(context, 'portal_url')
+    portal = portal_url.getPortalObject()
+    folder = portal.get('tapahtumat')
+    if folder:
+        folder.setLayout('search-results')
