@@ -397,7 +397,6 @@ class TestCase(IntegrationTestCase):
     def test_events_folders_removed(self):
         self.assertRaises(KeyError, lambda: self.portal['events'])
 
-
     def test_setuphandlers__set_collections(self):
         from plone.registry.interfaces import IRegistry
         from zope.component import getUtility

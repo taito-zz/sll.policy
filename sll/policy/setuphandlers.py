@@ -1,4 +1,3 @@
-from collective.searchevent.collection import ICollection
 from plone.registry.interfaces import IRegistry
 from sll.policy.config import YHDISTYKSET
 from zope.component import getUtility
