@@ -656,3 +656,76 @@ class TestCase(IntegrationTestCase):
             tapahtumat.getLayout(),
             'search-results'
         )
+
+    def test_upgrades_32_to_33(self):
+        folder = self.portal[
+            self.portal.invokeFactory(
+                'Folder',
+                'folder',
+            )
+        ]
+        folder.reindexObject()
+        subject = folder.schema.get('subject').schemata
+        self.assertEqual(subject, 'categorization')
+        related_items = folder.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'categorization')
+        folder.schema.changeSchemataForField('excludeFromNav', 'categorization')
+        exclude_from_nav = folder.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'categorization')
+
+        document = self.portal[
+            self.portal.invokeFactory(
+                'Document',
+                'document',
+            )
+        ]
+        document.reindexObject()
+        subject = document.schema.get('subject').schemata
+        self.assertEqual(subject, 'categorization')
+        document.schema.changeSchemataForField('relatedItems', 'categorization')
+        related_items = document.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'categorization')
+        document.schema.changeSchemataForField('excludeFromNav', 'categorization')
+        exclude_from_nav = document.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'categorization')
+
+        event = self.portal[
+            self.portal.invokeFactory(
+                'Event',
+                'event',
+            )
+        ]
+        event.reindexObject()
+        event.schema.changeSchemataForField('subject', 'categorization')
+        subject = event.schema.get('subject').schemata
+        self.assertEqual(subject, 'categorization')
+        event.schema.changeSchemataForField('relatedItems', 'categorization')
+        related_items = event.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'categorization')
+        event.schema.changeSchemataForField('excludeFromNav', 'categorization')
+        exclude_from_nav = event.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'categorization')
+
+        from sll.policy.upgrades import upgrade_32_to_33
+        upgrade_32_to_33(self.portal)
+
+        subject = folder.schema.get('subject').schemata
+        self.assertEqual(subject, 'categorization')
+        related_items = folder.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'categorization')
+        exclude_from_nav = folder.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'default')
+
+        subject = document.schema.get('subject').schemata
+        self.assertEqual(subject, 'categorization')
+        related_items = document.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'default')
+        exclude_from_nav = document.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'default')
+
+        subject = event.schema.get('subject').schemata
+        self.assertEqual(subject, 'default')
+        related_items = event.schema.get('relatedItems').schemata
+        self.assertEqual(related_items, 'default')
+        exclude_from_nav = event.schema.get('excludeFromNav').schemata
+        self.assertEqual(exclude_from_nav, 'default')

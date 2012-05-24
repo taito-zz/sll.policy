@@ -1,0 +1,59 @@
+Log in as the portal owner::
+
+    >>> from plone.app.testing import TEST_USER_NAME, TEST_USER_PASSWORD
+    >>> browser.login(TEST_USER_NAME, TEST_USER_PASSWORD)
+
+Add Document::
+
+    >>> browser.open('/createObject?type_name=Document')
+
+    >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-excludeFromNav"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
+    False
+
+Add News Item::
+
+    >>> browser.open('/createObject?type_name=News Item')
+
+    >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-excludeFromNav"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
+    False
+
+Add Event::
+
+    >>> browser.open('/createObject?type_name=Event')
+
+    >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-excludeFromNav"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
+    True
+
+Add Folder::
+
+    >>> browser.open('/createObject?type_name=Folder')
+
+    >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
+    False
+    >>> 'id="archetypes-fieldname-excludeFromNav"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
+    False
+
+Add FormFolder::
+
+    >>> browser.open('/createObject?type_name=FormFolder')
+
+    >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
+    False
+    >>> 'id="archetypes-fieldname-excludeFromNav"' in browser.bycss('#fieldset-default')
+    True
+    >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
+    False

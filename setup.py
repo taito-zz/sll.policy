@@ -32,6 +32,7 @@ setup(
         'collective.cart.core',
         'collective.cart.shipping',
         'collective.folderlogo',
+        'collective.monkeypatcher',
         'collective.pfg.payment',
         'collective.pfg.showrequest',
         'collective.portlet.fblikebox',

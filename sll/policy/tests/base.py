@@ -17,6 +17,10 @@ class SllPolicyLayer(PloneSandboxLayer):
         # Required by Products.CMFPlone:plone-content to setup defaul plone site.
         z2.installProduct(app, 'Products.PythonScripts')
 
+        import Products.PloneFormGen
+        self.loadZCML(package=Products.PloneFormGen)
+        z2.installProduct(app, 'Products.PloneFormGen')
+
         # Load ZCML
         import sll.policy
         self.loadZCML(package=sll.policy)
@@ -36,6 +40,7 @@ class SllPolicyLayer(PloneSandboxLayer):
     def tearDownZope(self, app):
         """Tear down Zope."""
         # z2.uninstallProduct(app, 'sll.policy')
+        z2.uninstallProduct(app, 'Products.PloneFormGen')
 
 
 FIXTURE = SllPolicyLayer()
