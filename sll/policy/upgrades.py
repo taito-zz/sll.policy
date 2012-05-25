@@ -148,3 +148,13 @@ def upgrade_32_to_33(context, logger=None):
         schema.changeSchemataForField('subject', 'default')
         message = 'Updated subject, excludeFromNav and relatedItems to default schemata for {0}'.format(bid)
         logger.info(message)
+
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Setting FormFolder to content.leadimage.')
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'propertiestool',
+        run_dependencies=False,
+        purge_old=False
+    )
+    logger.info('Set FormFolder to content.leadimage.')

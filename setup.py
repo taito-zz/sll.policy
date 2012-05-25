@@ -27,7 +27,6 @@ setup(
     install_requires=[
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
-        'Products.PloneFormGen',
         'abita.development',
         'collective.cart.core',
         'collective.cart.shipping',

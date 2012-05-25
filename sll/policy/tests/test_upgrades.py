@@ -11,231 +11,6 @@ class TestCase(IntegrationTestCase):
         from plone.app.testing import setRoles
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-    # def test_upgrade_4_to_5__workflow(self):
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-    #     ## Change enable_wf_state_filtering.
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     navtree_properties = getattr(properties, 'navtree_properties')
-    #     self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
-    #     navtree_properties._updateProperty('enable_wf_state_filtering', True)
-    #     self.assertTrue(navtree_properties.getProperty('enable_wf_state_filtering'))
-
-    #     from sll.policy.upgrades import upgrade_4_to_5
-    #     upgrade_4_to_5(self.portal)
-
-    #     self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
-
-    #     wftool = getToolByName(self.portal, 'portal_workflow')
-    #     contents = [
-    #         'Document',
-    #         'Event',
-    #         'File',
-    #         'Folder',
-    #         'FormFolder',
-    #         'Image',
-    #         'Link',
-    #         'News Item',
-    #         'Topic',
-    #     ]
-    #     for content in contents:
-    #         self.assertEqual(
-    #             wftool.getChainForPortalType(content),
-    #             ('two_states_workflow',)
-    #         )
-
-    # def test_upgrade_4_to_5__disable_nonfolderish_sections(self):
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     site_properties = getattr(properties, 'site_properties')
-    #     self.assertFalse(site_properties.getProperty('disable_nonfolderish_sections'))
-    #     site_properties._updateProperty('disable_nonfolderish_sections', True)
-    #     self.assertTrue(site_properties.getProperty('disable_nonfolderish_sections'))
-    #     from sll.policy.upgrades import upgrade_4_to_5
-    #     upgrade_4_to_5(self.portal)
-    #     self.assertFalse(site_properties.getProperty('disable_nonfolderish_sections'))
-
-    # def test_upgrade_4_to_5__wf_states_to_show(self):
-
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     navtree_properties = getattr(properties, 'navtree_properties')
-    #     self.assertEqual(
-    #         navtree_properties.getProperty('wf_states_to_show'),
-    #         ()
-    #     )
-    #     navtree_properties._updateProperty('wf_states_to_show', ('published', 'private'))
-    #     self.assertEqual(
-    #         navtree_properties.getProperty('wf_states_to_show'),
-    #         ('published', 'private')
-    #     )
-    #     from sll.policy.upgrades import upgrade_4_to_5
-    #     upgrade_4_to_5(self.portal)
-    #     self.assertEqual(
-    #         navtree_properties.getProperty('wf_states_to_show'),
-    #         ()
-    #     )
-
-    # def test_upgrade_5_to_6(self):
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    #     folder01 = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Folder',
-    #             'folder01',
-    #         )
-    #     ]
-    #     folder01.reindexObject()
-    #     folder02 = folder01[
-    #         folder01.invokeFactory(
-    #             'Folder',
-    #             'folder02',
-    #         )
-    #     ]
-    #     folder02.reindexObject()
-    #     catalog = getToolByName(self.portal, 'portal_catalog')
-
-    #     uids = [brain.UID for brain in catalog()]
-
-    #     from sll.policy.upgrades import upgrade_5_to_6
-    #     upgrade_5_to_6(self.portal)
-
-    #     from Products.ATContentTypes.interfaces.folder import IATFolder
-    #     query = {
-    #         'object_provides': IATFolder.__identifier__,
-    #         'path': {
-    #             'query': '/'.join(self.portal.getPhysicalPath()),
-    #             'depth': 1,
-    #         },
-    #     }
-
-    #     new_uids = [brain.UID for brain in catalog(query)]
-    #     for uid in new_uids:
-    #         self.assertFalse(uid in uids)
-    #     self.failUnless(self.portal['folder01'])
-
-    # def test_upgrade_6_to_7(self):
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    #     wftool = getToolByName(self.portal, "portal_workflow")
-
-    #     folder01 = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Folder',
-    #             'folder01',
-    #         )
-    #     ]
-    #     folder01.reindexObject()
-    #     wftool.doActionFor(folder01, 'publish')
-    #     folder01.reindexObject(idxs=['review_state'])
-
-    #     folder02 = folder01[
-    #         folder01.invokeFactory(
-    #             'Folder',
-    #             'folder02',
-    #         )
-    #     ]
-    #     folder02.reindexObject()
-    #     wftool.doActionFor(folder02, 'publish')
-    #     folder02.reindexObject(idxs=['review_state'])
-
-    #     folder03 = folder02[
-    #         folder02.invokeFactory(
-    #             'Folder',
-    #             'folder03',
-    #         )
-    #     ]
-    #     folder03.reindexObject()
-
-    #     catalog = getToolByName(self.portal, 'portal_catalog')
-    #     uids = [brain.UID for brain in catalog()]
-
-    #     from sll.policy.upgrades import upgrade_6_to_7
-    #     upgrade_6_to_7(self.portal)
-
-    #     self.assertFalse(self.portal['folder01']['folder02'].UID() in uids)
-    #     self.failUnless(self.portal['folder01']['folder02'])
-    #     self.failUnless(
-    #         wftool.getInfoFor(
-    #             self.portal['folder01'],
-    #             'review_state'
-    #         ),
-    #         'published'
-    #     )
-    #     self.failUnless(
-    #         wftool.getInfoFor(
-    #             self.portal['folder01']['folder02'],
-    #             'review_state'
-    #         ),
-    #         'published'
-    #     )
-    #     self.failUnless(
-    #         wftool.getInfoFor(
-    #             self.portal['folder01']['folder02']['folder03'],
-    #             'review_state'
-    #         ),
-    #         'private'
-    #     )
-
-    # def test_copy_paste_remove_others(self):
-    #     from plone.app.testing import TEST_USER_ID
-    #     from plone.app.testing import setRoles
-    #     setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    #     wftool = getToolByName(self.portal, "portal_workflow")
-
-    #     document01 = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Document',
-    #             'document01',
-    #         )
-    #     ]
-    #     wftool.doActionFor(document01, 'publish')
-    #     document01.reindexObject()
-
-    #     document02 = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Document',
-    #             'document02',
-    #         )
-    #     ]
-    #     document02.reindexObject()
-
-    #     catalog = getToolByName(self.portal, 'portal_catalog')
-    #     uids = [brain.UID for brain in catalog()]
-
-    #     from sll.policy.upgrades import copy_paste_remove_others
-
-    #     from Products.ATContentTypes.interfaces.document import IATDocument
-    #     copy_paste_remove_others(self.portal, IATDocument.__identifier__)
-
-    #     self.assertFalse(self.portal['document01'].UID() in uids)
-    #     self.assertFalse(self.portal['document02'].UID() in uids)
-    #     self.failUnless(
-    #         wftool.getInfoFor(
-    #             self.portal['document01'],
-    #             'review_state'
-    #         ),
-    #         'published'
-    #     )
-    #     self.failUnless(
-    #         wftool.getInfoFor(
-    #             self.portal['document02'],
-    #             'review_state'
-    #         ),
-    #         'private'
-    #     )
-
     # def test_upgrade_13_to_14(self):
     #     portal_properties = getToolByName(self.portal, 'portal_properties')
     #     navtree_properties = getattr(portal_properties, 'navtree_properties')
@@ -706,6 +481,14 @@ class TestCase(IntegrationTestCase):
         exclude_from_nav = event.schema.get('excludeFromNav').schemata
         self.assertEqual(exclude_from_nav, 'categorization')
 
+        properties = getToolByName(self.portal, 'portal_properties')
+        cli_properties = getattr(properties, 'cli_properties')
+        cli_properties.manage_changeProperties(allowed_types=('Document', 'Event'))
+        self.assertEqual(
+            cli_properties.getProperty('allowed_types'),
+            ('Document', 'Event')
+        )
+
         from sll.policy.upgrades import upgrade_32_to_33
         upgrade_32_to_33(self.portal)
 
@@ -729,3 +512,8 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(related_items, 'default')
         exclude_from_nav = event.schema.get('excludeFromNav').schemata
         self.assertEqual(exclude_from_nav, 'default')
+
+        self.assertEqual(
+            cli_properties.getProperty('allowed_types'),
+            ('Document', 'Event', 'FormFolder')
+        )

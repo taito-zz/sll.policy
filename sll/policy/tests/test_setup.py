@@ -198,7 +198,7 @@ class TestCase(IntegrationTestCase):
         cli_properties = getattr(properties, 'cli_properties')
         self.assertEqual(
             cli_properties.getProperty('allowed_types'),
-            ('Document', 'Event')
+            ('Document', 'Event', 'FormFolder')
         )
 
     def test_rolemap__Manage_portlets__rolesOfPermission(self):

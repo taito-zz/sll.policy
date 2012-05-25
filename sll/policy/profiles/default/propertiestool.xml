@@ -128,6 +128,7 @@
   <property name="allowed_types" type="lines" purge="True">
    <element value="Document"/>
    <element value="Event"/>
+   <element value="FormFolder"/>
   </property>
  </object>
 
