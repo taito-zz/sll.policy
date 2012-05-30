@@ -158,3 +158,24 @@ def upgrade_32_to_33(context, logger=None):
         purge_old=False
     )
     logger.info('Set FormFolder to content.leadimage.')
+
+
+def disable_javascript(context, rid, logger=None):
+    """Disable javascript"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    javascripts = getToolByName(context, 'portal_javascripts')
+    resource = javascripts.getResource(rid)
+    if resource:
+        message = 'Disabling {0}.'.format(rid)
+        logger.info(message)
+        resource.setEnabled(False)
+        message = 'Disabled {0}.'.format(rid)
+        logger.info(message)
+
+
+def upgrade_33_to_34(context, logger=None):
+    """Disable ++resource++search.js"""
+    disable_javascript(context, '++resource++search.js')

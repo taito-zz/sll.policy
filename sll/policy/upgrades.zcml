@@ -34,4 +34,14 @@
     title="Update schemata for subject, excludeFromNav and relatedItems."
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="34"
+    handler="sll.policy.upgrades.upgrade_33_to_34"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="33"
+    title="Disable ++resource++search.js"
+    />
+
 </configure>

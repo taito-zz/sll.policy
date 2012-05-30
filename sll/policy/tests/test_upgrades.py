@@ -1,6 +1,8 @@
 from Products.CMFCore.utils import getToolByName
 from sll.policy.tests.base import IntegrationTestCase
 
+import mock
+
 
 class TestCase(IntegrationTestCase):
     """TestCase for Plone upgrades."""
@@ -10,126 +12,6 @@ class TestCase(IntegrationTestCase):
         from plone.app.testing import TEST_USER_ID
         from plone.app.testing import setRoles
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    # def test_upgrade_13_to_14(self):
-    #     portal_properties = getToolByName(self.portal, 'portal_properties')
-    #     navtree_properties = getattr(portal_properties, 'navtree_properties')
-    #     self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
-
-    #     navtree_properties._updateProperty('topLevel', 1)
-    #     self.assertEqual(navtree_properties.getProperty('topLevel'), 1)
-
-    #     from sll.policy.upgrades import upgrade_13_to_14
-    #     upgrade_13_to_14(self.portal)
-
-    #     self.assertEqual(navtree_properties.getProperty('topLevel'), 0)
-
-    # def test_upgrade_14_to_15__collective_cropimage_ids(self):
-    #     from sll.policy.upgrades import upgrade_14_to_15
-    #     upgrade_14_to_15(self.portal)
-    #     from plone.registry.interfaces import IRegistry
-    #     from zope.component import getUtility
-    #     registry = getUtility(IRegistry)
-    #     self.assertEqual(
-    #         registry['collective.cropimage.ids'],
-    #         [
-    #             {
-    #                 'ratio_height': 15.0,
-    #                 'ratio_width': 17.0,
-    #                 'max_width': 170.0,
-    #                 'min_height': 150.0,
-    #                 'max_height': 150.0,
-    #                 'min_width': 170.0,
-    #                 'id': 'feed'
-    #             }
-    #         ]
-    #     )
-
-    # def test_upgrades_15_to_16(self):
-    #     portal_skins = getToolByName(self.portal, 'portal_skins')
-    #     custom = portal_skins['custom']
-    #     from Products.PageTemplates.ZopePageTemplate import manage_addPageTemplate
-    #     manage_addPageTemplate(custom, 'aaa', text='')
-    #     manage_addPageTemplate(custom, 'portlet_kartta', text='')
-    #     from sll.policy.upgrades import upgrade_15_to_16
-    #     upgrade_15_to_16(self.portal)
-    #     installer = getToolByName(self.portal, 'portal_quickinstaller')
-    #     self.assertFalse(installer.isProductInstalled('NewSllSkin'))
-    #     self.assertEqual(portal_skins.default_skin, 'Sunburst Theme')
-    #     self.assertFalse('NewSllSkin' in portal_skins.getSkinSelections())
-    #     self.assertEqual(custom.objectIds(), ['aaa'])
-
-    # def test_upgrades_16_to_17(self):
-    #     from zope.component import getUtility
-    #     from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-    #     storage = getUtility(IViewletSettingsStorage)
-    #     storage.setHidden('plone.portaltop', '*', (u'plone.header',))
-    #     self.assertTrue(u'plone.header' in storage.getHidden('plone.portaltop', '*'))
-    #     storage.setHidden('plone.portalheader', '*', (u'plone.logo',))
-    #     self.assertTrue(u'plone.logo' in storage.getHidden('plone.portalheader', '*'))
-    #     from sll.policy.upgrades import upgrade_16_to_17
-    #     upgrade_16_to_17(self.portal)
-    #     self.assertEqual(
-    #         storage.getOrder('plone.portaltop', '*'),
-    #         (
-    #             u'plone.header',
-    #         )
-    #     )
-    #     self.assertFalse(storage.getHidden('plone.portaltop', '*'))
-    #     self.assertEqual(
-    #         storage.getOrder('plone.portalheader', '*'),
-    #         (
-    #             u'plone.skip_links',
-    #             u'plone.personal_bar',
-    #             u'plone.site_actions',
-    #             u'plone.app.i18n.locales.languageselector',
-    #             u'plone.searchbox',
-    #             u'plone.logo',
-    #             u'plone.global_sections',
-    #         )
-    #     )
-    #     self.assertEqual(storage.getHidden('plone.portalheader', '*'), ())
-
-    # def test_upgrades_17_to_18(self):
-    #     tausta = self.portal[
-    #         self.portal.invokeFactory('Document', 'ylapalkin-tausta.png')
-    #     ]
-    #     tausta.reindexObject()
-    #     self.failUnless(self.portal['ylapalkin-tausta.png'])
-    #     properties = getToolByName(self.portal, 'portal_properties')
-    #     folder_logo_properties = getattr(properties, 'folder_logo_properties')
-    #     folder_logo_properties.manage_changeProperties(
-    #         background_color='white',
-    #         background_image_id='image',
-    #     )
-    #     self.assertEqual(
-    #         folder_logo_properties.getProperty('background_color'),
-    #         'white'
-    #     )
-    #     self.assertEqual(
-    #         folder_logo_properties.getProperty('background_image_id'),
-    #         'image'
-    #     )
-    #     from sll.policy.upgrades import upgrade_17_to_18
-    #     upgrade_17_to_18(self.portal)
-    #     self.assertRaises(KeyError, lambda: self.portal['ylapalkin-tausta.png'])
-    #     self.assertEqual(
-    #         folder_logo_properties.getProperty('background_color'),
-    #         ''
-    #     )
-    #     self.assertEqual(
-    #         folder_logo_properties.getProperty('background_image_id'),
-    #         ''
-    #     )
-
-    # def test_upgrades_18_to_19(self):
-    #     installer = getToolByName(self.portal, 'portal_quickinstaller')
-    #     product = 'plonetheme.classic'
-    #     installer.installProduct(product)
-    #     self.assertTrue(installer.isProductInstalled(product))
-    #     from sll.policy.upgrades import upgrade_18_to_19
-    #     upgrade_18_to_19(self.portal)
-    #     self.assertFalse(installer.isProductInstalled(product))
 
     # def test_upgrades_19_to_20(self):
     #     from zope.component import getUtility
@@ -517,3 +399,20 @@ class TestCase(IntegrationTestCase):
             cli_properties.getProperty('allowed_types'),
             ('Document', 'Event', 'FormFolder')
         )
+
+    def test_disable_javascript(self):
+        javascripts = getToolByName(self.portal, 'portal_javascripts')
+        rid = 'jquery-integration.js'
+        resource = javascripts.getResource(rid)
+        self.assertTrue(resource.getEnabled())
+
+        from sll.policy.upgrades import disable_javascript
+        disable_javascript(self.portal, rid)
+
+        self.assertFalse(resource.getEnabled())
+
+    @mock.patch('sll.policy.upgrades.disable_javascript')
+    def test_upgrades_33_to_34(self, disable_javascript):
+        from sll.policy.upgrades import upgrade_33_to_34
+        upgrade_33_to_34(self.portal)
+        disable_javascript.assert_called_with(self.portal, '++resource++search.js')
