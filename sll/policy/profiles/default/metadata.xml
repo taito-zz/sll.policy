@@ -11,7 +11,6 @@
     <!-- <dependency>profile-collective.cart.core:default</dependency> -->
     <!-- <dependency>profile-collective.cart.shipping:default</dependency> -->
     <dependency>profile-collective.pfg.showrequest:default</dependency>
-    <dependency>profile-collective.searchevent:default</dependency>
     <dependency>profile-collective.sharerizer:default</dependency>
     <dependency>profile-collective.portlet.fblikebox:default</dependency>
     <dependency>profile-sll.templates:default</dependency>

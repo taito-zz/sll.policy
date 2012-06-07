@@ -35,7 +35,6 @@ setup(
         'collective.pfg.payment',
         'collective.pfg.showrequest',
         'collective.portlet.fblikebox',
-        'collective.searchevent',
         'collective.sharerizer',
         'five.grok',
         'hexagonit.testing',
