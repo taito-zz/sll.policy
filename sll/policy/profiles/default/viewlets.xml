@@ -2,6 +2,7 @@
 <object>
   <order manager="plone.portaltop" skinname="*">
     <viewlet name="plone.header" />
+    <viewlet name="Products.Carousel.viewlet" />
   </order>
   <order manager="plone.portalheader" skinname="*">
     <viewlet name="plone.skip_links" />
