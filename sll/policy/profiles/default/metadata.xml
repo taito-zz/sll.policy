@@ -16,5 +16,6 @@
     <dependency>profile-sll.templates:default</dependency>
     <dependency>profile-sll.portlet:default</dependency>
     <dependency>profile-sll.theme:default</dependency>
+    <dependency>profile-sll.carousel:default</dependency>
   </dependencies>
 </metadata>
