@@ -179,3 +179,30 @@ def disable_javascript(context, rid, logger=None):
 def upgrade_33_to_34(context, logger=None):
     """Disable ++resource++search.js"""
     disable_javascript(context, '++resource++search.js')
+
+
+def upgrade_34_to_35(context, logger=None):
+    """Update Folders' workflow"""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+
+    workflow = getToolByName(context, 'portal_workflow')
+    workflow.setChainForPortalTypes(('Folder',), 'folder_workflow')
+    catalog = getToolByName(context, 'portal_catalog')
+    query = {
+        'portal_type': [
+            'Folder',
+        ],
+    }
+    brains = catalog(query)
+    for brain in brains:
+        bid = brain.id
+        obj = brain.getObject()
+        if workflow.getInfoFor(obj, "review_state") == 'private':
+            message = 'Publishing {0}'.format(bid)
+            logger.info(message)
+            workflow.doActionFor(obj, 'publish')
+            message = 'Published {0}'.format(bid)
+            logger.info(message)
+    workflow.setChainForPortalTypes(('Folder', ), 'two_states_workflow')
