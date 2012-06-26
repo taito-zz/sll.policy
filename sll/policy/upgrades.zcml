@@ -44,14 +44,4 @@
     title="Disable ++resource++search.js"
     />
 
-  <genericsetup:upgradeStep
-    description=""
-    destination="35"
-    handler="sll.policy.upgrades.upgrade_34_to_35"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="34"
-    title="Update Folders' workflow"
-    />
-
 </configure>
