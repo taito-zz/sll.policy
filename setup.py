@@ -28,8 +28,6 @@ setup(
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
         'abita.development',
-        'collective.cart.core',
-        'collective.cart.shipping',
         'collective.folderlogo',
         'collective.monkeypatcher',
         'collective.pfg.payment',
