@@ -416,3 +416,26 @@ class TestCase(IntegrationTestCase):
         from sll.policy.upgrades import upgrade_33_to_34
         upgrade_33_to_34(self.portal)
         disable_javascript.assert_called_with(self.portal, '++resource++search.js')
+
+
+    def test_upgrades_34_to_35(self):
+        folder = self.portal[self.portal.invokeFactory('Folder', 'folder')]
+        from collective.cart.core.interfaces.marker import IPotentiallyAddableToCart
+        from collective.cart.core.interfaces.marker import IAddableToCart
+        from collective.cart.core.interfaces.marker import IProductAnnotations
+        from collective.cart.core.interfaces.marker import ICartAware
+        from zope.interface import alsoProvides
+        alsoProvides(folder, (IPotentiallyAddableToCart, IAddableToCart, IProductAnnotations, ICartAware))
+        folder.reindexObject(idxs=['object_provides'])
+        self.assertTrue(IPotentiallyAddableToCart.providedBy(folder))
+        self.assertTrue(IAddableToCart.providedBy(folder))
+        self.assertTrue(IProductAnnotations.providedBy(folder))
+        self.assertTrue(ICartAware.providedBy(folder))
+
+        from sll.policy.upgrades import upgrade_34_to_35
+        upgrade_34_to_35(self.portal)
+
+        self.assertFalse(IPotentiallyAddableToCart.providedBy(folder))
+        self.assertFalse(IAddableToCart.providedBy(folder))
+        self.assertFalse(IProductAnnotations.providedBy(folder))
+        self.assertFalse(ICartAware.providedBy(folder))

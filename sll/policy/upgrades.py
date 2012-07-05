@@ -179,3 +179,35 @@ def disable_javascript(context, rid, logger=None):
 def upgrade_33_to_34(context, logger=None):
     """Disable ++resource++search.js"""
     disable_javascript(context, '++resource++search.js')
+
+
+def upgrade_34_to_35(context, logger=None):
+    """Disable Marker Interfaces."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+    from collective.cart.core.interfaces.marker import IPotentiallyAddableToCart
+    from collective.cart.core.interfaces.marker import IAddableToCart
+    from collective.cart.core.interfaces.marker import IProductAnnotations
+    from collective.cart.core.interfaces.marker import ICartAware
+    from zope.interface import noLongerProvides
+    catalog = getToolByName(context, 'portal_catalog')
+    query = {
+        'object_provides': [
+            IPotentiallyAddableToCart.__identifier__,
+            IAddableToCart.__identifier__,
+            IProductAnnotations.__identifier__,
+            ICartAware.__identifier__]
+    }
+    for brain in catalog(query):
+        bid = brain.id
+        obj = brain.getObject()
+        message = 'Disabling marker interfaces from {0}.'.format(bid)
+        logger.info(message)
+        noLongerProvides(obj, IPotentiallyAddableToCart)
+        noLongerProvides(obj, IAddableToCart)
+        noLongerProvides(obj, IProductAnnotations)
+        noLongerProvides(obj, ICartAware)
+        message = 'Disabled marker interfaces from {0}.'.format(bid)
+        logger.info(message)
+        obj.reindexObject(idxs=['object_provides'])
