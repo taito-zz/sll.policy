@@ -38,7 +38,7 @@ setup(
         'hexagonit.testing',
         'plone.browserlayer',
         'setuptools',
-        'sll.carousel',
+        # 'sll.carousel',
         'sll.portlet',
         'sll.templates',
         'sll.theme',
