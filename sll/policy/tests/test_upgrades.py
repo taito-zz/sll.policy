@@ -417,7 +417,6 @@ class TestCase(IntegrationTestCase):
         upgrade_33_to_34(self.portal)
         disable_javascript.assert_called_with(self.portal, '++resource++search.js')
 
-
     def test_upgrades_34_to_35(self):
         folder = self.portal[self.portal.invokeFactory('Folder', 'folder')]
         from collective.cart.core.interfaces.marker import IPotentiallyAddableToCart

@@ -1,50 +1,4 @@
 # -*- coding: utf-8 -*-
-
-#     def test_is_collective_pfg_payment_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('collective.pfg.payment'))
-
-#     def test_is_collective_cart_core_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('collective.cart.core'))
-
-#     def test_is_collective_cart_shipping_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('collective.cart.shipping'))
-
-#     def test_is_collective_pfg_showrequest_installed(self):
-#         self.failUnless(self.installer.isProductInstalled('collective.pfg.showrequest'))
-
-#     ## propertiestool.xml
-#     def test_collective_cart_properties(self):
-#         self.assertEquals('EUR', self.ccp.getProperty('currency'))
-#         self.assertEquals('€', self.ccp.getProperty('currency_symbol'))
-#         self.assertEquals('Behind', self.ccp.getProperty('symbol_location'))
-#         self.assertEquals(('Document',), self.ccp.getProperty('content_types'))
-#         self.assertEquals('Select', self.ccp.getProperty('quantity_method'))
-
-#     def test_collective_pfg_payment_properties(self):
-#         names = (
-#             'MERCHANT_ID',
-#             'AMOUNT',
-#             'ORDER_NUMBER',
-#             'REFERENCE_NUMBER',
-#             'ORDER_DESCRIPTION',
-#             'CURRENCY',
-#             'RETURN_ADDRESS',
-#             'CANCEL_ADDRESS',
-#             'PENDING_ADDRESS',
-#             'NOTIFY_ADDRESS',
-#             'TYPE',
-#             'CULTURE',
-#             'PRESELECTED_METHOD',
-#             'MODE',
-#             'VISIBLE_METHODS',
-#             'GROUP'
-#         )
-#         self.assertEquals(names, self.cppp.getProperty('fields'))
-#         self.assertEquals('6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ', self.cppp.getProperty('mac'))
-#         self.assertEquals('|', self.cppp.getProperty('separator'))
-#         self.assertEquals(True, self.cppp.getProperty('capital'))
-
-
 from Products.CMFCore.utils import getToolByName
 from sll.policy.tests.base import IntegrationTestCase
 from zope.component import getUtility
@@ -67,9 +21,9 @@ class TestCase(IntegrationTestCase):
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
         self.failUnless(installer.isProductInstalled('PloneFormGen'))
 
-    # def test_installed__sll_carousel(self):
-    #     installer = getToolByName(self.portal, 'portal_quickinstaller')
-    #     self.failUnless(installer.isProductInstalled('sll.carousel'))
+    def test_installed__sll_carousel(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.carousel'))
 
     def test_abita_development_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
