@@ -8,14 +8,14 @@
   <include package="z3c.jbot" file="meta.zcml" />
   <browser:jbot directory="overrides" layer=".interfaces.ISllPolicyLayer" />
 
-  <browser:viewlet
+  <!-- <browser:viewlet
     name="sll.head"
     for="*"
     manager="plone.app.layout.viewlets.interfaces.IHtmlHead"
     class=".viewlet.HeadViewlet"
     permission="zope.Public"
     layer=".interfaces.ISllPolicyLayer"
-    />
+    /> -->
 
   <browser:viewlet
     name="plone.path_bar"
