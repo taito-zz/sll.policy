@@ -18,7 +18,7 @@ setup(
     keywords='',
     author='Taito Horiuchi',
     author_email='taito.horiuchi@abita.fi',
-    url='http://sll.fi/',
+    url='http://www.sll.fi/',
     license='None-free',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['sll'],
@@ -39,17 +39,16 @@ setup(
         'plone.browserlayer',
         'setuptools',
         'sll.carousel',
+        'sll.locales',
         'sll.portlet',
-        #'sll.shopping',
+        'sll.shopping',
         'sll.templates',
         'sll.theme',
         'z3c.autoinclude',
-        'z3c.jbot',
-    ],
+        'z3c.jbot'],
     entry_points="""
     # -*- Entry points: -*-
 
     [z3c.autoinclude.plugin]
     target = plone
-    """,
-)
+    """)

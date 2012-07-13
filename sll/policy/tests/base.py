@@ -24,6 +24,8 @@ class SllPolicyLayer(PloneSandboxLayer):
         # Load ZCML
         import sll.policy
         self.loadZCML(package=sll.policy)
+        import sll.locales
+        self.loadZCML(package=sll.locales)
 
     def setUpPloneSite(self, portal):
         """Set up Plone."""
