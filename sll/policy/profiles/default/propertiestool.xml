@@ -19,6 +19,9 @@
     <property
       name="enable_sitemap"
       type="boolean">True</property>
+    <property name="localTimeFormat" type="string">%d.%m.%Y</property>
+    <property name="localLongTimeFormat" type="string">%d.%m.%Y %H.%M</property>
+    <property name="localTimeOnlyFormat" type="string">%H.%M</property>
     <property
       name="mark_special_links"
       type="string">false</property>
