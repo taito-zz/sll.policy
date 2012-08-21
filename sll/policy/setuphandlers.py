@@ -46,17 +46,16 @@ def set_collections(context, logger=None):
     registry = getUtility(IRegistry)
     collections = registry['collective.searchevent.collections']
     ids = [item['id'] for item in collections]
-    if 'SLL' not in ids:
-        logger.info('Setting collective.searchevent.collections.')
-        data = {
-            'id': 'SLL',
-            'limit': 10,
-            'paths': set(paths),
-            'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot', ],
-        }
-        collections.append(data)
-        registry['collective.searchevent.collections'] = collections
-        logger.info('Set collective.searchevent.collections.')
+    logger.info('Setting collective.searchevent.collections.')
+    data = {
+        'id': 'SLL',
+        'limit': 10,
+        'paths': set(paths),
+        'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot', ],
+    }
+    collections.append(data)
+    registry['collective.searchevent.collections'] = collections
+    logger.info('Set collective.searchevent.collections.')
 
 
 def setupVarious(context):
