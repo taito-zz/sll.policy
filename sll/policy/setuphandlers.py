@@ -45,7 +45,7 @@ def set_collections(context, logger=None):
 
     registry = getUtility(IRegistry)
     collections = registry['collective.searchevent.collections']
-    ids = [item['id'] for item in collections]
+    collections = [col for col in collections if col['id'] != 'SLL']
     logger.info('Setting collective.searchevent.collections.')
     data = {
         'id': 'SLL',
