@@ -114,5 +114,6 @@ YHDISTYKSET = {
         'kasivarsi',
         'kemin-seutu',
         'posio',
-    ]
+    ],
+    'pohjois-savo': []
  }

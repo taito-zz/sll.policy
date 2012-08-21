@@ -37,6 +37,10 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.theme'))
 
+    def test_hexagonit_socialbutton_installed(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('hexagonit.socialbutton'))
+
     def test_actions__dashboard(self):
         tool = getToolByName(self.portal, 'portal_actions')
         actions = getattr(tool, 'user')
@@ -53,27 +57,23 @@ class TestCase(IntegrationTestCase):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
             setup.getVersionForProfile('profile-sll.policy:default'),
-            u'35'
-        )
+            u'36')
 
     ## properties.xml
     def test_properties__title(self):
         self.assertEqual(
             self.portal.getProperty('title'),
-            'Luonnonsuojeluliitto'
-        )
+            'Luonnonsuojeluliitto')
 
     def test_properties__description(self):
         self.assertEqual(
             self.portal.getProperty('description'),
-            'Suomen luonnonsuojeluliitto ry'
-        )
+            'Suomen luonnonsuojeluliitto ry')
 
     def test_properties__email_from_address(self):
         self.assertEqual(
             self.portal.getProperty('email_from_address'),
-            'webmaster@sll.fi'
-        )
+            'webmaster@sll.fi')
 
     def test_properties__email_from_name(self):
         self.assertEqual(
@@ -255,14 +255,6 @@ class TestCase(IntegrationTestCase):
         tinymce = getToolByName(self.portal, 'portal_tinymce')
         self.assertTrue(tinymce.link_using_uids)
 
-    # def test_tinymce__toolbar_forecolor(self):
-    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
-    #     self.assertTrue(tinymce.toolbar_forecolor)
-
-    # def test_tinymce__toolbar_backcolor(self):
-    #     tinymce = getToolByName(self.portal, 'portal_tinymce')
-    #     self.assertTrue(tinymce.toolbar_backcolor)
-
     def test_portlets__news_removed_from_right_column(self):
         from zope.component import getMultiAdapter
         from plone.portlets.interfaces import IPortletManager
@@ -289,30 +281,6 @@ class TestCase(IntegrationTestCase):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
-
-    # def test_theme__enabled(self):
-    #     registry = getUtility(IRegistry)
-    #     from plone.app.theming.interfaces import IThemeSettings
-    #     settings = registry.forInterface(IThemeSettings)
-    #     self.assertTrue(settings.enabled)
-
-    # def test_theme__rules(self):
-    #     registry = getUtility(IRegistry)
-    #     from plone.app.theming.interfaces import IThemeSettings
-    #     settings = registry.forInterface(IThemeSettings)
-    #     self.assertEqual(
-    #         settings.rules,
-    #         "/++theme++sll.theme/rules.xml"
-    #     )
-
-    # def test_theme__absolutePrefix(self):
-    #     registry = getUtility(IRegistry)
-    #     from plone.app.theming.interfaces import IThemeSettings
-    #     settings = registry.forInterface(IThemeSettings)
-    #     self.assertEqual(
-    #         settings.absolutePrefix,
-    #         "/++theme++sll.theme"
-    #     )
 
     ## rolemap.xml
     def test_content_rule(self):
@@ -374,6 +342,7 @@ class TestCase(IntegrationTestCase):
                             'sll/pohjanmaa',
                             'sll/pohjois-karjala',
                             'sll/pohjois-pohjanmaa',
+                            'sll/pohjois-savo',
                             'sll/satakunta',
                             'sll/uusimaa',
                             'sll/varsinais-suomi',

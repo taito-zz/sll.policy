@@ -6,7 +6,6 @@ from Products.ATContentTypes.interfaces.image import IATImage
 from Products.ATContentTypes.interfaces.news import IATNewsItem
 from Products.CMFCore.utils import getToolByName
 from Products.PloneFormGen.interfaces import IPloneFormGenForm
-from sll.policy.setuphandlers import set_collections
 
 
 import logging
@@ -74,19 +73,19 @@ def upgrade_30_to_31(context, logger=None):
     logger.info(message)
 
 
-def upgrade_31_to_32(context, logger=None):
-    """Set collections, search-result to tapahtumat default view."""
-    if logger is None:
-        # Called as upgrade step: define our own logger.
-        logger = logging.getLogger(__name__)
+# def upgrade_31_to_32(context, logger=None):
+#     """Set collections, search-result to tapahtumat default view."""
+#     if logger is None:
+#         # Called as upgrade step: define our own logger.
+#         logger = logging.getLogger(__name__)
 
-    set_collections(context, logger=logger)
+#     set_collections(context, logger=logger)
 
-    portal_url = getToolByName(context, 'portal_url')
-    portal = portal_url.getPortalObject()
-    folder = portal.get('tapahtumat')
-    if folder:
-        folder.setLayout('search-results')
+#     portal_url = getToolByName(context, 'portal_url')
+#     portal = portal_url.getPortalObject()
+#     folder = portal.get('tapahtumat')
+#     if folder:
+#         folder.setLayout('search-results')
 
 
 def upgrade_32_to_33(context, logger=None):
@@ -211,3 +210,14 @@ def upgrade_34_to_35(context, logger=None):
         message = 'Disabled marker interfaces from {0}.'.format(bid)
         logger.info(message)
         obj.reindexObject(idxs=['object_provides'])
+
+
+def upgrade_35_to_36(context, logger=None):
+    """Reset collections."""
+    if logger is None:
+        # Called as upgrade step: define our own logger.
+        logger = logging.getLogger(__name__)
+    from sll.policy.setuphandlers import set_collections
+    logger.info('Setting collections.')
+    set_collections(context)
+    logger.info('Set collections.')

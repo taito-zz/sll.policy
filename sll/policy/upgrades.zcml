@@ -16,16 +16,6 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="32"
-    handler="sll.policy.upgrades.upgrade_31_to_32"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="31"
-    title="Set collections, search-result to tapahtumat default view."
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="33"
     handler="sll.policy.upgrades.upgrade_32_to_33"
     profile="sll.policy:default"

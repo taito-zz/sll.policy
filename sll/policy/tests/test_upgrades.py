@@ -259,60 +259,61 @@ class TestCase(IntegrationTestCase):
         for pac in packages:
             self.failUnless(installer.isProductInstalled(pac))
 
-    def test_upgrades_31_to_32(self):
+    # def test_upgrades_31_to_32(self):
 
-        from plone.registry.interfaces import IRegistry
-        from zope.component import getUtility
-        registry = getUtility(IRegistry)
-        registry['collective.searchevent.collections'] = []
-        self.assertEqual(
-            registry['collective.searchevent.collections'],
-            []
-        )
+    #     from plone.registry.interfaces import IRegistry
+    #     from zope.component import getUtility
+    #     registry = getUtility(IRegistry)
+    #     registry['collective.searchevent.collections'] = []
+    #     self.assertEqual(
+    #         registry['collective.searchevent.collections'],
+    #         []
+    #     )
 
-        tapahtumat = self.portal['tapahtumat']
-        tapahtumat.setLayout('some-view')
-        self.assertEqual(
-            tapahtumat.getLayout(),
-            'some-view'
-        )
+    #     tapahtumat = self.portal['tapahtumat']
+    #     tapahtumat.setLayout('some-view')
+    #     self.assertEqual(
+    #         tapahtumat.getLayout(),
+    #         'some-view'
+    #     )
 
-        from sll.policy.upgrades import upgrade_31_to_32
-        upgrade_31_to_32(self.portal)
+    #     from sll.policy.upgrades import upgrade_31_to_32
+    #     upgrade_31_to_32(self.portal)
 
-        self.assertEqual(
-            registry['collective.searchevent.collections'],
-            [
-                {
-                    'id': 'SLL',
-                    'limit': 10,
-                    'paths': set(
-                        [
-                            'sll/etela-hame',
-                            'sll/etela-karjala',
-                            'sll/etela-savo',
-                            'sll/kainuu',
-                            'sll/keski-suomi',
-                            'sll/kymenlaakso',
-                            'sll/lappi',
-                            'sll/pirkanmaa',
-                            'sll/pohjanmaa',
-                            'sll/pohjois-karjala',
-                            'sll/pohjois-pohjanmaa',
-                            'sll/satakunta',
-                            'sll/uusimaa',
-                            'sll/varsinais-suomi',
-                        ]
-                    ),
-                    'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
-                }
-            ]
-        )
+    #     self.assertEqual(
+    #         registry['collective.searchevent.collections'],
+    #         [
+    #             {
+    #                 'id': 'SLL',
+    #                 'limit': 10,
+    #                 'paths': set(
+    #                     [
+    #                         'sll/etela-hame',
+    #                         'sll/etela-karjala',
+    #                         'sll/etela-savo',
+    #                         'sll/kainuu',
+    #                         'sll/keski-suomi',
+    #                         'sll/kymenlaakso',
+    #                         'sll/lappi',
+    #                         'sll/pirkanmaa',
+    #                         'sll/pohjanmaa',
+    #                         'sll/pohjois-karjala',
+    #                         'sll/pohjois-pohjanmaa',
+    #                         'sll/pohjois-savo',
+    #                         'sll/satakunta',
+    #                         'sll/uusimaa',
+    #                         'sll/varsinais-suomi',
+    #                     ]
+    #                 ),
+    #                 'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
+    #             }
+    #         ]
+    #     )
 
-        self.assertEqual(
-            tapahtumat.getLayout(),
-            'search-results'
-        )
+    #     self.assertEqual(
+    #         tapahtumat.getLayout(),
+    #         'search-results'
+    #     )
 
     def test_upgrades_32_to_33(self):
         folder = self.portal[
@@ -438,3 +439,44 @@ class TestCase(IntegrationTestCase):
         self.assertFalse(IAddableToCart.providedBy(folder))
         self.assertFalse(IProductAnnotations.providedBy(folder))
         self.assertFalse(ICartAware.providedBy(folder))
+
+    def test_upgrades_35_to_36(self):
+        from plone.registry.interfaces import IRegistry
+        from zope.component import getUtility
+        registry = getUtility(IRegistry)
+        registry['collective.searchevent.collections'] = []
+        self.assertEqual(
+            registry['collective.searchevent.collections'], [])
+
+        from sll.policy.upgrades import upgrade_35_to_36
+        upgrade_35_to_36(self.portal)
+
+        self.assertEqual(
+            registry['collective.searchevent.collections'],
+            [
+                {
+                    'id': 'SLL',
+                    'limit': 10,
+                    'paths': set(
+                        [
+                            'sll/etela-hame',
+                            'sll/etela-karjala',
+                            'sll/etela-savo',
+                            'sll/kainuu',
+                            'sll/keski-suomi',
+                            'sll/kymenlaakso',
+                            'sll/lappi',
+                            'sll/pirkanmaa',
+                            'sll/pohjanmaa',
+                            'sll/pohjois-karjala',
+                            'sll/pohjois-pohjanmaa',
+                            'sll/pohjois-savo',
+                            'sll/satakunta',
+                            'sll/uusimaa',
+                            'sll/varsinais-suomi',
+                        ]
+                    ),
+                    'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
+                }
+            ]
+        )

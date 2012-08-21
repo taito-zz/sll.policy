@@ -35,6 +35,7 @@ setup(
         'collective.portlet.fblikebox',
         'collective.sharerizer',
         'five.grok',
+        'hexagonit.socialbutton',
         'hexagonit.testing',
         'plone.browserlayer',
         'setuptools',
