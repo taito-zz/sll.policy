@@ -5,19 +5,17 @@
   >
 
   <!-- Hide default Calendar portlet -->
-  <portlet addview="portlets.Login" remove="true" />
+  <!-- <portlet addview="portlets.Login" remove="true" /> -->
   <!-- Hide Classic portlet -->
   <portlet addview="portlets.Classic" remove="true" />
 
   <!-- Remove portlets from left column -->
-  <!-- <assignment remove="True" name="navigation" category="context" key="/"
-              manager="plone.leftcolumn" type="portlets.Navigation" /> -->
   <assignment remove="True" name="portlet_kartta" category="context" key="/"
               manager="plone.leftcolumn" type="portlets.Navigation" />
   <assignment remove="True" name="tiedotteet" category="context" key="/" manager="plone.leftcolumn" />
   <assignment remove="True" name="suomen-luonnonsuojeluliiton-jaesenenae" category="context" key="/" manager="plone.leftcolumn" />
   <assignment remove="True" name="recent-items" category="context" key="/" manager="plone.leftcolumn" />
-  <assignment remove="True" name="Cart" category="context" key="/" manager="plone.leftcolumn" />
+  <!-- <assignment remove="True" name="Cart" category="context" key="/" manager="plone.leftcolumn" /> -->
 
 
   <!-- Remove portlets from right column -->
