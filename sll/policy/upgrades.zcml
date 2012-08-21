@@ -44,4 +44,14 @@
     title="Disable Marker Interfaces"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="36"
+    handler="sll.policy.upgrades.upgrade_35_to_36"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="35"
+    title="Reset collections"
+    />
+
 </configure>
