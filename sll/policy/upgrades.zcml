@@ -51,7 +51,7 @@
     profile="sll.policy:default"
     sortkey="1"
     source="35"
-    title="Reset collections"
+    title="Reset collections and reimport registry.xml"
     />
 
 </configure>

@@ -213,7 +213,7 @@ def upgrade_34_to_35(context, logger=None):
 
 
 def upgrade_35_to_36(context, logger=None):
-    """Reset collections."""
+    """Reset collections and reimport registry.xml"""
     if logger is None:
         # Called as upgrade step: define our own logger.
         logger = logging.getLogger(__name__)
@@ -221,3 +221,8 @@ def upgrade_35_to_36(context, logger=None):
     logger.info('Setting collections.')
     set_collections(context)
     logger.info('Set collections.')
+
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Reimporting registry.xml')
+    setup.runImportStepFromProfile(PROFILE_ID, 'plone.app.registry', run_dependencies=False, purge_old=False)
+    logger.info('Reimported registry.xml')

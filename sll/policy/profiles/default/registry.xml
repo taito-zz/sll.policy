@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<registry>
+  <record name="hexagonit.socialbutton.codes">
+    <field type="plone.registry.field.Dict">
+      <title>Codes for Social Buttons</title>
+      <key_type type="plone.registry.field.TextLine" />
+      <value_type type="plone.registry.field.Dict">
+        <title>Value list</title>
+        <key_type type="plone.registry.field.TextLine" />
+        <value_type type="plone.registry.field.Text">
+          <title>Values</title>
+        </value_type>
+      </value_type>
+    </field>
+    <value>
+      <element key="kysely">
+        <element key="code_text">&lt;script type="text/javascript"&gt;
+   var _wt = '9eb28b';
+
+   (function () {
+       if (document.cookie.indexOf('VISITED_2719') &lt; 0) {
+           var ws = document.createElement('script'); ws.type = 'text/javascript'; ws.async = true;
+           ws.src = ('https:' == document.location.protocol ? 'https://ssl.' : 'http://') + 'survey.webstatus.v2.userneeds.dk/wsi.ashx?t=' + _wt + (location.href.indexOf('wsiNoCookie') &gt;= 0 ? '&amp;nc=1' : '');
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ws, s);
+   }})();
+&lt;/script&gt;</element>
+      </element>
+      <element key="twitter">
+        <element key="code_text">&lt;a class="social-button twitter" title="Twitter" href="https://twitter.com/share?text=${title}?url=${url}"&gt;
+&lt;img src="${portal_url}/++resource++hexagonit.socialbutton/twitter.gif" /&gt;
+&lt;/a&gt;</element>
+      </element>
+      <element key="facebook">
+        <element key="code_text">&lt;a class="social-button facebook" title="Facebook" target="_blank" href="http://www.facebook.com/sharer.php?t=${title}&amp;u=${url}"&gt;
+&lt;img src="${portal_url}/++resource++hexagonit.socialbutton/facebook.gif" /&gt;
+&lt;/a&gt;</element>
+      </element>
+      <element key="google-plus">
+        <element key="code_text">&lt;a class="social-button googleplus" title="Google+" href="https://plusone.google.com/_/+1/confirm?hl=${lang}&amp;title=${title}&amp;url=${url}"&gt;
+&lt;img src="${portal_url}/++resource++hexagonit.socialbutton/google-plus.gif" /&gt;
+&lt;/a&gt;</element>
+      </element>
+    </value>
+  </record>
+  <record name="hexagonit.socialbutton.config">
+    <field type="plone.registry.field.Dict">
+      <title>Configuration for Social Buttons</title>
+      <key_type type="plone.registry.field.TextLine" />
+      <value_type type="plone.registry.field.Dict">
+        <title>Value list</title>
+        <key_type type="plone.registry.field.TextLine" />
+        <value_type type="plone.registry.field.Text">
+          <title>Values</title>
+        </value_type>
+      </value_type>
+    </field>
+    <value>
+      <element key="kysely">
+        <element key="view_permission_only">True</element>
+        <element key="enabled">True</element>
+        <element key="view_models">*</element>
+        <element key="content_types">*</element>
+        <element key="viewlet_manager">plone.abovecontent</element>
+      </element>
+      <element key="twitter">
+        <element key="view_permission_only">True</element>
+        <element key="enabled">True</element>
+        <element key="view_models">*</element>
+        <element key="content_types">Document,Folder,FormFolder,Plone Site,News Item,Event</element>
+        <element key="viewlet_manager">plone.belowcontent</element>
+      </element>
+      <element key="facebook">
+        <element key="view_permission_only">True</element>
+        <element key="enabled">True</element>
+        <element key="view_models">*</element>
+        <element key="content_types">Document,Folder,FormFolder,Plone Site,News Item,Event</element>
+        <element key="viewlet_manager">plone.belowcontent</element>
+      </element>
+      <element key="google-plus">
+        <element key="view_permission_only">True</element>
+        <element key="enabled">True</element>
+        <element key="view_models">*</element>
+        <element key="content_types">Document,Folder,FormFolder,Plone Site,News Item,Event</element>
+        <element key="viewlet_manager">plone.belowcontent</element>
+      </element>
+    </value>
+  </record>
+</registry>

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
 from sll.policy.tests.base import IntegrationTestCase
-from zope.component import getUtility
 
 
 class TestCase(IntegrationTestCase):
@@ -155,6 +154,29 @@ class TestCase(IntegrationTestCase):
             ('Document', 'Event', 'FormFolder')
         )
 
+    def get_record(self, name):
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+        return getUtility(IRegistry).records.get(name)
+
+    def test_registry_record_hexagonit_socialbutton_codes(self):
+        record = self.get_record('hexagonit.socialbutton.codes')
+        self.assertEqual(record.value, {
+            u'twitter': {u'code_text': u'<a class="social-button twitter" title="Twitter" href="https://twitter.com/share?text=${title}?url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/twitter.gif" />\n</a>'},
+            u'facebook': {u'code_text': u'<a class="social-button facebook" title="Facebook" target="_blank" href="http://www.facebook.com/sharer.php?t=${title}&u=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/facebook.gif" />\n</a>'},
+            u'google-plus': {u'code_text': u'<a class="social-button googleplus" title="Google+" href="https://plusone.google.com/_/+1/confirm?hl=${lang}&title=${title}&url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/google-plus.gif" />\n</a>'},
+            u'kysely': {u'code_text': u'<script type="text/javascript">\n   var _wt = \'9eb28b\';\n\n   (function () {\n       if (document.cookie.indexOf(\'VISITED_2719\') < 0) {\n           var ws = document.createElement(\'script\'); ws.type = \'text/javascript\'; ws.async = true;\n           ws.src = (\'https:\' == document.location.protocol ? \'https://ssl.\' : \'http://\') + \'survey.webstatus.v2.userneeds.dk/wsi.ashx?t=\' + _wt + (location.href.indexOf(\'wsiNoCookie\') >= 0 ? \'&nc=1\' : \'\');\n           var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ws, s);\n   }})();\n</script>'},
+        })
+
+    def test_registry_record_hexagonit_socialbutton_config(self):
+        record = self.get_record('hexagonit.socialbutton.config')
+        self.assertEqual(record.value, {
+            u'twitter': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
+            u'facebook': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
+            u'google-plus': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
+            u'kysely': {u'content_types': u'*', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.abovecontent'},
+        })
+
     def test_rolemap__Manage_portlets__rolesOfPermission(self):
         permission = "Portlets: Manage portlets"
         roles = [
@@ -256,17 +278,19 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(tinymce.link_using_uids)
 
     def test_portlets__news_removed_from_right_column(self):
-        from zope.component import getMultiAdapter
-        from plone.portlets.interfaces import IPortletManager
         from plone.portlets.interfaces import IPortletAssignmentMapping
+        from plone.portlets.interfaces import IPortletManager
+        from zope.component import getMultiAdapter
+        from zope.component import getUtility
         column = getUtility(IPortletManager, name=u"plone.rightcolumn")
         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
         self.assertFalse('news' in assignable.keys())
 
     def test_portlets__events_removed_from_right_column(self):
-        from zope.component import getMultiAdapter
-        from plone.portlets.interfaces import IPortletManager
         from plone.portlets.interfaces import IPortletAssignmentMapping
+        from plone.portlets.interfaces import IPortletManager
+        from zope.component import getMultiAdapter
+        from zope.component import getUtility
         column = getUtility(IPortletManager, name=u"plone.rightcolumn")
         assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
         self.assertFalse('events' in assignable.keys())
