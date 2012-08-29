@@ -13,119 +13,6 @@ class TestCase(IntegrationTestCase):
         from plone.app.testing import setRoles
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-    # def test_upgrades_19_to_20(self):
-    #     from zope.component import getUtility
-    #     from plone.app.viewletmanager.interfaces import IViewletSettingsStorage
-    #     storage = getUtility(IViewletSettingsStorage)
-    #     storage.setHidden('plone.portalfooter', '*', (u'plone.footer',))
-    #     self.assertEqual(storage.getHidden('plone.portalfooter', '*'), (u'plone.footer',))
-    #     from sll.policy.upgrades import upgrade_19_to_20
-    #     upgrade_19_to_20(self.portal)
-    #     self.assertEqual(
-    #         storage.getHidden('plone.portalfooter', '*'),
-    #         (
-    #             u'plone.colophon',
-    #             u'plone.site_actions',
-    #         )
-    #     )
-    #     self.assertEqual(
-    #         storage.getOrder('plone.portalheader', '*'),
-    #         (
-    #             u'plone.skip_links',
-    #             u'plone.personal_bar',
-    #             u'plone.site_actions',
-    #             u'plone.app.i18n.locales.languageselector',
-    #             u'plone.searchbox',
-    #             u'plone.logo',
-    #             u'plone.global_sections',
-    #         )
-    #     )
-
-    # def test_upgrades_21_to_22(self):
-    #     folder01 = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Folder',
-    #             'folder01',
-    #         )
-    #     ]
-    #     folder01.setExcludeFromNav(False)
-    #     folder01.reindexObject()
-
-    #     folder02 = folder01[
-    #         folder01.invokeFactory(
-    #             'Folder',
-    #             'folder02',
-    #         )
-    #     ]
-    #     folder02.setExcludeFromNav(False)
-    #     folder02.reindexObject()
-
-    #     liity = self.portal[
-    #         self.portal.invokeFactory(
-    #             'Folder',
-    #             'liity-uusi',
-    #         )
-    #     ]
-    #     liity.setExcludeFromNav(True)
-    #     liity.reindexObject()
-
-    #     self.assertFalse(folder01.getExcludeFromNav())
-    #     self.assertTrue(liity.getExcludeFromNav())
-
-    #     from sll.policy.upgrades import upgrade_21_to_22
-    #     upgrade_21_to_22(self.portal)
-    #     self.assertTrue(folder01.getExcludeFromNav())
-    #     self.assertFalse(folder02.getExcludeFromNav())
-    #     self.assertFalse(liity.getExcludeFromNav())
-
-    # def test_upgrades_26_to_27(self):
-    #     portal_properties = getToolByName(self.portal, 'portal_properties')
-    #     site_properties = getattr(portal_properties, 'site_properties')
-    #     site_properties.manage_changeProperties(mark_special_links="true")
-
-    #     self.assertEqual(site_properties.getProperty('mark_special_links'), 'true')
-
-    #     from sll.policy.upgrades import upgrade_26_to_27
-    #     upgrade_26_to_27(self.portal)
-
-    #     self.assertEqual(site_properties.getProperty('mark_special_links'), 'false')
-
-    # def test_upgrades_27_to_28(self):
-    #     portal_actions = getToolByName(self.portal, 'portal_actions')
-    #     actions = getattr(portal_actions, 'user')
-    #     action = getattr(actions, 'login')
-    #     action.manage_changeProperties(visible=True)
-    #     self.assertTrue(action.getProperty('visible'))
-
-    #     from sll.policy.upgrades import upgrade_27_to_28
-    #     upgrade_27_to_28(self.portal)
-
-    #     self.assertFalse(action.getProperty('visible'))
-
-    # def test_upgrades_28_to_29(self):
-    #     piiri = self.portal[
-    #         self.portal.invokeFactory('Folder', 'lappi')
-    #     ]
-    #     piiri.reindexObject()
-    #     ylitornio = piiri[
-    #         piiri.invokeFactory('Folder', 'ylitornio')
-    #     ]
-    #     ylitornio.reindexObject()
-    #     aaa = piiri[
-    #         piiri.invokeFactory('Folder', 'aaa')
-    #     ]
-    #     aaa.reindexObject()
-
-    #     from plone.app.layout.navigation.interfaces import INavigationRoot
-    #     self.assertFalse(INavigationRoot.providedBy(ylitornio))
-    #     self.assertFalse(INavigationRoot.providedBy(aaa))
-
-    #     from sll.policy.upgrades import upgrade_28_to_29
-    #     upgrade_28_to_29(self.portal)
-
-    #     self.assertTrue(INavigationRoot.providedBy(ylitornio))
-    #     self.assertFalse(INavigationRoot.providedBy(aaa))
-
     def test_upgrades_30_to_31(self):
 
         permission = "plone.portlet.collection: Add collection portlet"
@@ -258,62 +145,6 @@ class TestCase(IntegrationTestCase):
 
         for pac in packages:
             self.failUnless(installer.isProductInstalled(pac))
-
-    # def test_upgrades_31_to_32(self):
-
-    #     from plone.registry.interfaces import IRegistry
-    #     from zope.component import getUtility
-    #     registry = getUtility(IRegistry)
-    #     registry['collective.searchevent.collections'] = []
-    #     self.assertEqual(
-    #         registry['collective.searchevent.collections'],
-    #         []
-    #     )
-
-    #     tapahtumat = self.portal['tapahtumat']
-    #     tapahtumat.setLayout('some-view')
-    #     self.assertEqual(
-    #         tapahtumat.getLayout(),
-    #         'some-view'
-    #     )
-
-    #     from sll.policy.upgrades import upgrade_31_to_32
-    #     upgrade_31_to_32(self.portal)
-
-    #     self.assertEqual(
-    #         registry['collective.searchevent.collections'],
-    #         [
-    #             {
-    #                 'id': 'SLL',
-    #                 'limit': 10,
-    #                 'paths': set(
-    #                     [
-    #                         'sll/etela-hame',
-    #                         'sll/etela-karjala',
-    #                         'sll/etela-savo',
-    #                         'sll/kainuu',
-    #                         'sll/keski-suomi',
-    #                         'sll/kymenlaakso',
-    #                         'sll/lappi',
-    #                         'sll/pirkanmaa',
-    #                         'sll/pohjanmaa',
-    #                         'sll/pohjois-karjala',
-    #                         'sll/pohjois-pohjanmaa',
-    #                         'sll/pohjois-savo',
-    #                         'sll/satakunta',
-    #                         'sll/uusimaa',
-    #                         'sll/varsinais-suomi',
-    #                     ]
-    #                 ),
-    #                 'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
-    #             }
-    #         ]
-    #     )
-
-    #     self.assertEqual(
-    #         tapahtumat.getLayout(),
-    #         'search-results'
-    #     )
 
     def test_upgrades_32_to_33(self):
         folder = self.portal[
@@ -499,3 +330,23 @@ class TestCase(IntegrationTestCase):
             u'google-plus': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
             u'kysely': {u'content_types': u'*', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.abovecontent'},
             })
+
+    def test_upgrade_36_to_37(self):
+        atct = getToolByName(self.portal, 'portal_atct')
+        atct.manage_changeProperties(
+            image_types=(), folder_types=(), album_batch_size=10,
+            album_image_scale='small', single_image_scale='thumb')
+        self.assertEqual(atct.getProperty('image_types'), ())
+        self.assertEqual(atct.getProperty('folder_types'), ())
+        self.assertEqual(atct.getProperty('album_batch_size'), 10)
+        self.assertEqual(atct.getProperty('album_image_scale'), 'small')
+        self.assertEqual(atct.getProperty('single_image_scale'), 'thumb')
+
+        from sll.policy.upgrades import upgrade_36_to_37
+        upgrade_36_to_37(self.portal)
+
+        self.assertEqual(atct.getProperty('image_types'), ('Image', 'News Item'))
+        self.assertEqual(atct.getProperty('folder_types'), ('Image',))
+        self.assertEqual(atct.getProperty('album_batch_size'), 30)
+        self.assertEqual(atct.getProperty('album_image_scale'), 'thumb')
+        self.assertEqual(atct.getProperty('single_image_scale'), 'preview')

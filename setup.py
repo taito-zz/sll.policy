@@ -32,8 +32,6 @@ setup(
         'collective.monkeypatcher',
         'collective.pfg.payment',
         'collective.pfg.showrequest',
-        'collective.portlet.fblikebox',
-        'collective.sharerizer',
         'five.grok',
         'hexagonit.socialbutton',
         'hexagonit.testing',

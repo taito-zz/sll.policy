@@ -55,14 +55,12 @@ class TestCase(IntegrationTestCase):
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
-            setup.getVersionForProfile('profile-sll.policy:default'),
-            u'36')
+            setup.getVersionForProfile('profile-sll.policy:default'), u'37')
 
     ## properties.xml
     def test_properties__title(self):
         self.assertEqual(
-            self.portal.getProperty('title'),
-            'Luonnonsuojeluliitto')
+            self.portal.getProperty('title'), 'Luonnonsuojeluliitto')
 
     def test_properties__description(self):
         self.assertEqual(
@@ -77,14 +75,12 @@ class TestCase(IntegrationTestCase):
     def test_properties__email_from_name(self):
         self.assertEqual(
             self.portal.getProperty('email_from_name'),
-            'Suomen luonnonsuojeluliitto ry'
-        )
+            'Suomen luonnonsuojeluliitto ry')
 
     def test_properties_default_page(self):
         self.assertEqual(
             self.portal.getProperty('default_page'),
-            'sll-view'
-        )
+            'sll-view')
 
     ## propertiestool.xml
     def test_propertiestool_site_properties__default_editor(self):
@@ -92,8 +88,7 @@ class TestCase(IntegrationTestCase):
         site_properties = getattr(properties, 'site_properties')
         self.assertEqual(
             site_properties.getProperty('default_editor'),
-            'TinyMCE'
-        )
+            'TinyMCE')
 
     def test_default_language(self):
         properties = getToolByName(self.portal, 'portal_properties')

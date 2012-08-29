@@ -73,21 +73,6 @@ def upgrade_30_to_31(context, logger=None):
     logger.info(message)
 
 
-# def upgrade_31_to_32(context, logger=None):
-#     """Set collections, search-result to tapahtumat default view."""
-#     if logger is None:
-#         # Called as upgrade step: define our own logger.
-#         logger = logging.getLogger(__name__)
-
-#     set_collections(context, logger=logger)
-
-#     portal_url = getToolByName(context, 'portal_url')
-#     portal = portal_url.getPortalObject()
-#     folder = portal.get('tapahtumat')
-#     if folder:
-#         folder.setLayout('search-results')
-
-
 def upgrade_32_to_33(context, logger=None):
     """Update schemata for subject, excludeFromNav and relatedItems."""
     if logger is None:
@@ -224,5 +209,17 @@ def upgrade_35_to_36(context, logger=None):
 
     setup = getToolByName(context, 'portal_setup')
     logger.info('Reimporting registry.xml')
-    setup.runImportStepFromProfile(PROFILE_ID, 'plone.app.registry', run_dependencies=False, purge_old=False)
+    setup.runImportStepFromProfile(
+        PROFILE_ID, 'plone.app.registry', run_dependencies=False, purge_old=False)
     logger.info('Reimported registry.xml')
+
+
+def upgrade_36_to_37(context, logger=None):
+    """Reimport atcttool."""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Reimporting atcttool')
+    setup.runImportStepFromProfile(
+        'profile-Products.CMFPlone:plone', 'atcttool', run_dependencies=False, purge_old=True)
+    logger.info('Reimported atcttool')

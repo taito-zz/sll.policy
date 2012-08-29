@@ -54,4 +54,14 @@
     title="Reset collections and reimport registry.xml"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="37"
+    handler="sll.policy.upgrades.upgrade_36_to_37"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="36"
+    title="Reimport atcttool"
+    />
+
 </configure>
