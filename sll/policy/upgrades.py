@@ -6,6 +6,8 @@ from Products.ATContentTypes.interfaces.image import IATImage
 from Products.ATContentTypes.interfaces.news import IATNewsItem
 from Products.CMFCore.utils import getToolByName
 from Products.PloneFormGen.interfaces import IPloneFormGenForm
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 
 
 import logging
@@ -223,3 +225,27 @@ def upgrade_36_to_37(context, logger=None):
     setup.runImportStepFromProfile(
         'profile-Products.CMFPlone:plone', 'atcttool', run_dependencies=False, purge_old=True)
     logger.info('Reimported atcttool')
+
+    registry = getUtility(IRegistry)
+    for record in registry.records:
+        rec = registry.records.get(record)
+        obj = rec.field
+        message = "Setting attribute 'defaultFactory' to record: '{0}'.".format(record)
+        logger.info(message)
+        loop = True
+        while loop:
+            if not hasattr(obj, 'defaultFactory'):
+                setattr(obj, 'defaultFactory', None)
+            if getattr(obj, 'key_type', None) is not None:
+                if not hasattr(obj.key_type, 'defaultFactory'):
+                    setattr(obj.key_type, 'defaultFactory', None)
+            if getattr(obj, 'value_type', None) is not None:
+                if not hasattr(obj.value_type, 'defaultFactory'):
+                    setattr(obj.value_type, 'defaultFactory', None)
+                    obj = obj.value_type
+                else:
+                    loop = False
+            else:
+                loop = False
+        message = "Set attribute 'defaultFactory' to record: '{0}'.".format(record)
+        logger.info(message)
