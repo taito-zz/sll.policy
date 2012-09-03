@@ -121,6 +121,11 @@ class TestCase(IntegrationTestCase):
         site_properties = getattr(properties, 'site_properties')
         self.assertTrue(site_properties.getProperty('exposeDCMetaTags'))
 
+    def test_propertiestool_site_properties__enable_link_integrity_checks(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertTrue(site_properties.getProperty('enable_link_integrity_checks'))
+
     def test_propertiestool_site_properties__enable_sitemap(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_properties = getattr(properties, 'site_properties')
@@ -337,40 +342,6 @@ class TestCase(IntegrationTestCase):
 
     def test_events_folders_removed(self):
         self.assertRaises(KeyError, lambda: self.portal['events'])
-
-    def test_setuphandlers__set_collections(self):
-        from plone.registry.interfaces import IRegistry
-        from zope.component import getUtility
-        registry = getUtility(IRegistry)
-        self.assertEqual(
-            registry['collective.searchevent.collections'],
-            [
-                {
-                    'id': 'SLL',
-                    'limit': 10,
-                    'paths': set(
-                        [
-                            'sll/etela-hame',
-                            'sll/etela-karjala',
-                            'sll/etela-savo',
-                            'sll/kainuu',
-                            'sll/keski-suomi',
-                            'sll/kymenlaakso',
-                            'sll/lappi',
-                            'sll/pirkanmaa',
-                            'sll/pohjanmaa',
-                            'sll/pohjois-karjala',
-                            'sll/pohjois-pohjanmaa',
-                            'sll/pohjois-savo',
-                            'sll/satakunta',
-                            'sll/uusimaa',
-                            'sll/varsinais-suomi',
-                        ]
-                    ),
-                    'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
-                }
-            ]
-        )
 
     def test_setuphanlders__folder__tapahtumat__layout(self):
         folder = self.portal['tapahtumat']

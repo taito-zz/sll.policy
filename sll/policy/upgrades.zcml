@@ -46,32 +46,12 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="36"
-    handler="sll.policy.upgrades.upgrade_35_to_36"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="35"
-    title="Reset collections and reimport registry.xml"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="37"
     handler="sll.policy.upgrades.upgrade_36_to_37"
     profile="sll.policy:default"
     sortkey="1"
     source="36"
     title="Reimport atcttool"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
-    destination="38"
-    handler="sll.policy.upgrades.upgrade_37_to_38"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="37"
-    title="Search for uuid"
     />
 
 </configure>

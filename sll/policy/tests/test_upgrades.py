@@ -271,66 +271,6 @@ class TestCase(IntegrationTestCase):
         self.assertFalse(IProductAnnotations.providedBy(folder))
         self.assertFalse(ICartAware.providedBy(folder))
 
-    def test_upgrades_35_to_36(self):
-        from plone.registry.interfaces import IRegistry
-        from zope.component import getUtility
-        registry = getUtility(IRegistry)
-        registry['collective.searchevent.collections'] = []
-        self.assertEqual(
-            registry['collective.searchevent.collections'], [])
-
-        registry['hexagonit.socialbutton.codes'] = {}
-        registry['hexagonit.socialbutton.config'] = {}
-
-        self.assertEqual(registry['hexagonit.socialbutton.codes'], {})
-        self.assertEqual(registry['hexagonit.socialbutton.config'], {})
-
-        from sll.policy.upgrades import upgrade_35_to_36
-        upgrade_35_to_36(self.portal)
-
-        self.assertEqual(
-            registry['collective.searchevent.collections'],
-            [
-                {
-                    'id': 'SLL',
-                    'limit': 10,
-                    'paths': set(
-                        [
-                            'sll/etela-hame',
-                            'sll/etela-karjala',
-                            'sll/etela-savo',
-                            'sll/kainuu',
-                            'sll/keski-suomi',
-                            'sll/kymenlaakso',
-                            'sll/lappi',
-                            'sll/pirkanmaa',
-                            'sll/pohjanmaa',
-                            'sll/pohjois-karjala',
-                            'sll/pohjois-pohjanmaa',
-                            'sll/pohjois-savo',
-                            'sll/satakunta',
-                            'sll/uusimaa',
-                            'sll/varsinais-suomi',
-                        ]
-                    ),
-                    'tags': ['Kokous', 'Kurssi', 'Retki', 'Talkoot'],
-                }
-            ]
-        )
-
-        self.assertEqual(registry['hexagonit.socialbutton.codes'], {
-            u'twitter': {u'code_text': u'<a class="social-button twitter" title="Twitter" href="https://twitter.com/share?text=${title}?url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/twitter.gif" />\n</a>'},
-            u'facebook': {u'code_text': u'<a class="social-button facebook" title="Facebook" target="_blank" href="http://www.facebook.com/sharer.php?t=${title}&u=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/facebook.gif" />\n</a>'},
-            u'google-plus': {u'code_text': u'<a class="social-button googleplus" title="Google+" href="https://plusone.google.com/_/+1/confirm?hl=${lang}&title=${title}&url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/google-plus.gif" />\n</a>'},
-            u'kysely': {u'code_text': u'<script type="text/javascript">\n   var _wt = \'9eb28b\';\n\n   (function () {\n       if (document.cookie.indexOf(\'VISITED_2719\') < 0) {\n           var ws = document.createElement(\'script\'); ws.type = \'text/javascript\'; ws.async = true;\n           ws.src = (\'https:\' == document.location.protocol ? \'https://ssl.\' : \'http://\') + \'survey.webstatus.v2.userneeds.dk/wsi.ashx?t=\' + _wt + (location.href.indexOf(\'wsiNoCookie\') >= 0 ? \'&nc=1\' : \'\');\n           var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ws, s);\n   }})();\n</script>'},
-            })
-        self.assertEqual(registry['hexagonit.socialbutton.config'], {
-            u'twitter': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'facebook': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'google-plus': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'kysely': {u'content_types': u'*', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.abovecontent'},
-            })
-
     def test_upgrade_36_to_37(self):
         atct = getToolByName(self.portal, 'portal_atct')
         atct.manage_changeProperties(

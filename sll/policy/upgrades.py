@@ -199,23 +199,6 @@ def upgrade_34_to_35(context, logger=None):
         obj.reindexObject(idxs=['object_provides'])
 
 
-def upgrade_35_to_36(context, logger=None):
-    """Reset collections and reimport registry.xml"""
-    if logger is None:
-        # Called as upgrade step: define our own logger.
-        logger = logging.getLogger(__name__)
-    from sll.policy.setuphandlers import set_collections
-    logger.info('Setting collections.')
-    set_collections(context)
-    logger.info('Set collections.')
-
-    setup = getToolByName(context, 'portal_setup')
-    logger.info('Reimporting registry.xml')
-    setup.runImportStepFromProfile(
-        PROFILE_ID, 'plone.app.registry', run_dependencies=False, purge_old=False)
-    logger.info('Reimported registry.xml')
-
-
 def upgrade_36_to_37(context, logger=None):
     """Reimport atcttool."""
     if logger is None:
@@ -249,19 +232,3 @@ def upgrade_36_to_37(context, logger=None):
                 loop = False
         message = "Set attribute 'defaultFactory' to record: '{0}'.".format(record)
         logger.info(message)
-
-
-def upgrade_37_to_38(context, logger=None):
-    """Search for uuid."""
-    if logger is None:
-        logger = logging.getLogger(__name__)
-
-    catalog = getToolByName(context, 'portal_catalog')
-    uuids = [brain.UID for brain in catalog()]
-    res = []
-    for uuid in uuids:
-        if uuids.count(uuid) > 1:
-            res.append(uuid)
-    brains = catalog(UUID=res)
-    import pdb; pdb.set_trace()
-
