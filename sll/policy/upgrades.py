@@ -260,7 +260,8 @@ def upgrade_37_to_38(context, logger=None):
     uuids = [brain.UID for brain in catalog()]
     res = []
     for uuid in uuids:
-        if uuid not in res:
+        if uuids.count(uuid) > 1:
             res.append(uuid)
-    if len(uuids) != len(res):
-        import pdb; pdb.set_trace()
+    brains = catalog(UUID=res)
+    import pdb; pdb.set_trace()
+
