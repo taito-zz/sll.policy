@@ -249,3 +249,18 @@ def upgrade_36_to_37(context, logger=None):
                 loop = False
         message = "Set attribute 'defaultFactory' to record: '{0}'.".format(record)
         logger.info(message)
+
+
+def upgrade_37_to_38(context, logger=None):
+    """Search for uuid."""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    catalog = getToolByName(context, 'portal_catalog')
+    uuids = [brain.UID for brain in catalog()]
+    res = []
+    for uuid in uuids:
+        if uuid not in res:
+            res.append(uuid)
+    if len(uuids) != len(res):
+        import pdb; pdb.set_trace()
