@@ -232,3 +232,19 @@ def upgrade_36_to_37(context, logger=None):
                 loop = False
         message = "Set attribute 'defaultFactory' to record: '{0}'.".format(record)
         logger.info(message)
+
+
+def upgrade_37_to_38(context, logger=None):
+    """Update users wysiwyg_editor to TinyMCE."""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    membership = getToolByName(context, 'portal_membership')
+    for mid in membership.listMemberIds():
+        member = membership.getMemberById(mid)
+        if member.getProperty('wysiwyg_editor') != 'TinyMCE':
+            logger.info(
+                "Setting wysiwyg_editor to TinyMCE for {}.".format(mid))
+            member.manage_changeProperties(wysiwyg_editor='TinyMCE')
+            logger.info(
+                "Set wysiwyg_editor to TinyMCE for {}.".format(mid))

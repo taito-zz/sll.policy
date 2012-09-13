@@ -290,3 +290,14 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(atct.getProperty('album_batch_size'), 30)
         self.assertEqual(atct.getProperty('album_image_scale'), 'thumb')
         self.assertEqual(atct.getProperty('single_image_scale'), 'preview')
+
+    def test_upgrade_37_to_38(self):
+        membership = getToolByName(self.portal, 'portal_membership')
+        membership.getMemberById('test_user_1_').manage_changeProperties(wysiwyg_editor='Kupu')
+        self.assertEqual(membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'Kupu')
+
+        from sll.policy.upgrades import upgrade_37_to_38
+        upgrade_37_to_38(self.portal)
+
+        self.assertEqual(
+            membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'TinyMCE')
