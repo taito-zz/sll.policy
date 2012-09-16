@@ -5,4 +5,5 @@ sll/policy/docs/_build/*
 *.pyo
 *~
 .DS_Store
+.long-description.html
 dist
