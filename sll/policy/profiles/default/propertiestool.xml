@@ -2,6 +2,9 @@
 <object name="portal_properties" meta_type="Plone Properties Tool">
 
   <object name="site_properties" meta_type="Plone Property Sheet">
+    <property name="available_editors" type="lines">
+      <element value="TinyMCE"/>
+    </property>
     <property name="default_editor" type="string">TinyMCE</property>
     <property
       name="disable_nonfolderish_sections"

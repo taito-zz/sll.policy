@@ -245,6 +245,15 @@ def upgrade_37_to_38(context, logger=None):
         if member.getProperty('wysiwyg_editor') != 'TinyMCE':
             logger.info(
                 "Setting wysiwyg_editor to TinyMCE for {}.".format(mid))
-            member.manage_changeProperties(wysiwyg_editor='TinyMCE')
+            member.setMemberProperties({'wysiwyg_editor': 'TinyMCE'})
             logger.info(
                 "Set wysiwyg_editor to TinyMCE for {}.".format(mid))
+
+    setup = getToolByName(context, 'portal_setup')
+    logger.info('Setting available_editor only to TinyMCE.')
+    setup.runImportStepFromProfile(
+        PROFILE_ID,
+        'propertiestool',
+        run_dependencies=False,
+        purge_old=False)
+    logger.info('Set available_editor only to TinyMCE.')

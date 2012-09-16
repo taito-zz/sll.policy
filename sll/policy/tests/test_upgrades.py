@@ -296,8 +296,14 @@ class TestCase(IntegrationTestCase):
         membership.getMemberById('test_user_1_').manage_changeProperties(wysiwyg_editor='Kupu')
         self.assertEqual(membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'Kupu')
 
+        site_properties = getattr(getToolByName(self.portal, 'portal_properties'), 'site_properties')
+        site_properties.manage_changeProperties(available_editors=('TinyMCE', 'Kupu'))
+        self.assertEqual(site_properties.available_editors, ('TinyMCE', 'Kupu'))
+
         from sll.policy.upgrades import upgrade_37_to_38
         upgrade_37_to_38(self.portal)
 
         self.assertEqual(
             membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'TinyMCE')
+
+        self.assertEqual(site_properties.available_editors, ('TinyMCE',))
