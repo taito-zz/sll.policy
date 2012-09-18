@@ -294,6 +294,7 @@ class TestCase(IntegrationTestCase):
         ctype = self.get_ctype('Plone Site')
         self.assertEqual(ctype.allowed_content_types, (
             'Carousel Banner',
+            'Collection',
             'Document',
             'Event',
             'File',
@@ -302,7 +303,6 @@ class TestCase(IntegrationTestCase):
             'Image',
             'Link',
             'News Item',
-            'Topic',
             'collective.cart.shopping.Shop'))
 
     def test_portlets__news_removed_from_right_column(self):

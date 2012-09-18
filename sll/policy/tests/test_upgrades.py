@@ -321,6 +321,7 @@ class TestCase(IntegrationTestCase):
         self.assertTrue(ctype.filter_content_types)
         self.assertEqual(ctype.allowed_content_types, (
             'Carousel Banner',
+            'Collection',
             'Document',
             'Event',
             'File',
@@ -329,5 +330,4 @@ class TestCase(IntegrationTestCase):
             'Image',
             'Link',
             'News Item',
-            'Topic',
             'collective.cart.shopping.Shop'))

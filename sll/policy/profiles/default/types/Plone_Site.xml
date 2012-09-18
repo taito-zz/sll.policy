@@ -3,6 +3,7 @@
   <property name="filter_content_types">True</property>
   <property name="allowed_content_types" purge="False">
     <element value="Carousel Banner"/>
+    <element value="Collection"/>
     <element value="Document"/>
     <element value="Event"/>
     <element value="File"/>
@@ -11,7 +12,6 @@
     <element value="Image"/>
     <element value="Link"/>
     <element value="News Item"/>
-    <element value="Topic"/>
     <element value="collective.cart.shopping.Shop"/>
   </property>
 </object>
