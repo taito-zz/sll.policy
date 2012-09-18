@@ -307,3 +307,26 @@ class TestCase(IntegrationTestCase):
             membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'TinyMCE')
 
         self.assertEqual(site_properties.available_editors, ('TinyMCE',))
+
+    def test_upgrade_38_to_39(self):
+        types = getToolByName(self.portal, 'portal_types')
+        ctype = types.getTypeInfo('Plone Site')
+        ctype.manage_changeProperties(filter_content_types=False, allowed_content_types=())
+        self.assertFalse(ctype.filter_content_types)
+        self.assertEqual(ctype.allowed_content_types, ())
+
+        from sll.policy.upgrades import upgrade_38_to_39
+        upgrade_38_to_39(self.portal)
+
+        self.assertTrue(ctype.filter_content_types)
+        self.assertEqual(ctype.allowed_content_types, (
+            'Carousel Banner',
+            'Document',
+            'Event',
+            'File',
+            'Folder',
+            'FormFolder',
+            'Image',
+            'Link',
+            'News Item',
+            'Topic'))

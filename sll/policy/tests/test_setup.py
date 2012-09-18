@@ -55,7 +55,7 @@ class TestCase(IntegrationTestCase):
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
-            setup.getVersionForProfile('profile-sll.policy:default'), u'38')
+            setup.getVersionForProfile('profile-sll.policy:default'), u'39')
 
     ## properties.xml
     def test_properties__title(self):
@@ -276,6 +276,33 @@ class TestCase(IntegrationTestCase):
     def test_tinymce__link_using_uids(self):
         tinymce = getToolByName(self.portal, 'portal_tinymce')
         self.assertTrue(tinymce.link_using_uids)
+
+    def get_ctype(self, name):
+        """Returns content type info.
+
+        :param name: Name of content type.
+        :type name: test_types__Plone_Site__filter_content_types
+        """
+        types = getToolByName(self.portal, 'portal_types')
+        return types.getTypeInfo(name)
+
+    def test_types__Plone_Site__filter_content_types(self):
+        ctype = self.get_ctype('Plone Site')
+        self.assertTrue(ctype.filter_content_types)
+
+    def test_types__Plone_Site__allowed_content_types(self):
+        ctype = self.get_ctype('Plone Site')
+        self.assertEqual(ctype.allowed_content_types, (
+            'Carousel Banner',
+            'Document',
+            'Event',
+            'File',
+            'Folder',
+            'FormFolder',
+            'Image',
+            'Link',
+            'News Item',
+            'Topic'))
 
     def test_portlets__news_removed_from_right_column(self):
         from plone.portlets.interfaces import IPortletAssignmentMapping
