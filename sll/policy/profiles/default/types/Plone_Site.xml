@@ -12,5 +12,6 @@
     <element value="Link"/>
     <element value="News Item"/>
     <element value="Topic"/>
+    <element value="collective.cart.shopping.Shop"/>
   </property>
 </object>

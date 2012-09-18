@@ -329,4 +329,5 @@ class TestCase(IntegrationTestCase):
             'Image',
             'Link',
             'News Item',
-            'Topic'))
+            'Topic',
+            'collective.cart.shopping.Shop'))

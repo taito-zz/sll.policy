@@ -302,7 +302,8 @@ class TestCase(IntegrationTestCase):
             'Image',
             'Link',
             'News Item',
-            'Topic'))
+            'Topic',
+            'collective.cart.shopping.Shop'))
 
     def test_portlets__news_removed_from_right_column(self):
         from plone.portlets.interfaces import IPortletAssignmentMapping
