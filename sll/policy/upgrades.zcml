@@ -1,8 +1,7 @@
 <configure
   i18n_domain="sll.policy"
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-  xmlns="http://namespaces.zope.org/zope"
-  >
+  xmlns="http://namespaces.zope.org/zope">
 
   <genericsetup:upgradeStep
     description="Reimport rolemap.xml for portlets and Reimport propertiestool.xml to set default_editor TinyMCE and external link opens new window."

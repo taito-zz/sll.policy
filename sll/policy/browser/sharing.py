@@ -1,6 +1,6 @@
-from plone.memoize.instance import memoize
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.workflow.browser.sharing import SharingView
+from plone.memoize.instance import memoize
 
 import inspect
 

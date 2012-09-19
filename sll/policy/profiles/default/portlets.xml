@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <portlets
   i18n:domain="sll.policy"
-  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-  >
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n">
 
   <!-- Hide default Calendar portlet -->
   <!-- <portlet addview="portlets.Login" remove="true" /> -->
@@ -15,7 +14,6 @@
   <assignment remove="True" name="tiedotteet" category="context" key="/" manager="plone.leftcolumn" />
   <assignment remove="True" name="suomen-luonnonsuojeluliiton-jaesenenae" category="context" key="/" manager="plone.leftcolumn" />
   <assignment remove="True" name="recent-items" category="context" key="/" manager="plone.leftcolumn" />
-  <!-- <assignment remove="True" name="Cart" category="context" key="/" manager="plone.leftcolumn" /> -->
 
 
   <!-- Remove portlets from right column -->
@@ -42,20 +40,7 @@
     <property name="bottomLevel">0</property>
     <property name="root"></property>
   </assignment>
-  <!-- <assignment
-    name="searchevent"
-    category="context"
-    key="/tapahtumat"
-    manager="plone.leftcolumn"
-    type="collective.searchevent.SearchEvent"
-    visible="True"
-    >
-    <property name="header">Tapahtumahaku</property>
-    <property name="show_header">True</property>
-    <property name="collections">SLL</property>
-    <property name="tags"></property>
-    <property name="folders">Piirit</property>
-  </assignment> -->
+
   <!-- Assign portlets to right column -->
   <assignment
     name="sll-map"

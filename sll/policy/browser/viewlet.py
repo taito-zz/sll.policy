@@ -7,15 +7,6 @@ from plone.app.layout.viewlets.common import PathBarViewlet
 from zope.component import getMultiAdapter
 
 
-# class HeadViewlet(PathBarViewlet):
-
-#     index = ViewPageTemplateFile('viewlets/head.pt')
-
-#     def update(self):
-#         if not IPloneSiteRoot.providedBy(self.context):
-#             self.request.set('disable_plone.rightcolumn', True)
-
-
 class PathBarViewlet(PathBarViewlet):
 
     index = render = ViewPageTemplateFile('viewlets/path_bar.pt')
