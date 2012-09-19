@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.0.2 (2012-09-XX)
+==================
+
+- Removed kysely from registry. [taito]
+
 1.0.1 (2012-09-19)
 ==================
 
