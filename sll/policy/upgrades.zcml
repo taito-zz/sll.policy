@@ -54,7 +54,7 @@
     title="Reimport atcttool"
     />
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="38"
     handler="sll.policy.upgrades.upgrade_37_to_38"
@@ -62,7 +62,7 @@
     sortkey="1"
     source="37"
     title="Update users wysiwyg_editor to TinyMCE"
-    />
+    /> -->
 
   <genericsetup:upgradeStep
     description=""

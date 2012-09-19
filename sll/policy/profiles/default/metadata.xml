@@ -13,5 +13,6 @@
     <dependency>profile-sll.theme:default</dependency>
     <dependency>profile-sll.carousel:default</dependency>
     <dependency>profile-hexagonit.socialbutton:default</dependency>
+    <dependency>profile-collective.portlet.fblikebox:default</dependency>
   </dependencies>
 </metadata>
