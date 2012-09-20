@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.0.3 (2012-09-XX)
+==================
+
+- Moved content lead image related property to sll.templates package. [taito]
+
 1.0.2 (2012-09-20)
 ==================
 
