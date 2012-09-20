@@ -4,26 +4,6 @@
   xmlns="http://namespaces.zope.org/zope">
 
   <genericsetup:upgradeStep
-    description="Reimport rolemap.xml for portlets and Reimport propertiestool.xml to set default_editor TinyMCE and external link opens new window."
-    destination="31"
-    handler="sll.policy.upgrades.upgrade_30_to_31"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="30"
-    title="Reimport rolemap.xml and propertiestool.xml"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
-    destination="33"
-    handler="sll.policy.upgrades.upgrade_32_to_33"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="32"
-    title="Update schemata for subject, excludeFromNav and relatedItems."
-    />
-
-  <genericsetup:upgradeStep
     description=""
     destination="34"
     handler="sll.policy.upgrades.upgrade_33_to_34"

@@ -155,8 +155,7 @@ class TestCase(IntegrationTestCase):
         cli_properties = getattr(properties, 'cli_properties')
         self.assertEqual(
             cli_properties.getProperty('allowed_types'),
-            ('Document', 'Event', 'FormFolder')
-        )
+            ('Document', 'Event', 'FormFolder'))
 
     def get_record(self, name):
         from zope.component import getUtility
@@ -169,7 +168,6 @@ class TestCase(IntegrationTestCase):
             u'twitter': {u'code_text': u'<a class="social-button twitter" title="Twitter" href="https://twitter.com/share?text=${title}?url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/twitter.gif" />\n</a>'},
             u'facebook': {u'code_text': u'<a class="social-button facebook" title="Facebook" target="_blank" href="http://www.facebook.com/sharer.php?t=${title}&u=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/facebook.gif" />\n</a>'},
             u'google-plus': {u'code_text': u'<a class="social-button googleplus" title="Google+" href="https://plusone.google.com/_/+1/confirm?hl=${lang}&title=${title}&url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/google-plus.gif" />\n</a>'},
-            u'kysely': {u'code_text': u'<script type="text/javascript">\n   var _wt = \'9eb28b\';\n\n   (function () {\n       if (document.cookie.indexOf(\'VISITED_2719\') < 0) {\n           var ws = document.createElement(\'script\'); ws.type = \'text/javascript\'; ws.async = true;\n           ws.src = (\'https:\' == document.location.protocol ? \'https://ssl.\' : \'http://\') + \'survey.webstatus.v2.userneeds.dk/wsi.ashx?t=\' + _wt + (location.href.indexOf(\'wsiNoCookie\') >= 0 ? \'&nc=1\' : \'\');\n           var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ws, s);\n   }})();\n</script>'},
         })
 
     def test_registry_record_hexagonit_socialbutton_config(self):
@@ -178,7 +176,6 @@ class TestCase(IntegrationTestCase):
             u'twitter': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
             u'facebook': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
             u'google-plus': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'kysely': {u'content_types': u'*', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.abovecontent'},
         })
 
     def test_rolemap__Manage_portlets__rolesOfPermission(self):
