@@ -28,6 +28,10 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.carousel'))
 
+    def test_installed__sll_shopping(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.shopping'))
+
     def test_abita_development_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('abita.development'))
@@ -141,7 +145,7 @@ class TestCase(IntegrationTestCase):
         contents = ('Document', 'Folder', 'FormFolder', 'News Item')
         for content in contents:
             self.assertFalse(content in navtree_properties.getProperty('metaTypesNotToList'))
-        contents = ('Event', 'File', 'Image', 'Link', 'Topic')
+        contents = ('Collection', 'Event', 'File', 'Image', 'Link', 'Topic')
         for content in contents:
             self.assertTrue(content in navtree_properties.getProperty('metaTypesNotToList'))
 
