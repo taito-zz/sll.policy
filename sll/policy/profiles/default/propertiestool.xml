@@ -6,9 +6,6 @@
       <element value="TinyMCE"/>
     </property>
     <property name="default_editor" type="string">TinyMCE</property>
-    <property
-      name="disable_nonfolderish_sections"
-      type="boolean">False</property>
     <property name="default_language" type="string">fi</property>
     <property name="enable_link_integrity_checks" type="boolean">True</property>
     <property

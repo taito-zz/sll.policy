@@ -103,6 +103,11 @@ class TestCase(IntegrationTestCase):
         site_props = properties.site_properties
         self.assertEqual(site_props.getProperty('default_language'), 'fi')
 
+    def test_site_properties__disable_nonfolderish_sections(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_props = properties.site_properties
+        self.assertFalse(site_props.getProperty('disable_nonfolderish_sections'))
+
     def test_enable_self_reg(self):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
@@ -113,16 +118,14 @@ class TestCase(IntegrationTestCase):
         site_properties = getattr(properties, 'site_properties')
         self.assertEqual(
             site_properties.getProperty('external_links_open_new_window'),
-            'true'
-        )
+            'true')
 
     def test_propertiestool_site_properties__icon_visibility(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_properties = getattr(properties, 'site_properties')
         self.assertEqual(
             site_properties.getProperty('icon_visibility'),
-            'authenticated'
-        )
+            'authenticated')
 
     def test_propertiestool_site_properties__exposeDCMetaTags(self):
         properties = getToolByName(self.portal, 'portal_properties')
