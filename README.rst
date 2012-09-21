@@ -7,10 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
-1.0.3 (2012-09-XX)
+1.0.3 (2012-09-21)
 ==================
 
 - Moved content lead image related property to sll.templates package. [taito]
+- Enabled upgrade step to migrate only to use TinyMCE. [taito]
 
 1.0.2 (2012-09-20)
 ==================
