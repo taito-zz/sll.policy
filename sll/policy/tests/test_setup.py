@@ -139,6 +139,13 @@ class TestCase(IntegrationTestCase):
         site_properties = getattr(properties, 'site_properties')
         self.assertTrue(site_properties.getProperty('enable_sitemap'))
 
+    def test_propertiestool_site_properties__types_not_searched(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        contents = ('Collection', 'Topic')
+        for content in contents:
+            self.assertIn(content, site_properties.getProperty('types_not_searched'))
+
     def test_propertiestool_navtree_properties__metaTypesNotToList(self):
         properties = getToolByName(self.portal, 'portal_properties')
         navtree_properties = getattr(properties, 'navtree_properties')
