@@ -1,4 +1,20 @@
+from Products.CMFCore.utils import getToolByName
+
+
 import logging
+
+
+logger = logging.getLogger(__name__)
+
+
+def set_firstweekday(context):
+    portal = context.getSite()
+    tool = getToolByName(portal, 'portal_calendar')
+    if tool.firstweekday != 0:
+        logger.info('Setting first weekday for calendar to Monday.')
+        tool.firstweekday = 0
+        # log = context.getLogger(__name__)
+        logger.info('Set first weekday for calendar to Monday.')
 
 
 def create_folder(context, oid, logger=None):
@@ -35,6 +51,7 @@ def setupVarious(context):
     if context.readDataFile('sll.policy_various.txt') is None:
         return
 
+    set_firstweekday(context)
     folder_ids = ['Members', 'news', 'events']
     remove_folder(context, folder_ids)
     create_folder(context, 'tapahtumat')

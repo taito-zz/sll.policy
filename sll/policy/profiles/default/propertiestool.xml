@@ -28,6 +28,7 @@
       <element value="Topic"/>
     </property>
     <property name="use_email_as_login" type="boolean">True</property>
+    <property name="visible_ids" type="boolean">True</property>
   </object>
 
   <object name="navtree_properties" meta_type="Plone Property Sheet">

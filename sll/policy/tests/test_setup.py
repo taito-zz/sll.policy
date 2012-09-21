@@ -60,6 +60,19 @@ class TestCase(IntegrationTestCase):
         action = getattr(actions, 'login')
         self.assertFalse(action.getProperty('visible'))
 
+    def test_jsregistry__popupforms(self):
+        javascripts = getToolByName(self.portal, 'portal_javascripts')
+        resource = javascripts.getResource('popupforms.js')
+        self.assertFalse(resource.getEnabled())
+
+    def test_mailhost__smtp_host(self):
+        mailhost = getToolByName(self.portal, 'MailHost')
+        self.assertEqual(mailhost.smtp_host, 'sll.fi')
+
+    def test_mailhost__smtp_port(self):
+        mailhost = getToolByName(self.portal, 'MailHost')
+        self.assertEqual(mailhost.smtp_port, 25)
+
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
@@ -89,6 +102,9 @@ class TestCase(IntegrationTestCase):
         self.assertEqual(
             self.portal.getProperty('default_page'),
             'sll-view')
+
+    def test_properties_validate_email(self):
+        self.assertTrue(self.portal.getProperty('validate_email'))
 
     ## propertiestool.xml
     def test_propertiestool_site_properties__default_editor(self):
@@ -148,6 +164,11 @@ class TestCase(IntegrationTestCase):
         contents = ('Collection', 'Topic')
         for content in contents:
             self.assertIn(content, site_properties.getProperty('types_not_searched'))
+
+    def test_propertiestool_site_properties__visible_ids(self):
+        properties = getToolByName(self.portal, 'portal_properties')
+        site_properties = getattr(properties, 'site_properties')
+        self.assertTrue(site_properties.getProperty('visible_ids'))
 
     def test_propertiestool_navtree_properties__metaTypesNotToList(self):
         properties = getToolByName(self.portal, 'portal_properties')
@@ -285,8 +306,11 @@ class TestCase(IntegrationTestCase):
         permission = "plone.portlet.static: Add static portlet"
         self.assertEqual(
             self.portal.acquiredRolesAreUsedBy(permission),
-            'CHECKED'
-        )
+            'CHECKED')
+
+    def setuphanders__set_firstweekday(self):
+        calendar = getToolByName(self.portal, 'portal_calendar')
+        self.assertEqual(calendar.firstweekday, 0)
 
     def test_tinymce__link_using_uids(self):
         tinymce = getToolByName(self.portal, 'portal_tinymce')
