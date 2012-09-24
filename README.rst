@@ -7,10 +7,10 @@ This package contains policies for SLL site.
 Change log
 ----------
 
-1.0.4 (2012-09-XX)
+1.0.4 (2012-09-24)
 ==================
 
-- Added Collecton and Topic to types_not_searched. [taito]
+- Added Collection and Topic to types_not_searched. [taito]
 
 1.0.3 (2012-09-21)
 ==================
