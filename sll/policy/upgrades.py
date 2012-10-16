@@ -147,6 +147,7 @@ def remove_portlet(context, portlet_class, logger):
             assignable = getMultiAdapter((obj, column), IPortletAssignmentMapping)
             for key in assignable.keys():
                 if isinstance(assignable[key], portlet_class):
+                    logger.info('Removing {} from {} of {}.'.format(key, col, '/'.join(obj.getPhysicalPath())))
                     del assignable[key]
 
 
