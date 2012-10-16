@@ -7,6 +7,12 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.1 (2012-10-XX)
+================
+
+- Added upgrade step to remove fblike portlet. [taito]
+
+
 1.0.4 (2012-09-24)
 ==================
 

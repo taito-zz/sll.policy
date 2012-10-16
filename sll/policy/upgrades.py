@@ -1,7 +1,9 @@
 from Products.CMFCore.utils import getToolByName
+from plone.portlets.interfaces import IPortletAssignmentMapping
+from plone.portlets.interfaces import IPortletManager
 from plone.registry.interfaces import IRegistry
+from zope.component import getMultiAdapter
 from zope.component import getUtility
-
 
 import logging
 
@@ -132,3 +134,26 @@ def upgrade_38_to_39(context, logger=None):
     setup.runImportStepFromProfile(
         PROFILE_ID, 'typeinfo', run_dependencies=False, purge_old=False)
     logger.info('Reimported typeinfo.')
+
+
+def remove_portlet(context, portlet_class, logger):
+    """Remove portlet from left and right columns."""
+
+    catalog = getToolByName(context, 'portal_catalog')
+    for brain in catalog(Language="all"):
+        obj = brain.getObject()
+        for col in [u"plone.leftcolumn", u"plone.rightcolumn"]:
+            column = getUtility(IPortletManager, name=col)
+            assignable = getMultiAdapter((obj, column), IPortletAssignmentMapping)
+            for key in assignable.keys():
+                if isinstance(assignable[key], portlet_class):
+                    del assignable[key]
+
+
+def upgrade_39_to_40(context, logger=None):
+    """Remove fblike portlet"""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    from collective.portlet.fblikebox.likeboxportlet import Assignment
+    remove_portlet(context, Assignment, logger)

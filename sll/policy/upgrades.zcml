@@ -53,4 +53,14 @@
     title="Reimport typeinfo for updating allowed_content_types for Plone Site"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="40"
+    handler="sll.policy.upgrades.upgrade_39_to_40"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="39"
+    title="Remove fblike portlet"
+    />
+
 </configure>

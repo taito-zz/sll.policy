@@ -20,17 +20,9 @@ class TestCase(IntegrationTestCase):
         self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
         self.failUnless(installer.isProductInstalled('PloneFormGen'))
 
-    def test_installed__collective_portlet_fblikebox(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('collective.portlet.fblikebox'))
-
     def test_installed__sll_carousel(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.carousel'))
-
-    def test_installed__sll_shopping(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.shopping'))
 
     def test_abita_development_installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -76,7 +68,7 @@ class TestCase(IntegrationTestCase):
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
-            setup.getVersionForProfile('profile-sll.policy:default'), u'39')
+            setup.getVersionForProfile('profile-sll.policy:default'), u'40')
 
     ## properties.xml
     def test_properties__title(self):
