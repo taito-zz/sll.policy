@@ -7,10 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
-1.1 (2012-10-XX)
+1.1 (2012-10-16)
 ================
 
-- Added upgrade step to remove fblike portlet. [taito]
+- Added upgrade step to remove fblike portlet removing dependency to collective.portlet.fblikebox. [taito]
+- Removed dependency to sll.shopping. [taito]
 
 
 1.0.4 (2012-09-24)
