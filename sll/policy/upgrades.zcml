@@ -5,26 +5,6 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="34"
-    handler="sll.policy.upgrades.upgrade_33_to_34"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="33"
-    title="Disable ++resource++search.js"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
-    destination="35"
-    handler="sll.policy.upgrades.upgrade_34_to_35"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="34"
-    title="Disable Marker Interfaces"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="37"
     handler="sll.policy.upgrades.upgrade_36_to_37"
     profile="sll.policy:default"
@@ -61,6 +41,16 @@
     sortkey="1"
     source="39"
     title="Remove fblike portlet"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="41"
+    handler="sll.policy.upgrades.upgrade_40_to_41"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="40"
+    title="Enable visible_ids for all the registred members"
     />
 
 </configure>

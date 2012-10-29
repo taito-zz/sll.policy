@@ -1,4 +1,3 @@
-sll/policy/docs/_build/*
 *.egg-info
 *.mo
 *.pyc
@@ -7,3 +6,4 @@ sll/policy/docs/_build/*
 .DS_Store
 .long-description.html
 dist
+sll/policy/docs/_build/*

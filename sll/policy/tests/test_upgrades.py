@@ -24,34 +24,6 @@ class TestCase(IntegrationTestCase):
 
         self.assertFalse(resource.getEnabled())
 
-    @mock.patch('sll.policy.upgrades.disable_javascript')
-    def test_upgrades_33_to_34(self, disable_javascript):
-        from sll.policy.upgrades import upgrade_33_to_34
-        upgrade_33_to_34(self.portal)
-        disable_javascript.assert_called_with(self.portal, '++resource++search.js')
-
-    def test_upgrades_34_to_35(self):
-        folder = self.portal[self.portal.invokeFactory('Folder', 'folder')]
-        from collective.cart.core.interfaces.marker import IPotentiallyAddableToCart
-        from collective.cart.core.interfaces.marker import IAddableToCart
-        from collective.cart.core.interfaces.marker import IProductAnnotations
-        from collective.cart.core.interfaces.marker import ICartAware
-        from zope.interface import alsoProvides
-        alsoProvides(folder, (IPotentiallyAddableToCart, IAddableToCart, IProductAnnotations, ICartAware))
-        folder.reindexObject(idxs=['object_provides'])
-        self.assertTrue(IPotentiallyAddableToCart.providedBy(folder))
-        self.assertTrue(IAddableToCart.providedBy(folder))
-        self.assertTrue(IProductAnnotations.providedBy(folder))
-        self.assertTrue(ICartAware.providedBy(folder))
-
-        from sll.policy.upgrades import upgrade_34_to_35
-        upgrade_34_to_35(self.portal)
-
-        self.assertFalse(IPotentiallyAddableToCart.providedBy(folder))
-        self.assertFalse(IAddableToCart.providedBy(folder))
-        self.assertFalse(IProductAnnotations.providedBy(folder))
-        self.assertFalse(ICartAware.providedBy(folder))
-
     def test_upgrade_36_to_37(self):
         atct = getToolByName(self.portal, 'portal_atct')
         atct.manage_changeProperties(
@@ -112,3 +84,14 @@ class TestCase(IntegrationTestCase):
             'Link',
             'News Item',
             'collective.cart.shopping.Shop'))
+
+
+    def test_upgrade_40_to_41(self):
+        membership = getToolByName(self.portal, 'portal_membership')
+        membership.getMemberById('test_user_1_').manage_changeProperties(visible_ids=False)
+        self.assertFalse(membership.getMemberById('test_user_1_').getProperty('visible_ids'))
+
+        from sll.policy.upgrades import upgrade_40_to_41
+        upgrade_40_to_41(self.portal)
+
+        self.assertTrue(membership.getMemberById('test_user_1_').getProperty('visible_ids'))
