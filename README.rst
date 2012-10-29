@@ -7,7 +7,7 @@ This package contains policies for SLL site.
 Change log
 ----------
 
-1.2 (2012-10-XX)
+1.2 (2012-10-29)
 ================
 
 - Added upgrade step to enable visible_ids to all the registered members and also
