@@ -5,36 +5,6 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="37"
-    handler="sll.policy.upgrades.upgrade_36_to_37"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="36"
-    title="Reimport atcttool"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
-    destination="38"
-    handler="sll.policy.upgrades.upgrade_37_to_38"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="37"
-    title="Update users wysiwyg_editor to TinyMCE"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
-    destination="39"
-    handler="sll.policy.upgrades.upgrade_38_to_39"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="38"
-    title="Reimport typeinfo for updating allowed_content_types for Plone Site"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="40"
     handler="sll.policy.upgrades.upgrade_39_to_40"
     profile="sll.policy:default"

@@ -68,7 +68,7 @@ class TestCase(IntegrationTestCase):
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
         self.assertEqual(
-            setup.getVersionForProfile('profile-sll.policy:default'), u'40')
+            setup.getVersionForProfile('profile-sll.policy:default'), u'41')
 
     ## properties.xml
     def test_properties__title(self):
@@ -317,24 +317,24 @@ class TestCase(IntegrationTestCase):
         types = getToolByName(self.portal, 'portal_types')
         return types.getTypeInfo(name)
 
-    def test_types__Plone_Site__filter_content_types(self):
-        ctype = self.get_ctype('Plone Site')
-        self.assertTrue(ctype.filter_content_types)
+    # def test_types__Plone_Site__filter_content_types(self):
+    #     ctype = self.get_ctype('Plone Site')
+    #     self.assertTrue(ctype.filter_content_types)
 
-    def test_types__Plone_Site__allowed_content_types(self):
-        ctype = self.get_ctype('Plone Site')
-        self.assertEqual(ctype.allowed_content_types, (
-            'Carousel Banner',
-            'Collection',
-            'Document',
-            'Event',
-            'File',
-            'Folder',
-            'FormFolder',
-            'Image',
-            'Link',
-            'News Item',
-            'collective.cart.shopping.Shop'))
+    # def test_types__Plone_Site__allowed_content_types(self):
+    #     ctype = self.get_ctype('Plone Site')
+    #     self.assertEqual(ctype.allowed_content_types, (
+    #         'Carousel Banner',
+    #         'Collection',
+    #         'Document',
+    #         'Event',
+    #         'File',
+    #         'Folder',
+    #         'FormFolder',
+    #         'Image',
+    #         'Link',
+    #         'News Item',
+    #         'collective.cart.shopping.Shop'))
 
     def test_portlets__news_removed_from_right_column(self):
         from plone.portlets.interfaces import IPortletAssignmentMapping

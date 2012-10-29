@@ -87,16 +87,16 @@ def upgrade_37_to_38(context, logger=None):
     logger.info('Set available_editor only to TinyMCE.')
 
 
-def upgrade_38_to_39(context, logger=None):
-    """Reimport typeinfo for updating allowed_content_types for Plone Site"""
-    if logger is None:
-        logger = logging.getLogger(__name__)
+# def upgrade_38_to_39(context, logger=None):
+#     """Reimport typeinfo for updating allowed_content_types for Plone Site"""
+#     if logger is None:
+#         logger = logging.getLogger(__name__)
 
-    setup = getToolByName(context, 'portal_setup')
-    logger.info('Reimporting typeinfo.')
-    setup.runImportStepFromProfile(
-        PROFILE_ID, 'typeinfo', run_dependencies=False, purge_old=False)
-    logger.info('Reimported typeinfo.')
+#     setup = getToolByName(context, 'portal_setup')
+#     logger.info('Reimporting typeinfo.')
+#     setup.runImportStepFromProfile(
+#         PROFILE_ID, 'typeinfo', run_dependencies=False, purge_old=False)
+#     logger.info('Reimported typeinfo.')
 
 
 def remove_portlet(context, portlet_class, logger):

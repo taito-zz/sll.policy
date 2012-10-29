@@ -7,6 +7,12 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.2 (2012-10-XX)
+================
+
+- Added upgrade step to enable visible_ids to all the registered members and also
+  default to property value True for new members. [taito]
+
 1.1.1 (2012-10-16)
 ==================
 
