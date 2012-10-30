@@ -14,7 +14,6 @@ Change log
 
     AttributeError: type object 'IDexterityFTI' has no attribute '__iro__'
 
-
 1.2 (2012-10-29)
 ================
 
