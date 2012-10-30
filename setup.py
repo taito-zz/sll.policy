@@ -35,6 +35,7 @@ setup(
         'five.grok',
         'hexagonit.socialbutton',
         'hexagonit.testing',
+        'plone.app.dexterity',
         'plone.browserlayer',
         'setuptools',
         'sll.carousel',

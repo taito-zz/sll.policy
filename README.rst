@@ -7,6 +7,14 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.2.1 (2012-10-30)
+==================
+
+- Added dependency to plone.app.dexterity to avoid the next error [taito]::
+
+    AttributeError: type object 'IDexterityFTI' has no attribute '__iro__'
+
+
 1.2 (2012-10-29)
 ================
 
