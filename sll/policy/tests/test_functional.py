@@ -43,6 +43,10 @@ def setUp(self):
 
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
+    # Create News Item.
+    news = portal[portal.invokeFactory('News Item', 'news')]
+    news.reindexObject()
+
     # Set the site back in English mode to make testing easier.
     portal.portal_languages.manage_setLanguageSettings('en', ['en', 'fi'])
 
@@ -83,5 +87,4 @@ def DocFileSuite(testfile, flags=FLAGS, setUp=setUp, layer=FUNCTIONAL_TESTING):
 def test_suite():
     return unittest.TestSuite([
         DocFileSuite('functional/content.txt'),
-        DocFileSuite('functional/portlets.txt'),
-        ])
+        DocFileSuite('functional/portlets.txt')])

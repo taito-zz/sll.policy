@@ -116,4 +116,4 @@ YHDISTYKSET = {
         'posio',
     ],
     'pohjois-savo': []
- }
+}

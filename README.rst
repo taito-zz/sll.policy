@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.2.2 (2012-11-14)
+==================
+
+- Tested with Plone-4.2.2. [taito]
+
 1.2.1 (2012-10-30)
 ==================
 

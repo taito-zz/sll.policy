@@ -13,9 +13,9 @@ Add Document::
     >>> 'id="archetypes-fieldname-subject"' in browser.bycss('#fieldset-default')
     False
 
-Add News Item::
+Edit News Item::
 
-    >>> browser.open('/createObject?type_name=News Item')
+    >>> browser.open('/news/edit')
 
     >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
     True
