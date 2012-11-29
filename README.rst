@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.3 (2012-11-30)
+================
+
+- Added testing integration to Travis CI. [taito]
+
 1.2.2 (2012-11-14)
 ==================
 

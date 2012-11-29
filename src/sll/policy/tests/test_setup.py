@@ -13,33 +13,6 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.policy'))
 
-    def test_dependencies_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.templates'))
-        self.failUnless(installer.isProductInstalled('collective.cropimage'))
-        self.failUnless(installer.isProductInstalled('collective.contentleadimage'))
-        self.failUnless(installer.isProductInstalled('PloneFormGen'))
-
-    def test_installed__sll_carousel(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.carousel'))
-
-    def test_abita_development_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('abita.development'))
-
-    def test_sll_portlet_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.portlet'))
-
-    def test_sll_theme_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('sll.theme'))
-
-    def test_hexagonit_socialbutton_installed(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('hexagonit.socialbutton'))
-
     def test_actions__dashboard(self):
         tool = getToolByName(self.portal, 'portal_actions')
         actions = getattr(tool, 'user')
@@ -67,8 +40,63 @@ class TestCase(IntegrationTestCase):
 
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(
-            setup.getVersionForProfile('profile-sll.policy:default'), u'41')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'41')
+
+    def test_metadata__dependency__Products_PloneFormGen(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('PloneFormGen'))
+
+    def test_metadata__dependency__Products_PFGExtendedMailAdapter(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('PFGExtendedMailAdapter'))
+
+    def test_metadata__dependency__Products_PFGSelectionStringField(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('PFGSelectionStringField'))
+
+    def test_metadata__dependency___abita_development(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('abita.development'))
+
+    def test_metadata__dependency__collective_contentleadimage(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('collective.contentleadimage'))
+
+    def test_metadata__dependency__collective_cropimage(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('collective.cropimage'))
+
+    def test_metadata__dependency__collective_folderlogo(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('collective.folderlogo'))
+
+    def test_metadata__dependency__collective_microsite(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('collective.microsite'))
+
+    def test_metadata__dependency__collective_pfg_payment(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('collective.pfg.payment'))
+
+    def test_metadata__dependency___hexagonit_socialbutton(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('hexagonit.socialbutton'))
+
+    def test_metadata__dependency__sll_carousel(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.carousel'))
+
+    def test_metadata__dependency___sll_portlet(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.portlet'))
+
+    def test_metadata__dependency__sll_templates(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.assertTrue(installer.isProductInstalled('sll.templates'))
+
+    def test_metadata__dependency___sll_theme(self):
+        installer = getToolByName(self.portal, 'portal_quickinstaller')
+        self.failUnless(installer.isProductInstalled('sll.theme'))
 
     ## properties.xml
     def test_properties__title(self):
