@@ -23,7 +23,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'Products.CMFPlone>=4.2',
+        'Products.CMFPlone',
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
         'collective.folderlogo',
@@ -39,8 +39,7 @@ setup(
         'sll.locales',
         'sll.portlet',
         'sll.templates',
-        'sll.theme',
-        'z3c.jbot'],
+        'sll.theme'],
     entry_points="""
     # -*- Entry points: -*-
 

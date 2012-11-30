@@ -21,6 +21,8 @@ class SllPolicyLayer(PloneSandboxLayer):
         z2.installProduct(app, 'Products.PloneFormGen')
 
         # Load ZCML
+        import plonetheme.sunburst
+        self.loadZCML(package=plonetheme.sunburst)
         import sll.policy
         self.loadZCML(package=sll.policy)
         import sll.locales
@@ -36,6 +38,7 @@ class SllPolicyLayer(PloneSandboxLayer):
         # Install portal content. Including the Members folder! to setup defaul plone site.
         self.applyProfile(portal, 'Products.CMFPlone:plone-content')
 
+        self.applyProfile(portal, 'plonetheme.sunburst:default')
         self.applyProfile(portal, 'sll.policy:default')
 
     def tearDownZope(self, app):

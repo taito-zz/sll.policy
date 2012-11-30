@@ -4,10 +4,6 @@
     xmlns:five="http://namespaces.zope.org/five"
     i18n_domain="sll.policy">
 
-  <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
-  <include package="z3c.jbot" file="meta.zcml" />
-  <browser:jbot directory="overrides" layer=".interfaces.ISllPolicyLayer" />
-
   <browser:viewlet
     name="plone.path_bar"
     manager="plone.app.layout.viewlets.interfaces.IContentViews"
@@ -16,13 +12,13 @@
     layer=".interfaces.ISllPolicyLayer"
     />
 
-  <browser:page
+  <!-- <browser:page
     name="sharing"
     for="*"
     class=".sharing.SLLSharingView"
     permission="plone.DelegateRoles"
     layer=".interfaces.ISllPolicyLayer"
-    />
+    /> -->
 
 
 </configure>

@@ -10,7 +10,7 @@ class TestCase(IntegrationTestCase):
     def setUp(self):
         self.portal = self.layer['portal']
 
-    def test_sll_policy__installed(self):
+    def test_package__installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.policy'))
 
