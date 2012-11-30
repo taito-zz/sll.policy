@@ -5,22 +5,22 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="40"
-    handler="sll.policy.upgrades.upgrade_39_to_40"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="39"
-    title="Remove fblike portlet"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="41"
     handler="sll.policy.upgrades.upgrade_40_to_41"
     profile="sll.policy:default"
     sortkey="1"
     source="40"
     title="Enable visible_ids for all the registred members"
+    />
+
+  <genericsetup:upgradeStep
+    description="Set rate to 5.0."
+    destination="42"
+    handler="sll.policy.upgrades.reset_record_abita_development_rate"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="41"
+    title="Set record: abita.development.rate"
     />
 
 </configure>

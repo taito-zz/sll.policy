@@ -5,7 +5,5 @@
   <default>
    <bound-workflow workflow_id="two_states_workflow"/>
   </default>
-  <type type_id="File"/>
-  <type type_id="Image"/>
  </bindings>
 </object>

@@ -1,5 +1,7 @@
 from Products.CMFCore.utils import getToolByName
+from plone.registry.interfaces import IRegistry
 from sll.policy.tests.base import IntegrationTestCase
+from zope.component import getUtility
 
 
 class TestCase(IntegrationTestCase):
@@ -22,43 +24,6 @@ class TestCase(IntegrationTestCase):
 
         self.assertFalse(resource.getEnabled())
 
-    def test_upgrade_36_to_37(self):
-        atct = getToolByName(self.portal, 'portal_atct')
-        atct.manage_changeProperties(
-            image_types=(), folder_types=(), album_batch_size=10,
-            album_image_scale='small', single_image_scale='thumb')
-        self.assertEqual(atct.getProperty('image_types'), ())
-        self.assertEqual(atct.getProperty('folder_types'), ())
-        self.assertEqual(atct.getProperty('album_batch_size'), 10)
-        self.assertEqual(atct.getProperty('album_image_scale'), 'small')
-        self.assertEqual(atct.getProperty('single_image_scale'), 'thumb')
-
-        from sll.policy.upgrades import upgrade_36_to_37
-        upgrade_36_to_37(self.portal)
-
-        self.assertEqual(atct.getProperty('image_types'), ('Image', 'News Item'))
-        self.assertEqual(atct.getProperty('folder_types'), ('Image',))
-        self.assertEqual(atct.getProperty('album_batch_size'), 30)
-        self.assertEqual(atct.getProperty('album_image_scale'), 'thumb')
-        self.assertEqual(atct.getProperty('single_image_scale'), 'preview')
-
-    def test_upgrade_37_to_38(self):
-        membership = getToolByName(self.portal, 'portal_membership')
-        membership.getMemberById('test_user_1_').manage_changeProperties(wysiwyg_editor='Kupu')
-        self.assertEqual(membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'Kupu')
-
-        site_properties = getattr(getToolByName(self.portal, 'portal_properties'), 'site_properties')
-        site_properties.manage_changeProperties(available_editors=('TinyMCE', 'Kupu'))
-        self.assertEqual(site_properties.available_editors, ('TinyMCE', 'Kupu'))
-
-        from sll.policy.upgrades import upgrade_37_to_38
-        upgrade_37_to_38(self.portal)
-
-        self.assertEqual(
-            membership.getMemberById('test_user_1_').getProperty('wysiwyg_editor'), 'TinyMCE')
-
-        self.assertEqual(site_properties.available_editors, ('TinyMCE',))
-
     def test_upgrade_40_to_41(self):
         membership = getToolByName(self.portal, 'portal_membership')
         membership.getMemberById('test_user_1_').manage_changeProperties(visible_ids=False)
@@ -68,3 +33,12 @@ class TestCase(IntegrationTestCase):
         upgrade_40_to_41(self.portal)
 
         self.assertTrue(membership.getMemberById('test_user_1_').getProperty('visible_ids'))
+
+    def test_set_record_abita_development_rate(self):
+        record = getUtility(IRegistry)['abita.development.rate']
+        self.assertEqual(record, 5.0)
+
+        from sll.policy.upgrades import reset_record_abita_development_rate
+        reset_record_abita_development_rate(self.portal)
+
+        self.assertEqual(record, 5.0)

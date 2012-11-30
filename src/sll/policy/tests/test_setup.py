@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from Products.CMFCore.utils import getToolByName
+from sll.basepolicy.tests.test_setup import get_record
 from sll.policy.tests.base import IntegrationTestCase
 
 
@@ -25,22 +26,9 @@ class TestCase(IntegrationTestCase):
         action = getattr(actions, 'login')
         self.assertFalse(action.getProperty('visible'))
 
-    def test_jsregistry__popupforms(self):
-        javascripts = getToolByName(self.portal, 'portal_javascripts')
-        resource = javascripts.getResource('popupforms.js')
-        self.assertFalse(resource.getEnabled())
-
-    def test_mailhost__smtp_host(self):
-        mailhost = getToolByName(self.portal, 'MailHost')
-        self.assertEqual(mailhost.smtp_host, 'sll.fi')
-
-    def test_mailhost__smtp_port(self):
-        mailhost = getToolByName(self.portal, 'MailHost')
-        self.assertEqual(mailhost.smtp_port, 25)
-
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'41')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'42')
 
     def test_metadata__dependency__Products_PloneFormGen(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -53,10 +41,6 @@ class TestCase(IntegrationTestCase):
     def test_metadata__dependency__Products_PFGSelectionStringField(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.assertTrue(installer.isProductInstalled('PFGSelectionStringField'))
-
-    def test_metadata__dependency___abita_development(self):
-        installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('abita.development'))
 
     def test_metadata__dependency__collective_contentleadimage(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -78,9 +62,9 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.assertTrue(installer.isProductInstalled('collective.pfg.payment'))
 
-    def test_metadata__dependency___hexagonit_socialbutton(self):
+    def test_metadata__dependency__sll_basepolicy(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
-        self.failUnless(installer.isProductInstalled('hexagonit.socialbutton'))
+        self.failUnless(installer.isProductInstalled('sll.basepolicy'))
 
     def test_metadata__dependency__sll_carousel(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -123,22 +107,6 @@ class TestCase(IntegrationTestCase):
             self.portal.getProperty('default_page'),
             'sll-view')
 
-    def test_properties_validate_email(self):
-        self.assertTrue(self.portal.getProperty('validate_email'))
-
-    ## propertiestool.xml
-    def test_propertiestool_site_properties__default_editor(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertEqual(
-            site_properties.getProperty('default_editor'),
-            'TinyMCE')
-
-    def test_default_language(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_props = properties.site_properties
-        self.assertEqual(site_props.getProperty('default_language'), 'fi')
-
     def test_site_properties__disable_nonfolderish_sections(self):
         properties = getToolByName(self.portal, 'portal_properties')
         site_props = properties.site_properties
@@ -149,62 +117,6 @@ class TestCase(IntegrationTestCase):
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
 
-    def test_propertiestool_site_properties__external_links_open_new_window(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertEqual(
-            site_properties.getProperty('external_links_open_new_window'),
-            'true')
-
-    def test_propertiestool_site_properties__icon_visibility(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertEqual(
-            site_properties.getProperty('icon_visibility'),
-            'authenticated')
-
-    def test_propertiestool_site_properties__exposeDCMetaTags(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertTrue(site_properties.getProperty('exposeDCMetaTags'))
-
-    def test_propertiestool_site_properties__enable_link_integrity_checks(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertTrue(site_properties.getProperty('enable_link_integrity_checks'))
-
-    def test_propertiestool_site_properties__enable_sitemap(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertTrue(site_properties.getProperty('enable_sitemap'))
-
-    def test_propertiestool_site_properties__types_not_searched(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        contents = ('Collection', 'Topic')
-        for content in contents:
-            self.assertIn(content, site_properties.getProperty('types_not_searched'))
-
-    def test_propertiestool_site_properties__visible_ids(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_properties = getattr(properties, 'site_properties')
-        self.assertTrue(site_properties.getProperty('visible_ids'))
-
-    def test_propertiestool_navtree_properties__metaTypesNotToList(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        navtree_properties = getattr(properties, 'navtree_properties')
-        contents = ('Document', 'Folder', 'FormFolder', 'News Item')
-        for content in contents:
-            self.assertFalse(content in navtree_properties.getProperty('metaTypesNotToList'))
-        contents = ('Collection', 'Event', 'File', 'Image', 'Link', 'Topic')
-        for content in contents:
-            self.assertTrue(content in navtree_properties.getProperty('metaTypesNotToList'))
-
-    def test_propertiestool_navtree_properties__enable_wf_state_filtering(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        navtree_properties = getattr(properties, 'navtree_properties')
-        self.assertFalse(navtree_properties.getProperty('enable_wf_state_filtering'))
-
     def test_propertiestool_cli_properties__allowed_types(self):
         properties = getToolByName(self.portal, 'portal_properties')
         cli_properties = getattr(properties, 'cli_properties')
@@ -212,129 +124,13 @@ class TestCase(IntegrationTestCase):
             cli_properties.getProperty('allowed_types'),
             ('Document', 'Event', 'FormFolder'))
 
-    def get_record(self, name):
-        from zope.component import getUtility
-        from plone.registry.interfaces import IRegistry
-        return getUtility(IRegistry).records.get(name)
-
-    def test_registry_record_hexagonit_socialbutton_codes(self):
-        record = self.get_record('hexagonit.socialbutton.codes')
-        self.assertEqual(record.value, {
-            u'twitter': {u'code_text': u'<a class="social-button twitter" title="Twitter" href="https://twitter.com/share?text=${title}?url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/twitter.gif" />\n</a>'},
-            u'facebook': {u'code_text': u'<a class="social-button facebook" title="Facebook" target="_blank" href="http://www.facebook.com/sharer.php?t=${title}&u=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/facebook.gif" />\n</a>'},
-            u'google-plus': {u'code_text': u'<a class="social-button googleplus" title="Google+" href="https://plusone.google.com/_/+1/confirm?hl=${lang}&title=${title}&url=${url}">\n<img src="${portal_url}/++resource++hexagonit.socialbutton/google-plus.gif" />\n</a>'},
-        })
-
-    def test_registry_record_hexagonit_socialbutton_config(self):
-        record = self.get_record('hexagonit.socialbutton.config')
-        self.assertEqual(record.value, {
-            u'twitter': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'facebook': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-            u'google-plus': {u'content_types': u'Document,Folder,FormFolder,Plone Site,News Item,Event', u'view_permission_only': u'True', u'view_models': u'*', u'enabled': u'True', u'viewlet_manager': u'plone.belowcontent'},
-        })
-
-    def test_rolemap__Manage_portlets__rolesOfPermission(self):
-        permission = "Portlets: Manage portlets"
-        roles = [
-            item['name'] for item in self.portal.rolesOfPermission(
-                permission
-            ) if item['selected'] == 'SELECTED'
-        ]
-        roles.sort()
-        self.assertEqual(
-            roles,
-            [
-                'Editor',
-                'Manager',
-                'Site Administrator',
-            ]
-        )
-
-    def test_rolemap__Manage_portlets__acquiredRolesAreUsedBy(self):
-        permission = "Portlets: Manage portlets"
-        self.assertEqual(
-            self.portal.acquiredRolesAreUsedBy(permission),
-            'CHECKED'
-        )
-
-    def test_rolemap__Manage_own_portlets__rolesOfPermission(self):
-        permission = "Portlets: Manage own portlets"
-        roles = [
-            item['name'] for item in self.portal.rolesOfPermission(
-                permission
-            ) if item['selected'] == 'SELECTED'
-        ]
-        roles.sort()
-        self.assertEqual(
-            roles,
-            [
-                'Editor',
-                'Manager',
-                'Site Administrator',
-            ]
-        )
-
-    def test_rolemap__Manage_own_portlets__acquiredRolesAreUsedBy(self):
-        permission = "Portlets: Manage own portlets"
-        self.assertEqual(
-            self.portal.acquiredRolesAreUsedBy(permission),
-            'CHECKED'
-        )
-
-    def test_rolemap__Add_collection_portlet__rolesOfPermission(self):
-        permission = "plone.portlet.collection: Add collection portlet"
-        roles = [
-            item['name'] for item in self.portal.rolesOfPermission(
-                permission
-            ) if item['selected'] == 'SELECTED'
-        ]
-        roles.sort()
-        self.assertEqual(
-            roles,
-            [
-                'Editor',
-                'Manager',
-                'Site Administrator',
-            ]
-        )
-
-    def test_rolemap__Add_collection_portlet__acquiredRolesAreUsedBy(self):
-        permission = "plone.portlet.collection: Add collection portlet"
-        self.assertEqual(
-            self.portal.acquiredRolesAreUsedBy(permission),
-            'CHECKED'
-        )
-
-    def test_rolemap__Add_static_portlet__rolesOfPermission(self):
-        permission = "plone.portlet.static: Add static portlet"
-        roles = [
-            item['name'] for item in self.portal.rolesOfPermission(
-                permission
-            ) if item['selected'] == 'SELECTED'
-        ]
-        roles.sort()
-        self.assertEqual(
-            roles,
-            [
-                'Editor',
-                'Manager',
-                'Site Administrator',
-            ]
-        )
-
-    def test_rolemap__Add_static_portlet__acquiredRolesAreUsedBy(self):
-        permission = "plone.portlet.static: Add static portlet"
-        self.assertEqual(
-            self.portal.acquiredRolesAreUsedBy(permission),
-            'CHECKED')
+    def test_registry_record__abita_development_rate__value(self):
+        record = get_record('abita.development.rate')
+        self.assertEqual(record.value, 5.0)
 
     def setuphanders__set_firstweekday(self):
         calendar = getToolByName(self.portal, 'portal_calendar')
         self.assertEqual(calendar.firstweekday, 0)
-
-    def test_tinymce__link_using_uids(self):
-        tinymce = getToolByName(self.portal, 'portal_tinymce')
-        self.assertTrue(tinymce.link_using_uids)
 
     def get_ctype(self, name):
         """Returns content type info.
@@ -344,25 +140,6 @@ class TestCase(IntegrationTestCase):
         """
         types = getToolByName(self.portal, 'portal_types')
         return types.getTypeInfo(name)
-
-    # def test_types__Plone_Site__filter_content_types(self):
-    #     ctype = self.get_ctype('Plone Site')
-    #     self.assertTrue(ctype.filter_content_types)
-
-    # def test_types__Plone_Site__allowed_content_types(self):
-    #     ctype = self.get_ctype('Plone Site')
-    #     self.assertEqual(ctype.allowed_content_types, (
-    #         'Carousel Banner',
-    #         'Collection',
-    #         'Document',
-    #         'Event',
-    #         'File',
-    #         'Folder',
-    #         'FormFolder',
-    #         'Image',
-    #         'Link',
-    #         'News Item',
-    #         'collective.cart.shopping.Shop'))
 
     def test_portlets__news_removed_from_right_column(self):
         from plone.portlets.interfaces import IPortletAssignmentMapping

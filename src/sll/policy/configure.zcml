@@ -17,6 +17,7 @@
   <include package="collective.pfg.payment"/>
   <include package="five.grok"/>
   <include package="hexagonit.socialbutton"/>
+  <include package="sll.basepolicy"/>
   <include package="sll.carousel"/>
   <include package="sll.portlet"/>
   <include package="sll.templates"/>
