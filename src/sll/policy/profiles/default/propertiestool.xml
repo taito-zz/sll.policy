@@ -1,49 +1,6 @@
 <?xml version="1.0"?>
 <object name="portal_properties" meta_type="Plone Properties Tool">
 
-  <object name="site_properties" meta_type="Plone Property Sheet">
-    <property name="available_editors" type="lines">
-      <element value="TinyMCE"/>
-    </property>
-    <property name="default_editor" type="string">TinyMCE</property>
-    <property name="default_language" type="string">fi</property>
-    <property name="enable_link_integrity_checks" type="boolean">True</property>
-    <property
-      name="external_links_open_new_window"
-      type="string">true</property>
-    <property
-      name="icon_visibility"
-      type="string">authenticated</property>
-    <property
-      name="exposeDCMetaTags"
-      type="boolean">True</property>
-    <property
-      name="enable_sitemap"
-      type="boolean">True</property>
-    <property
-      name="mark_special_links"
-      type="string">false</property>
-    <property name="types_not_searched" type="lines" purge="False">
-      <element value="Collection"/>
-      <element value="Topic"/>
-    </property>
-    <property name="use_email_as_login" type="boolean">True</property>
-    <property name="visible_ids" type="boolean">True</property>
-  </object>
-
-  <object name="navtree_properties" meta_type="Plone Property Sheet">
-    <property name="metaTypesNotToList" type="lines" purge="False">
-      <element value="Collection"/>
-      <element value="Event"/>
-      <element value="File"/>
-      <element value="Image"/>
-      <element value="Link"/>
-      <element value="Topic"/>
-    </property>
-  </object>
-  <property name="enable_wf_state_filtering" type="boolean">False</property>
-  <property name="wf_states_to_show" type="lines"/>
-
  <object name="collective_pfg_payment_properties" meta_type="Plone Property Sheet">
   <property name="title">Payment Properties</property>
   <property name="fields" type="lines">
@@ -69,13 +26,6 @@
 
   <!-- For testing -->
   <!-- <property name="mac" type="string">6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ</property> -->
- </object>
-
- <object name="folder_logo_properties" meta_type="Plone Property Sheet">
-  <property name="title">Folder Logo Properties</property>
-  <property name="logo_id" type="string">ylapalkin-logo.png</property>
-  <property name="background_color" type="string"></property>
-  <property name="background_image_id" type="string"></property>
  </object>
 
 </object>

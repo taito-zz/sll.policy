@@ -1,4 +1,3 @@
-from Products.CMFCore.utils import getToolByName
 from hexagonit.testing.browser import Browser
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
@@ -28,7 +27,7 @@ def setUp(self):
     layer = self.globs['layer']
     browser = Browser(layer['app'])
     portal = layer['portal']
-    # Update global variables within the tests.
+
     self.globs.update({
         'TEST_USER_NAME': TEST_USER_NAME,
         'TEST_USER_PASSWORD': TEST_USER_PASSWORD,
@@ -37,24 +36,16 @@ def setUp(self):
     })
 
     browser.setBaseUrl(portal.absolute_url())
-
     browser.handleErrors = True
     portal.error_log._ignored_exceptions = ()
-
     setRoles(portal, TEST_USER_ID, ['Manager'])
 
     # Create News Item.
-    news = portal[portal.invokeFactory('News Item', 'news')]
-    news.reindexObject()
+    newsitem = portal[portal.invokeFactory('News Item', 'newsitem')]
+    newsitem.reindexObject()
 
     # Set the site back in English mode to make testing easier.
     portal.portal_languages.manage_setLanguageSettings('en', ['en', 'fi'])
-
-    user2 = 'test_user_2_'
-    regtool = getToolByName(portal, 'portal_registration')
-    regtool.addMember(user2, user2)
-    setRoles(portal, user2, ['Editor'])
-    self.globs['user2'] = user2
 
     transaction.commit()
 
@@ -85,6 +76,4 @@ def DocFileSuite(testfile, flags=FLAGS, setUp=setUp, layer=FUNCTIONAL_TESTING):
 
 
 def test_suite():
-    return unittest.TestSuite([
-        DocFileSuite('functional/content.txt'),
-        DocFileSuite('functional/portlets.txt')])
+    return unittest.TestSuite([DocFileSuite('functional/content.txt')])

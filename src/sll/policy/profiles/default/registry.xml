@@ -9,4 +9,13 @@
     <value>5.0</value>
   </record>
 
+  <record name="collective.folderlogo.logo_id">
+    <field type="plone.registry.field.TextLine">
+      <title>Logo ID</title>
+      <description></description>
+    </field>
+    <value>ylapalkin-logo.png</value>
+  </record>
+
+
 </registry>

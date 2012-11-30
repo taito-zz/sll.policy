@@ -15,7 +15,7 @@ Add Document::
 
 Edit News Item::
 
-    >>> browser.open('/news/edit')
+    >>> browser.open('/newsitem/edit')
 
     >>> 'id="archetypes-fieldname-relatedItems"' in browser.bycss('#fieldset-default')
     True

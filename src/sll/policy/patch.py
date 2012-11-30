@@ -6,12 +6,7 @@ from Products.ATContentTypes.content.schemata import marshall_register
 from Products.PloneFormGen.content.form import FormFolderSchema
 
 
-def finalizeATCTSchema(
-    schema,
-    tag_default=True,
-    related_item_default=True,
-    exclude_from_nav_default=True,
-):
+def finalizeATCTSchema(schema, tag_default=True, related_item_default=True, exclude_from_nav_default=True):
     """Finalizes an ATCT type schema to alter some fields
     """
     field = 'subject'

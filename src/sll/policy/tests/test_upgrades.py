@@ -34,11 +34,12 @@ class TestCase(IntegrationTestCase):
 
         self.assertTrue(membership.getMemberById('test_user_1_').getProperty('visible_ids'))
 
-    def test_set_record_abita_development_rate(self):
-        record = getUtility(IRegistry)['abita.development.rate']
-        self.assertEqual(record, 5.0)
+    def test_reset_record_abita_development_rate(self):
+        record = getUtility(IRegistry)
+        record['abita.development.rate'] = 2.0
+        self.assertEqual(record['abita.development.rate'], 2.0)
 
         from sll.policy.upgrades import reset_record_abita_development_rate
         reset_record_abita_development_rate(self.portal)
 
-        self.assertEqual(record, 5.0)
+        self.assertEqual(record['abita.development.rate'], 5.0)

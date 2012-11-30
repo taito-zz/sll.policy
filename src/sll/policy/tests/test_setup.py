@@ -10,25 +10,22 @@ class TestCase(IntegrationTestCase):
     def setUp(self):
         self.portal = self.layer['portal']
 
-    def test_is_sll_policy_installed(self):
+    def test_sll_policy__installed(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.policy'))
 
-    def test_actions__dashboard(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'user')
-        action = getattr(actions, 'dashboard')
+    def test_actions__user__dashboard(self):
+        action = getattr(getattr(getToolByName(self.portal, 'portal_actions'), 'user'), 'dashboard')
         self.assertFalse(action.getProperty('visible'))
 
-    def test_actions__login(self):
-        tool = getToolByName(self.portal, 'portal_actions')
-        actions = getattr(tool, 'user')
-        action = getattr(actions, 'login')
+    def test_actions__user__login(self):
+        action = getattr(getattr(getToolByName(self.portal, 'portal_actions'), 'user'), 'login')
         self.assertFalse(action.getProperty('visible'))
 
-    def test_metadata__version(self):
-        setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'42')
+    def test_browserlayer(self):
+        from sll.policy.browser.interfaces import ISllPolicyLayer
+        from plone.browserlayer import utils
+        self.failUnless(ISllPolicyLayer in utils.registered_layers())
 
     def test_metadata__dependency__Products_PloneFormGen(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
@@ -82,139 +79,50 @@ class TestCase(IntegrationTestCase):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         self.failUnless(installer.isProductInstalled('sll.theme'))
 
-    ## properties.xml
-    def test_properties__title(self):
-        self.assertEqual(
-            self.portal.getProperty('title'), 'Luonnonsuojeluliitto')
-
-    def test_properties__description(self):
-        self.assertEqual(
-            self.portal.getProperty('description'),
-            'Suomen luonnonsuojeluliitto ry')
-
-    def test_properties__email_from_address(self):
-        self.assertEqual(
-            self.portal.getProperty('email_from_address'),
-            'webmaster@sll.fi')
-
-    def test_properties__email_from_name(self):
-        self.assertEqual(
-            self.portal.getProperty('email_from_name'),
-            'Suomen luonnonsuojeluliitto ry')
+    def test_metadata__version(self):
+        setup = getToolByName(self.portal, 'portal_setup')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'42')
 
     def test_properties_default_page(self):
-        self.assertEqual(
-            self.portal.getProperty('default_page'),
-            'sll-view')
+        self.assertEqual(self.portal.getProperty('default_page'), 'sll-view')
 
-    def test_site_properties__disable_nonfolderish_sections(self):
-        properties = getToolByName(self.portal, 'portal_properties')
-        site_props = properties.site_properties
-        self.assertFalse(site_props.getProperty('disable_nonfolderish_sections'))
+    def test_properties__description(self):
+        self.assertEqual(self.portal.getProperty('description'), 'Suomen luonnonsuojeluliitto ry')
 
-    def test_enable_self_reg(self):
-        perms = self.portal.rolesOfPermission(permission='Add portal member')
-        anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
-        self.assertEqual(anon, '')
+    def test_properties__email_from_address(self):
+        self.assertEqual(self.portal.getProperty('email_from_address'), 'webmaster@sll.fi')
 
-    def test_propertiestool_cli_properties__allowed_types(self):
+    def test_properties__email_from_name(self):
+        self.assertEqual(self.portal.getProperty('email_from_name'), 'Suomen luonnonsuojeluliitto ry')
+
+    def test_properties__title(self):
+        self.assertEqual(self.portal.getProperty('title'), 'Luonnonsuojeluliitto')
+
+    def test_propertiestool__cli_properties__allowed_types(self):
         properties = getToolByName(self.portal, 'portal_properties')
         cli_properties = getattr(properties, 'cli_properties')
-        self.assertEqual(
-            cli_properties.getProperty('allowed_types'),
-            ('Document', 'Event', 'FormFolder'))
+        self.assertEqual(cli_properties.getProperty('allowed_types'), ('Document', 'Event', 'FormFolder'))
 
     def test_registry_record__abita_development_rate__value(self):
         record = get_record('abita.development.rate')
         self.assertEqual(record.value, 5.0)
 
-    def setuphanders__set_firstweekday(self):
-        calendar = getToolByName(self.portal, 'portal_calendar')
-        self.assertEqual(calendar.firstweekday, 0)
+    def test_registry_record__collective_folderlogo_logo_id__value(self):
+        record = get_record('collective.folderlogo.logo_id')
+        self.assertEqual(record.value, u'ylapalkin-logo.png')
 
-    def get_ctype(self, name):
-        """Returns content type info.
+    def test_security__ISharingPageRole(self):
+        from zope.component import getUtilitiesFor
+        from plone.app.workflow.interfaces import ISharingPageRole
+        roles = sorted([item[0] for item in getUtilitiesFor(ISharingPageRole)])
+        self.assertEqual(roles, [u'Contributor', u'Editor', u'Reader', u'Reviewer'])
 
-        :param name: Name of content type.
-        :type name: test_types__Plone_Site__filter_content_types
-        """
-        types = getToolByName(self.portal, 'portal_types')
-        return types.getTypeInfo(name)
-
-    def test_portlets__news_removed_from_right_column(self):
-        from plone.portlets.interfaces import IPortletAssignmentMapping
-        from plone.portlets.interfaces import IPortletManager
-        from zope.component import getMultiAdapter
-        from zope.component import getUtility
-        column = getUtility(IPortletManager, name=u"plone.rightcolumn")
-        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-        self.assertFalse('news' in assignable.keys())
-
-    def test_portlets__events_removed_from_right_column(self):
-        from plone.portlets.interfaces import IPortletAssignmentMapping
-        from plone.portlets.interfaces import IPortletManager
-        from zope.component import getMultiAdapter
-        from zope.component import getUtility
-        column = getUtility(IPortletManager, name=u"plone.rightcolumn")
-        assignable = getMultiAdapter((self.portal, column), IPortletAssignmentMapping)
-        self.assertFalse('events' in assignable.keys())
-
-    ## browserlayer.xml
-    def test_browserlayer(self):
-        from sll.policy.browser.interfaces import ISllPolicyLayer
-        from plone.browserlayer import utils
-        self.failUnless(ISllPolicyLayer in utils.registered_layers())
-
-    def test_disable_self_reg(self):
+    def test_security__enable_self_reg(self):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
 
-    ## rolemap.xml
-    def test_content_rule(self):
-        items = [
-            item['name'] for item in self.portal.rolesOfPermission(
-                "Content rules: Manage rules"
-            ) if item['selected'] == 'SELECTED'
-        ]
-        self.assertEqual(len(items), 2)
-        permissions = ['Site Administrator', 'Manager']
-        for item in items:
-            self.assertTrue(item in permissions)
-        self.assertFalse(
-            self.portal.acquiredRolesAreUsedBy(
-                "Content rules: Manage rules"
-            )
-        )
-
-    def test_ISharingPageRole(self):
-        from zope.component import getUtilitiesFor
-        from plone.app.workflow.interfaces import ISharingPageRole
-        res = []
-        for name, utility in getUtilitiesFor(ISharingPageRole):
-            res.append(name)
-        self.assertEqual(
-            res,
-            [u'Contributor', u'Reviewer', u'Editor', u'Reader']
-        )
-
-    def test_Members_folders_removed(self):
-        self.assertRaises(KeyError, lambda: self.portal['Members'])
-
-    def test_news_folders_removed(self):
-        self.assertRaises(KeyError, lambda: self.portal['news'])
-
-    def test_events_folders_removed(self):
-        self.assertRaises(KeyError, lambda: self.portal['events'])
-
-    def test_setuphanlders__folder__tapahtumat__layout(self):
-        folder = self.portal['tapahtumat']
-        self.assertEqual(
-            folder.getLayout(),
-            'search-results'
-        )
-
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')
         installer.uninstallProducts(['sll.policy'])
-        self.failIf(installer.isProductInstalled('sll.policy'))
+        self.assertFalse(installer.isProductInstalled('sll.policy'))
