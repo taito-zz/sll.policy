@@ -4,13 +4,13 @@
     xmlns:five="http://namespaces.zope.org/five"
     i18n_domain="sll.policy">
 
-  <browser:viewlet
+  <!-- <browser:viewlet
     name="plone.path_bar"
     manager="plone.app.layout.viewlets.interfaces.IContentViews"
     class=".viewlet.PathBarViewlet"
     permission="zope2.View"
     layer=".interfaces.ISllPolicyLayer"
-    />
+    /> -->
 
   <!-- <browser:page
     name="sharing"

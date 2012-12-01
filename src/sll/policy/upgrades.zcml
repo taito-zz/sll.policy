@@ -14,12 +14,22 @@
     />
 
   <genericsetup:upgradeStep
-    description="Set rate to 5.0."
+    description=""
     destination="42"
-    handler="sll.policy.upgrades.reset_record_abita_development_rate"
+    handler="sll.basepolicy.upgrades.install_sll_basepolicy"
     profile="sll.policy:default"
     sortkey="1"
     source="41"
+    title="Install sll.basepolicy"
+    />
+
+  <genericsetup:upgradeStep
+    description="Set rate to 5.0."
+    destination="43"
+    handler="sll.policy.upgrades.reset_record_abita_development_rate"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="42"
     title="Set record: abita.development.rate"
     />
 

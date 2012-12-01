@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>42</version>
+  <version>43</version>
   <dependencies>
     <dependency>profile-Products.PloneFormGen:default</dependency>
     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
