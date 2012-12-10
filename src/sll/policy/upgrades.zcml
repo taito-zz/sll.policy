@@ -43,7 +43,7 @@
     title="Unregister ISLLPolicyLayer"
     />
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="44"
     handler="sll.policy.upgrades.register_layer_ISllPolicyLayer"
@@ -51,6 +51,6 @@
     sortkey="2"
     source="43"
     title="Register ISllPolicyLayer"
-    />
+    /> -->
 
 </configure>

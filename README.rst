@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.5 (2012-12-10)
+================
+
+- Unregister browserlayer. [taito]
+
 1.4 (2012-12-10)
 ================
 

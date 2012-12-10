@@ -51,6 +51,6 @@ class TestCase(IntegrationTestCase):
         from sll.policy.upgrades import unregister_layer_ISLLPolicyLayer
         unregister_layer_ISLLPolicyLayer(self.portal)
         self.assertNotIn(ISllPolicyLayer, utils.registered_layers())
-        from sll.policy.upgrades import register_layer_ISllPolicyLayer
-        register_layer_ISllPolicyLayer(self.portal)
-        self.assertIn(ISllPolicyLayer, utils.registered_layers())
+        # from sll.policy.upgrades import register_layer_ISllPolicyLayer
+        # register_layer_ISllPolicyLayer(self.portal)
+        # self.assertIn(ISllPolicyLayer, utils.registered_layers())

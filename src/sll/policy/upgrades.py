@@ -1,5 +1,5 @@
 from Products.CMFCore.utils import getToolByName
-from abita.utils.utils import reimport_profile
+# from abita.utils.utils import reimport_profile
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletManager
 from sll.basepolicy.upgrades import set_record_abita_development_rate
@@ -80,6 +80,6 @@ def unregister_layer_ISLLPolicyLayer(context):
     utils.unregister_layer('sll.policy')
 
 
-def register_layer_ISllPolicyLayer(context):
-    """Register ISllPolicyLayer"""
-    reimport_profile(context, PROFILE_ID, 'browserlayer')
+# def register_layer_ISllPolicyLayer(context):
+#     """Register ISllPolicyLayer"""
+#     reimport_profile(context, PROFILE_ID, 'browserlayer')
