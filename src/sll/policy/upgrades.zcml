@@ -33,4 +33,24 @@
     title="Set record: abita.development.rate"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="44"
+    handler="sll.policy.upgrades.unregister_layer_ISLLPolicyLayer"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="43"
+    title="Unregister ISLLPolicyLayer"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="44"
+    handler="sll.policy.upgrades.register_layer_ISllPolicyLayer"
+    profile="sll.policy:default"
+    sortkey="2"
+    source="43"
+    title="Register ISllPolicyLayer"
+    />
+
 </configure>

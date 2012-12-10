@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.4 (2012-12-10)
+================
+
+- Updated dependencies and refactored. [taito]
+
 1.3 (2012-11-30)
 ================
 

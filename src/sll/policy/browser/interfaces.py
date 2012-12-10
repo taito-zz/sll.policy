@@ -5,5 +5,5 @@ class ISllPolicyLayer(Interface):
     """Marker interface for browserlayer."""
 
 
-class ITopPageFeed(Interface):
-    """Marker interface for top page feed."""
+# class ITopPageFeed(Interface):
+#     """Marker interface for top page feed."""

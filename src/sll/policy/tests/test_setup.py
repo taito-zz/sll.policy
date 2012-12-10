@@ -25,7 +25,7 @@ class TestCase(IntegrationTestCase):
     def test_browserlayer(self):
         from sll.policy.browser.interfaces import ISllPolicyLayer
         from plone.browserlayer import utils
-        self.failUnless(ISllPolicyLayer in utils.registered_layers())
+        self.assertIn(ISllPolicyLayer, utils.registered_layers())
 
     def test_metadata__dependency__Products_PloneFormGen(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')

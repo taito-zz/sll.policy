@@ -3,30 +3,24 @@
   i18n_domain="sll.policy"
   xmlns:five="http://namespaces.zope.org/five"
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-  xmlns:grok="http://namespaces.zope.org/grok"
   xmlns:i18n="http://namespaces.zope.org/i18n"
   xmlns:monkey="http://namespaces.plone.org/monkey"
   xmlns="http://namespaces.zope.org/zope">
 
   <include package="Products.PFGExtendedMailAdapter"/>
   <include package="Products.PFGSelectionStringField"/>
-  <include package="Products.PloneFormGen"/>
   <include package="abita.development"/>
   <include package="collective.folderlogo"/>
   <include package="collective.microsite"/>
   <include package="collective.pfg.payment"/>
-  <include package="five.grok"/>
+  <include package="collective.pfg.showrequest"/>
   <include package="hexagonit.socialbutton"/>
   <include package="sll.basepolicy"/>
-  <include package="sll.carousel"/>
   <include package="sll.portlet"/>
-  <include package="sll.templates"/>
   <include package="sll.theme"/>
   <include package="collective.monkeypatcher"/>
-  <include package="collective.pfg.showrequest"/>
-  <include package=".browser" />
+  <!-- <include package=".browser" /> -->
   <include file="upgrades.zcml"/>
-  <grok:grok package="." />
 
   <genericsetup:registerProfile
     description="Installs the sll.policy package"
