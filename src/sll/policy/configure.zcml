@@ -9,17 +9,14 @@
 
   <include package="Products.PFGExtendedMailAdapter"/>
   <include package="Products.PFGSelectionStringField"/>
-  <include package="abita.development"/>
   <include package="collective.folderlogo"/>
   <include package="collective.microsite"/>
   <include package="collective.pfg.payment"/>
   <include package="collective.pfg.showrequest"/>
-  <include package="hexagonit.socialbutton"/>
   <include package="sll.basepolicy"/>
   <include package="sll.portlet"/>
   <include package="sll.theme"/>
   <include package="collective.monkeypatcher"/>
-  <!-- <include package=".browser" /> -->
   <include file="upgrades.zcml"/>
 
   <genericsetup:registerProfile

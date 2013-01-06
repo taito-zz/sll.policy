@@ -8,7 +8,6 @@
     <dependency>profile-collective.microsite:default</dependency>
     <dependency>profile-collective.pfg.payment:default</dependency>
     <dependency>profile-collective.pfg.showrequest:default</dependency>
-    <dependency>profile-hexagonit.socialbutton:default</dependency>
     <dependency>profile-sll.basepolicy:default</dependency>
     <dependency>profile-sll.portlet:default</dependency>
     <dependency>profile-sll.theme:default</dependency>

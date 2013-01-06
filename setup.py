@@ -25,13 +25,11 @@ setup(
     install_requires=[
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
-        'abita.development',
         'collective.folderlogo',
         'collective.microsite',
         'collective.monkeypatcher',
         'collective.pfg.payment',
         'collective.pfg.showrequest',
-        'hexagonit.socialbutton',
         'hexagonit.testing',
         'setuptools',
         'sll.basepolicy',
