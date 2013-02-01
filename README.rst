@@ -11,6 +11,7 @@ Change log
 ================
 
 - Added upgrade step to exclude some objects from navigation. [taito]
+- Tested with Plone-4.2.4. [taito]
 
 1.5.1 (2013-01-06)
 ==================
