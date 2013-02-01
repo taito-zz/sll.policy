@@ -43,14 +43,14 @@
     title="Unregister ISLLPolicyLayer"
     />
 
-  <!-- <genericsetup:upgradeStep
+  <genericsetup:upgradeStep
     description=""
-    destination="44"
-    handler="sll.policy.upgrades.register_layer_ISllPolicyLayer"
+    destination="45"
+    handler="sll.policy.upgrades.excludeFromNav"
     profile="sll.policy:default"
-    sortkey="2"
-    source="43"
-    title="Register ISllPolicyLayer"
-    /> -->
+    sortkey="1"
+    source="44"
+    title="Exclude from navigation"
+    />
 
 </configure>

@@ -51,6 +51,19 @@ class TestCase(IntegrationTestCase):
         from sll.policy.upgrades import unregister_layer_ISLLPolicyLayer
         unregister_layer_ISLLPolicyLayer(self.portal)
         self.assertNotIn(ISllPolicyLayer, utils.registered_layers())
-        # from sll.policy.upgrades import register_layer_ISllPolicyLayer
-        # register_layer_ISllPolicyLayer(self.portal)
-        # self.assertIn(ISllPolicyLayer, utils.registered_layers())
+
+    def test_excludeFromNav(self):
+        uusimaa = self.portal[self.portal.invokeFactory('Folder', 'uusimaa')]
+        kannanotot = uusimaa[uusimaa.invokeFactory('Folder', 'kannanotot')]
+        folder1 = kannanotot[kannanotot.invokeFactory('Folder', 'folder1')]
+        folder2 = folder1[folder1.invokeFactory('Folder', 'folder2')]
+        self.assertFalse(kannanotot.getExcludeFromNav())
+        self.assertFalse(folder1.getExcludeFromNav())
+        self.assertFalse(folder2.getExcludeFromNav())
+
+        from sll.policy.upgrades import excludeFromNav
+        excludeFromNav(self.portal)
+
+        self.assertFalse(kannanotot.getExcludeFromNav())
+        self.assertTrue(folder1.getExcludeFromNav())
+        self.assertTrue(folder2.getExcludeFromNav())

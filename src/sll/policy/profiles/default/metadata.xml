@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>44</version>
+  <version>45</version>
   <dependencies>
     <dependency>profile-Products.PFGExtendedMailAdapter:default</dependency>
     <dependency>profile-Products.PFGSelectionStringField:default</dependency>

@@ -80,6 +80,36 @@ def unregister_layer_ISLLPolicyLayer(context):
     utils.unregister_layer('sll.policy')
 
 
-# def register_layer_ISllPolicyLayer(context):
-#     """Register ISllPolicyLayer"""
-#     reimport_profile(context, PROFILE_ID, 'browserlayer')
+def excludeFromNav(context, logger=None):
+    """Exclude from navigation"""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    paths = [
+        '/uusimaa/kannanotot',
+        '/uusimaa/tiedotus',
+        '/uusimaa/toiminta',
+        '/etela-karjala/tiedotus',
+        '/pohjois-savo/kannanotot',
+        '/pohjois-savo/toiminta',
+        '/satakunta/toiminta',
+        '/satakunta/kannanotot',
+        '/pohjois-pohjanmaa/kannanotot',
+        '/pohjois-pohjanmaa/tiedotteet',
+        '/lappi/tiedotteet',
+        '/lappi/edunvalvonta',
+        '/lappi/kolumnit',
+    ]
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    catalog = getToolByName(context, 'portal_catalog')
+    for path in paths:
+        path = '{}{}'.format('/'.join(portal.getPhysicalPath()), path)
+        query = {'path': {'query': path, 'depth': 1}}
+        for brain in catalog(path=path):
+            obj = brain.getObject()
+            obj.setExcludeFromNav(True)
+            obj.reindexObject(idxs=['exclude_from_nav'])
+        for brain in catalog(path={'query': path, 'depth': 0}):
+            obj = brain.getObject()
+            obj.setExcludeFromNav(False)
+            obj.reindexObject(idxs=['exclude_from_nav'])

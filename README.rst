@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.6 (2013-02-01)
+================
+
+- Added upgrade step to exclude some objects from navigation. [taito]
+
 1.5.1 (2013-01-06)
 ==================
 
