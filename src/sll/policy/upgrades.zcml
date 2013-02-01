@@ -53,4 +53,14 @@
     title="Exclude from navigation"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="46"
+    handler="sll.policy.upgrades.reimport_registry"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="45"
+    title="Reimport plone.app.registry"
+    />
+
 </configure>

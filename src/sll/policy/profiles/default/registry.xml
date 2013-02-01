@@ -6,7 +6,7 @@
       <title>Default Rate</title>
       <description>Default rate per 10 minutes.</description>
     </field>
-    <value>5.0</value>
+    <value>6.0</value>
   </record>
 
   <record name="collective.folderlogo.logo_id">
@@ -17,5 +17,8 @@
     <value>ylapalkin-logo.png</value>
   </record>
 
+  <record name="sll.templates.interfaces.ITopPageMainFeed.number">
+    <value>4</value>
+  </record>
 
 </registry>

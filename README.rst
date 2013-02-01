@@ -7,6 +7,11 @@ This package contains policies for SLL site.
 Change log
 ----------
 
+1.7 (2013-02-01)
+================
+
+- Number of top page main feed set to 4. [taito]
+
 1.6 (2013-02-01)
 ================
 

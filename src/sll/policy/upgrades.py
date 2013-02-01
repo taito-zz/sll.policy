@@ -1,5 +1,5 @@
 from Products.CMFCore.utils import getToolByName
-# from abita.utils.utils import reimport_profile
+from abita.utils.utils import reimport_profile
 from plone.portlets.interfaces import IPortletAssignmentMapping
 from plone.portlets.interfaces import IPortletManager
 from sll.basepolicy.upgrades import set_record_abita_development_rate
@@ -104,7 +104,6 @@ def excludeFromNav(context, logger=None):
     catalog = getToolByName(context, 'portal_catalog')
     for path in paths:
         path = '{}{}'.format('/'.join(portal.getPhysicalPath()), path)
-        query = {'path': {'query': path, 'depth': 1}}
         for brain in catalog(path=path):
             obj = brain.getObject()
             obj.setExcludeFromNav(True)
@@ -113,3 +112,8 @@ def excludeFromNav(context, logger=None):
             obj = brain.getObject()
             obj.setExcludeFromNav(False)
             obj.reindexObject(idxs=['exclude_from_nav'])
+
+
+def reimport_registry(context):
+    """Reimport plone.app.registry"""
+    reimport_profile(context, PROFILE_ID, 'plone.app.registry')

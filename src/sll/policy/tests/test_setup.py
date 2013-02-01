@@ -81,7 +81,7 @@ class TestCase(IntegrationTestCase):
 
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'45')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'46')
 
     def test_properties_default_page(self):
         self.assertEqual(self.portal.getProperty('default_page'), 'sll-view')
@@ -105,11 +105,15 @@ class TestCase(IntegrationTestCase):
 
     def test_registry_record__abita_development_rate__value(self):
         record = get_record('abita.development.rate')
-        self.assertEqual(record.value, 5.0)
+        self.assertEqual(record.value, 6.0)
 
     def test_registry_record__collective_folderlogo_logo_id__value(self):
         record = get_record('collective.folderlogo.logo_id')
         self.assertEqual(record.value, u'ylapalkin-logo.png')
+
+    def test_registry_record__sll_templates_interfaces_ITopPageMainFeed_number__value(self):
+        record = get_record('sll.templates.interfaces.ITopPageMainFeed.number')
+        self.assertEqual(record.value, 4)
 
     def test_security__ISharingPageRole(self):
         from zope.component import getUtilitiesFor

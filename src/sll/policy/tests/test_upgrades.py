@@ -3,6 +3,8 @@ from plone.registry.interfaces import IRegistry
 from sll.policy.tests.base import IntegrationTestCase
 from zope.component import getUtility
 
+import mock
+
 
 class TestCase(IntegrationTestCase):
     """TestCase for Plone upgrades."""
@@ -67,3 +69,9 @@ class TestCase(IntegrationTestCase):
         self.assertFalse(kannanotot.getExcludeFromNav())
         self.assertTrue(folder1.getExcludeFromNav())
         self.assertTrue(folder2.getExcludeFromNav())
+
+    @mock.patch('sll.policy.upgrades.reimport_profile')
+    def test_reimport_registry(self, reimport_profile):
+        from sll.policy.upgrades import reimport_registry
+        reimport_registry(self.portal)
+        reimport_profile.assert_called_with(self.portal, 'profile-sll.policy:default', 'plone.app.registry')
