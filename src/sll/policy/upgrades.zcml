@@ -5,16 +5,6 @@
 
   <genericsetup:upgradeStep
     description=""
-    destination="41"
-    handler="sll.policy.upgrades.upgrade_40_to_41"
-    profile="sll.policy:default"
-    sortkey="1"
-    source="40"
-    title="Enable visible_ids for all the registred members"
-    />
-
-  <genericsetup:upgradeStep
-    description=""
     destination="42"
     handler="sll.basepolicy.upgrades.install_sll_basepolicy"
     profile="sll.policy:default"

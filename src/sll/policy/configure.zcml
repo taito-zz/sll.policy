@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <configure
   i18n_domain="sll.policy"
-  xmlns:five="http://namespaces.zope.org/five"
   xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
   xmlns:i18n="http://namespaces.zope.org/i18n"
   xmlns:monkey="http://namespaces.plone.org/monkey"
