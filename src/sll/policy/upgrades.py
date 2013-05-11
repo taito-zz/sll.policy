@@ -53,3 +53,12 @@ def excludeFromNav(context, logger=None):
             obj = brain.getObject()
             obj.setExcludeFromNav(False)
             obj.reindexObject(idxs=['exclude_from_nav'])
+
+
+def set_view_for_tapahtumat(context, logger=None):
+    """Set view: @@search-event-results for folder: tapahtumat"""
+    if logger is None:
+        logger = logging.getLogger(__name__)
+
+    portal = getToolByName(context, 'portal_url').getPortalObject()
+    portal['tapahtumat'].setLayout('search-event-results')

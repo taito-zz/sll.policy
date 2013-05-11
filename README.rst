@@ -7,10 +7,10 @@ This package contains policies for SLL site.
 Change log
 ----------
 
-1.7 (2013-05-xx)
+1.7 (2013-05-11)
 ================
 
--
+- Tested with 4.3. [taito]
 
 1.6 (2013-02-01)
 ================

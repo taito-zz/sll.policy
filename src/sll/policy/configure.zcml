@@ -13,6 +13,7 @@
   <include package="collective.pfg.payment"/>
   <include package="collective.pfg.showrequest"/>
   <include package="sll.basepolicy"/>
+  <include package="sll.locales"/>
   <include package="sll.portlet"/>
   <include package="sll.theme"/>
   <include package="collective.monkeypatcher"/>
