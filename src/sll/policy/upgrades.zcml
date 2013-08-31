@@ -53,4 +53,14 @@
     title="Set view for tapahtumat"
     />
 
+  <genericsetup:upgradeStep
+    description=""
+    destination="47"
+    handler="sll.policy.upgrades.saveDocument"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="46"
+    title="Save document"
+    />
+
 </configure>

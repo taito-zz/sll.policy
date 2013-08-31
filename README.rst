@@ -4,8 +4,14 @@ sll.policy
 
 This package contains policies for SLL site.
 
-Change log
-----------
+Changelog
+---------
+
+1.8.1 (2013-08-31)
+==================
+
+- Add dependency to collective.cart.core and collective.cart.shipping to avoid TypeError. [taito]
+- Tested with 4.3.1. [taito]
 
 1.8 (2013-05-11)
 ================

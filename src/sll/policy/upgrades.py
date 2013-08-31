@@ -62,3 +62,22 @@ def set_view_for_tapahtumat(context, logger=None):
 
     portal = getToolByName(context, 'portal_url').getPortalObject()
     portal['tapahtumat'].setLayout('search-event-results')
+
+
+def saveDocument(setup):
+    """Save document"""
+    from Products.ATContentTypes.interfaces.document import IATDocument
+    from Products.Archetypes.event import ObjectEditedEvent
+    from zope import event
+    from zope.annotation.interfaces import IAnnotations
+
+    catalog = getToolByName(setup, 'portal_catalog')
+    brains = catalog(object_provides=IATDocument.__identifier__)
+    for brain in brains:
+        obj = brain.getObject()
+        annotations = IAnnotations(obj)
+        if 'collective.cart.shipping' in annotations:
+            del IAnnotations(obj)['collective.cart.shipping']
+        if 'collective.cart.core' in annotations:
+            del IAnnotations(obj)['collective.cart.core']
+        event.notify(ObjectEditedEvent(obj))

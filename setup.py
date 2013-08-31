@@ -25,6 +25,8 @@ setup(
     install_requires=[
         'Products.PFGExtendedMailAdapter',
         'Products.PFGSelectionStringField',
+        'collective.cart.core',
+        'collective.cart.shipping',
         'collective.folderlogo',
         'collective.microsite',
         'collective.monkeypatcher',

@@ -81,7 +81,7 @@ class TestCase(IntegrationTestCase):
 
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'46')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'47')
 
     def test_properties_default_page(self):
         self.assertEqual(self.portal.getProperty('default_page'), 'sll-view')
