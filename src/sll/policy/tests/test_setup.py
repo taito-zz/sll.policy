@@ -81,7 +81,7 @@ class TestCase(IntegrationTestCase):
 
     def test_metadata__version(self):
         setup = getToolByName(self.portal, 'portal_setup')
-        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'47')
+        self.assertEqual(setup.getVersionForProfile('profile-sll.policy:default'), u'48')
 
     def test_properties_default_page(self):
         self.assertEqual(self.portal.getProperty('default_page'), 'sll-view')
@@ -121,6 +121,10 @@ class TestCase(IntegrationTestCase):
         perms = self.portal.rolesOfPermission(permission='Add portal member')
         anon = [perm['selected'] for perm in perms if perm['name'] == 'Anonymous'][0]
         self.assertEqual(anon, '')
+
+    def test_tinymce_contextmenu(self):
+        tinymce = getToolByName(self.portal, 'portal_tinymce')
+        self.assertFalse(tinymce.contextmenu)
 
     def test_uninstall(self):
         installer = getToolByName(self.portal, 'portal_quickinstaller')

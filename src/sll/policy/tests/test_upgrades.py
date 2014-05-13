@@ -1,6 +1,9 @@
 from plone.registry.interfaces import IRegistry
 from sll.policy.tests.base import IntegrationTestCase
+from sll.policy.upgrades import PROFILE_ID
 from zope.component import getUtility
+
+import mock
 
 
 class TestCase(IntegrationTestCase):
@@ -39,3 +42,15 @@ class TestCase(IntegrationTestCase):
         self.assertFalse(kannanotot.getExcludeFromNav())
         self.assertTrue(folder1.getExcludeFromNav())
         self.assertTrue(folder2.getExcludeFromNav())
+
+    def test_reimport_controlpanel(self):
+        from sll.policy.upgrades import reimport_controlpanel
+        setup = mock.Mock()
+        reimport_controlpanel(setup)
+        setup.runImportStepFromProfile.assert_called_with(PROFILE_ID, 'controlpanel', run_dependencies=False, purge_old=False)
+
+    def test_reimport_tinymce(self):
+        from sll.policy.upgrades import reimport_tinymce
+        setup = mock.Mock()
+        reimport_tinymce(setup)
+        setup.runImportStepFromProfile.assert_called_with(PROFILE_ID, 'tinymce_settings', run_dependencies=False, purge_old=False)

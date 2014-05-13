@@ -43,7 +43,7 @@
     title="Exclude from navigation"
     />
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="46"
     handler="sll.policy.upgrades.set_view_for_tapahtumat"
@@ -51,9 +51,9 @@
     sortkey="1"
     source="45"
     title="Set view for tapahtumat"
-    />
+    /> -->
 
-  <genericsetup:upgradeStep
+  <!-- <genericsetup:upgradeStep
     description=""
     destination="47"
     handler="sll.policy.upgrades.saveDocument"
@@ -61,6 +61,26 @@
     sortkey="1"
     source="46"
     title="Save document"
+    /> -->
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="48"
+    handler="sll.policy.upgrades.reimport_controlpanel"
+    profile="sll.policy:default"
+    sortkey="1"
+    source="47"
+    title="Reimport controlpanel"
+    />
+
+  <genericsetup:upgradeStep
+    description=""
+    destination="48"
+    handler="sll.policy.upgrades.reimport_tinymce"
+    profile="sll.policy:default"
+    sortkey="2"
+    source="47"
+    title="Reimport tinymce"
     />
 
 </configure>

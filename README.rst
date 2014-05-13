@@ -7,6 +7,12 @@ This package contains policies for SLL site.
 Changelog
 ---------
 
+1.9 (2014-05-13)
+================
+
+- Remove kupu configlet. [taito]
+- Disable contextmenu from tinymce. [taito]
+
 1.8.1 (2013-08-31)
 ==================
 
