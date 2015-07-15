@@ -22,6 +22,8 @@ class SllPolicyLayer(PloneSandboxLayer):
         z2.installProduct(app, 'Products.PloneFormGen')
 
         # Load ZCML
+        import Products.CMFPlacefulWorkflow
+        self.loadZCML(package=Products.CMFPlacefulWorkflow)
         import plonetheme.sunburst
         self.loadZCML(package=plonetheme.sunburst)
         import sll.policy

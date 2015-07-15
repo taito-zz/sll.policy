@@ -19,6 +19,7 @@ Changelog
 ==================
 
 - Remove property default_page from properties.xml. [taito]
+- Add dependency to Products.CMFPlacefulWorkflow for test. [taito]
 
 1.9 (2014-05-13)
 ================
