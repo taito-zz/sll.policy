@@ -18,7 +18,7 @@ Changelog
 1.10 ( 2015-07-14)
 ==================
 
-- Remove property default_page. [taito]
+- Remove property default_page from properties.xml. [taito]
 
 1.9 (2014-05-13)
 ================
