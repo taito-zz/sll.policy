@@ -4,8 +4,21 @@ sll.policy
 
 This package contains policies for SLL site.
 
+.. image:: https://secure.travis-ci.org/taito/sll.policy.png
+    :target: http://travis-ci.org/taito/sll.policy
+
+Currently tested with
+---------------------
+
+* Plone-4.3.6 with Python-2.7.10 [taito]
+
 Changelog
 ---------
+
+1.10 ( 2015-07-14)
+==================
+
+- Remove property default_page. [taito]
 
 1.9 (2014-05-13)
 ================
