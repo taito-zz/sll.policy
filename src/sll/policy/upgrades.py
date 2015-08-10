@@ -55,34 +55,6 @@ def excludeFromNav(context, logger=None):
             obj.reindexObject(idxs=['exclude_from_nav'])
 
 
-# def set_view_for_tapahtumat(context, logger=None):
-#     """Set view: @@search-event-results for folder: tapahtumat"""
-#     if logger is None:
-#         logger = logging.getLogger(__name__)
-
-#     portal = getToolByName(context, 'portal_url').getPortalObject()
-#     portal['tapahtumat'].setLayout('search-event-results')
-
-
-# def saveDocument(setup):
-#     """Save document"""
-#     from Products.ATContentTypes.interfaces.document import IATDocument
-#     from Products.Archetypes.event import ObjectEditedEvent
-#     from zope import event
-#     from zope.annotation.interfaces import IAnnotations
-
-#     catalog = getToolByName(setup, 'portal_catalog')
-#     brains = catalog(object_provides=IATDocument.__identifier__)
-#     for brain in brains:
-#         obj = brain.getObject()
-#         annotations = IAnnotations(obj)
-#         if 'collective.cart.shipping' in annotations:
-#             del IAnnotations(obj)['collective.cart.shipping']
-#         if 'collective.cart.core' in annotations:
-#             del IAnnotations(obj)['collective.cart.core']
-#         event.notify(ObjectEditedEvent(obj))
-
-
 def reimport_controlpanel(setup):
     """Reimport controlpanel"""
     setup.runImportStepFromProfile(PROFILE_ID, 'controlpanel', run_dependencies=False, purge_old=False)
